@@ -14,7 +14,22 @@
       "mcp__context7__query-docs",
       "Bash(/c/nvm4w/nodejs/node:*)",
       "Bash(export PATH=\"/c/nvm4w/nodejs:$PATH\")",
-      "Bash(npx --yes create-next-app@latest /c/Users/mmart/workout-app --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm --no-turbopack)"
+      "Bash(npx --yes create-next-app@latest /c/Users/mmart/workout-app --typescript --tailwind --eslint --app --src-dir --no-import-alias --use-npm --no-turbopack)",
+      "Bash(npm install:*)",
+      "Bash(curl -L -o public/fonts/JetBrainsMono-Variable.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/master/fonts/variable/JetBrainsMono%5Bwght%5D.woff2\")",
+      "Bash(npx next:*)",
+      "Bash(node -e \"const pkg = require\\('./node_modules/serwist/package.json'\\); console.log\\(pkg.version\\)\")",
+      "Bash(node -e ':*)",
+      "Bash(npm run:*)",
+      "Bash(taskkill:*)",
+      "Bash(tasklist)",
+      "Bash(netstat -ano)",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__chrome-devtools__list_console_messages",
+      "Bash(curl -L -o public/fonts/JetBrainsMono-Variable.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/refs/heads/master/fonts/webfonts/JetBrainsMono-Regular.woff2\")",
+      "Bash(curl -L -o public/fonts/JetBrainsMono-Bold.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/refs/heads/master/fonts/webfonts/JetBrainsMono-Bold.woff2\")",
+      "mcp__chrome-devtools__take_screenshot"
     ]
   }
 }
