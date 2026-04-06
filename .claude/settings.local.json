@@ -29,7 +29,9 @@
       "mcp__chrome-devtools__list_console_messages",
       "Bash(curl -L -o public/fonts/JetBrainsMono-Variable.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/refs/heads/master/fonts/webfonts/JetBrainsMono-Regular.woff2\")",
       "Bash(curl -L -o public/fonts/JetBrainsMono-Bold.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/refs/heads/master/fonts/webfonts/JetBrainsMono-Bold.woff2\")",
-      "mcp__chrome-devtools__take_screenshot"
+      "mcp__chrome-devtools__take_screenshot",
+      "Bash(npx vercel:*)",
+      "Bash(wc:*)"
     ]
   }
 }
