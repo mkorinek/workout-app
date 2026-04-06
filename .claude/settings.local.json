@@ -31,7 +31,14 @@
       "Bash(curl -L -o public/fonts/JetBrainsMono-Bold.woff2 \"https://github.com/JetBrains/JetBrainsMono/raw/refs/heads/master/fonts/webfonts/JetBrainsMono-Bold.woff2\")",
       "mcp__chrome-devtools__take_screenshot",
       "Bash(npx vercel:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "mcp__chrome-devtools__lighthouse_audit",
+      "Read(//c/Users/mmart/AppData/Local/Temp/chrome-devtools-mcp-jgOUAD//**)",
+      "Read(//c/Users/mmart/AppData/Local/Temp//**)",
+      "Read(//c/Users/mmart/.claude/projects/C--Users-mmart-workout-app/**)",
+      "Read(//c/Users/mmart/.claude/projects/C--Users-mmart-workout-app/memory/**)",
+      "Bash(vercel --version)",
+      "WebFetch(domain:www.conventionalcommits.org)"
     ]
   }
 }

@@ -6,6 +6,7 @@ import { SetRow } from "@/components/workout/set-row";
 import { RestTimer } from "@/components/workout/rest-timer";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
 import {
   addSet,
@@ -13,6 +14,7 @@ import {
   uncompleteSet,
   updateSet,
   deleteSet,
+  deleteSession,
   finishWorkout,
 } from "@/actions/sessions";
 import { checkAndUpdatePR } from "@/actions/records";
@@ -59,6 +61,8 @@ export function WorkoutSessionClient({
   const [prSets, setPrSets] = useState<Set<string>>(new Set());
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
   const [finishing, setFinishing] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const isCompleted = !!session.completed_at;
 
   const handleAddSet = useCallback(async () => {
@@ -164,6 +168,18 @@ export function WorkoutSessionClient({
     }
   }, [session.id, session.template_id, router, addToast]);
 
+  const handleDeleteSession = useCallback(async () => {
+    setDeleting(true);
+    const result = await deleteSession(session.id);
+    if (result.error) {
+      addToast(result.error, "error");
+      setDeleting(false);
+      setConfirmDelete(false);
+    } else {
+      router.push("/workouts");
+    }
+  }, [session.id, router, addToast]);
+
   const completedSets = useMemo(() => sets.filter((s) => s.completed).length, [sets]);
   const totalVolume = useMemo(() => calculateVolume(sets), [sets]);
 
@@ -245,6 +261,54 @@ export function WorkoutSessionClient({
           >
             {finishing ? "finishing..." : "finish"}
           </Button>
+        </div>
+      )}
+
+      {/* Delete workout */}
+      <div className="mt-4 border-t border-term-gray pt-4">
+        <button onClick={() => setConfirmDelete(true)}>
+          <Badge variant="red">delete workout</Badge>
+        </button>
+      </div>
+
+      {/* Delete confirmation modal */}
+      {confirmDelete && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          onClick={() => { if (!deleting) setConfirmDelete(false); }}
+        >
+          <div className="absolute inset-0 bg-black/80" />
+          <div
+            className="relative border border-term-red bg-term-black p-6 max-w-sm w-[calc(100%-2rem)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-xs text-term-red uppercase tracking-widest mb-1 font-bold">
+              &gt; delete workout
+            </p>
+            <p className="text-[10px] text-term-gray-light mb-6">
+              this action cannot be undone. all sets and data for this workout will be permanently removed.
+            </p>
+            <div className="flex gap-2">
+              <Button
+                variant="danger"
+                size="sm"
+                className="flex-1"
+                onClick={handleDeleteSession}
+                disabled={deleting}
+              >
+                {deleting ? "deleting..." : "yes, delete"}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1"
+                onClick={() => setConfirmDelete(false)}
+                disabled={deleting}
+              >
+                cancel
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 

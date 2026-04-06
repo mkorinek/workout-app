@@ -17,6 +17,8 @@ export default function ProfilePage() {
     timer_flash: boolean;
     total_volume_kg: number;
     lifter_rank: string;
+    weekly_workout_goal: number | null;
+    week_start_day: number;
   } | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,6 +34,8 @@ export default function ProfilePage() {
           timer_flash: data.timer_flash,
           total_volume_kg: Number(data.total_volume_kg),
           lifter_rank: data.lifter_rank,
+          weekly_workout_goal: data.weekly_workout_goal ?? null,
+          week_start_day: data.week_start_day ?? 1,
         });
       }
       setLoading(false);
@@ -47,6 +51,8 @@ export default function ProfilePage() {
       timer_sound: profile.timer_sound,
       timer_vibration: profile.timer_vibration,
       timer_flash: profile.timer_flash,
+      weekly_workout_goal: profile.weekly_workout_goal,
+      week_start_day: profile.week_start_day,
     });
     setSaving(false);
   }
@@ -129,6 +135,64 @@ export default function ProfilePage() {
               />
               <span className="text-xs text-term-white">screen flash</span>
             </label>
+          </div>
+        </div>
+
+        {/* Weekly workout goal */}
+        <div>
+          <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
+            weekly workout goal
+          </label>
+          <p className="text-[10px] text-term-gray mb-2">
+            complete this many workouts each week to build your streak
+          </p>
+          <input
+            type="number"
+            min={1}
+            max={14}
+            value={profile.weekly_workout_goal ?? ""}
+            placeholder="not set"
+            onChange={(e) =>
+              setProfile({
+                ...profile,
+                weekly_workout_goal: e.target.value ? parseInt(e.target.value) : null,
+              })
+            }
+            className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1.5 w-24 focus:border-term-green outline-none tabular-nums"
+          />
+        </div>
+
+        {/* Week start day */}
+        <div>
+          <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
+            week start day
+          </label>
+          <p className="text-[10px] text-term-gray mb-2">
+            when does your training week begin?
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setProfile({ ...profile, week_start_day: 1 })}
+              className={`border px-3 py-1.5 text-xs uppercase tracking-widest font-mono transition-colors ${
+                profile.week_start_day === 1
+                  ? "border-term-green text-term-green bg-term-green/10"
+                  : "border-term-gray text-term-gray-light hover:border-term-green"
+              }`}
+            >
+              monday
+            </button>
+            <button
+              type="button"
+              onClick={() => setProfile({ ...profile, week_start_day: 0 })}
+              className={`border px-3 py-1.5 text-xs uppercase tracking-widest font-mono transition-colors ${
+                profile.week_start_day === 0
+                  ? "border-term-green text-term-green bg-term-green/10"
+                  : "border-term-gray text-term-gray-light hover:border-term-green"
+              }`}
+            >
+              sunday
+            </button>
           </div>
         </div>
 

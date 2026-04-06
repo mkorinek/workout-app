@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
+import { getWeekStartDate, getWeekEndDate, getPreviousWeekStart } from "@/lib/streak";
 
 export async function createSession(templateId?: string) {
   const supabase = await createClient();
@@ -148,7 +149,7 @@ export async function finishWorkout(sessionId: string) {
       .eq("session_id", sessionId),
     supabase
       .from("profiles")
-      .select("total_volume_kg")
+      .select("total_volume_kg, weekly_workout_goal, week_start_day, current_week_streak, streak_last_completed_week")
       .eq("id", user.id)
       .single(),
   ]);
@@ -157,16 +158,76 @@ export async function finishWorkout(sessionId: string) {
     const sessionVolume = calculateVolume(sets);
     const newTotal = Number(profile.total_volume_kg) + sessionVolume;
 
+    const profileUpdate: Record<string, unknown> = {
+      total_volume_kg: newTotal,
+      lifter_rank: getRankFromVolume(newTotal),
+      updated_at: new Date().toISOString(),
+    };
+
+    // Weekly streak logic
+    if (profile.weekly_workout_goal) {
+      const now = new Date();
+      const weekStart = getWeekStartDate(now, profile.week_start_day);
+      const weekEnd = getWeekEndDate(weekStart);
+
+      const { count } = await supabase
+        .from("workout_sessions")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", user.id)
+        .not("completed_at", "is", null)
+        .gte("completed_at", weekStart + "T00:00:00.000Z")
+        .lt("completed_at", weekEnd + "T00:00:00.000Z");
+
+      const workoutsThisWeek = count ?? 0;
+
+      if (workoutsThisWeek >= profile.weekly_workout_goal) {
+        const lastWeek = profile.streak_last_completed_week;
+        if (lastWeek === weekStart) {
+          // Already counted this week — no change
+        } else {
+          const previousWeek = getPreviousWeekStart(weekStart, profile.week_start_day);
+          if (lastWeek === previousWeek) {
+            profileUpdate.current_week_streak = profile.current_week_streak + 1;
+          } else {
+            profileUpdate.current_week_streak = 1;
+          }
+          profileUpdate.streak_last_completed_week = weekStart;
+        }
+      }
+    }
+
     await supabase
       .from("profiles")
-      .update({
-        total_volume_kg: newTotal,
-        lifter_rank: getRankFromVolume(newTotal),
-        updated_at: new Date().toISOString(),
-      })
+      .update(profileUpdate)
       .eq("id", user.id);
   }
 
+  revalidatePath("/workouts");
+  return { success: true };
+}
+
+export async function deleteSession(sessionId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
+  // Verify ownership
+  const { data: session } = await supabase
+    .from("workout_sessions")
+    .select("id")
+    .eq("id", sessionId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (!session) return { error: "Session not found" };
+
+  // Cascade deletes workout_sets via FK
+  const { error } = await supabase
+    .from("workout_sessions")
+    .delete()
+    .eq("id", sessionId);
+
+  if (error) return { error: error.message };
   revalidatePath("/workouts");
   return { success: true };
 }

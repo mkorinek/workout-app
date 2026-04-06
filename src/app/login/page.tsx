@@ -51,7 +51,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <p className="text-term-gray text-[10px] text-center uppercase tracking-widest">
+        <p className="text-term-gray-light text-[10px] text-center uppercase tracking-widest">
           all data encrypted &middot; your gains are safe
         </p>
       </div>

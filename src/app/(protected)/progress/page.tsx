@@ -1,18 +1,20 @@
 import { getPersonalRecords } from "@/actions/records";
 import { getAchievements } from "@/actions/achievements";
-import { getProfile } from "@/actions/profile";
+import { getProfile, getStreakData } from "@/actions/profile";
 import { getExercises } from "@/actions/exercises";
 import { PRBoard } from "@/components/progress/pr-board";
 import { AchievementBoard } from "@/components/achievements/achievement-board";
+import { WeeklyStreakSection } from "@/components/progress/weekly-streak";
 import { ProgressClient } from "./client";
 import { getRankFromVolume, getNextRank } from "@/lib/utils";
 
 export default async function ProgressPage() {
-  const [records, achievements, profile, exercises] = await Promise.all([
+  const [records, achievements, profile, exercises, streakData] = await Promise.all([
     getPersonalRecords(),
     getAchievements(),
     getProfile(),
     getExercises(),
+    getStreakData(),
   ]);
 
   const totalVolume = Number(profile?.total_volume_kg ?? 0);
@@ -52,6 +54,15 @@ export default async function ProgressPage() {
           </div>
         )}
       </div>
+
+      {/* Weekly streak */}
+      {streakData && (
+        <WeeklyStreakSection
+          currentStreak={streakData.currentStreak}
+          workoutsThisWeek={streakData.workoutsThisWeek}
+          weeklyGoal={streakData.weeklyWorkoutGoal}
+        />
+      )}
 
       {/* Charts */}
       <div className="mb-6">
