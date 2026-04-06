@@ -18,29 +18,35 @@ export function formatDateShort(date: string | Date): string {
   return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+const RANK_THRESHOLDS: [string, number][] = [
+  ["ROOKIE", 0],
+  ["INITIATE", 5_000],
+  ["REGULAR", 25_000],
+  ["HARDENED", 100_000],
+  ["VETERAN", 250_000],
+  ["ELITE", 500_000],
+  ["LEGEND", 1_000_000],
+];
+
 export function getRankFromVolume(totalVolumeKg: number): string {
-  if (totalVolumeKg >= 1_000_000) return "LEGEND";
-  if (totalVolumeKg >= 500_000) return "ELITE";
-  if (totalVolumeKg >= 250_000) return "VETERAN";
-  if (totalVolumeKg >= 100_000) return "HARDENED";
-  if (totalVolumeKg >= 25_000) return "REGULAR";
-  if (totalVolumeKg >= 5_000) return "INITIATE";
+  for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
+    if (totalVolumeKg >= RANK_THRESHOLDS[i][1]) return RANK_THRESHOLDS[i][0];
+  }
   return "ROOKIE";
 }
 
 export function getNextRank(currentRank: string): { name: string; volumeNeeded: number } | null {
-  const ranks: [string, number][] = [
-    ["INITIATE", 5_000],
-    ["REGULAR", 25_000],
-    ["HARDENED", 100_000],
-    ["VETERAN", 250_000],
-    ["ELITE", 500_000],
-    ["LEGEND", 1_000_000],
-  ];
-  const idx = ranks.findIndex(([name]) => name === currentRank);
-  if (idx === -1 && currentRank === "ROOKIE") return { name: "INITIATE", volumeNeeded: 5_000 };
-  if (idx >= 0 && idx < ranks.length - 1) return { name: ranks[idx + 1][0], volumeNeeded: ranks[idx + 1][1] };
+  const idx = RANK_THRESHOLDS.findIndex(([name]) => name === currentRank);
+  if (idx >= 0 && idx < RANK_THRESHOLDS.length - 1) {
+    return { name: RANK_THRESHOLDS[idx + 1][0], volumeNeeded: RANK_THRESHOLDS[idx + 1][1] };
+  }
   return null;
+}
+
+export function calculateVolume(sets: { weight_kg: number; reps: number; completed: boolean }[]): number {
+  return sets
+    .filter((s) => s.completed)
+    .reduce((sum, s) => sum + Number(s.weight_kg) * s.reps, 0);
 }
 
 export function cn(...classes: (string | boolean | undefined | null)[]): string {

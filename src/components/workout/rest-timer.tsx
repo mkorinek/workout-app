@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { formatTime } from "@/lib/utils";
 
 interface RestTimerProps {
-  duration: number; // seconds
+  duration: number;
   onComplete: () => void;
   onSkip: () => void;
   timerSound: boolean;
@@ -25,11 +25,19 @@ export function RestTimer({
   const [flashActive, setFlashActive] = useState(false);
   const startTimeRef = useRef(Date.now());
   const rafRef = useRef<number>(0);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  useEffect(() => {
+    return () => {
+      audioCtxRef.current?.close();
+    };
+  }, []);
 
   const playBeep = useCallback(() => {
     if (!timerSound) return;
     try {
       const ctx = new AudioContext();
+      audioCtxRef.current = ctx;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -39,7 +47,6 @@ export function RestTimer({
       gain.gain.value = 0.15;
       osc.start();
       osc.stop(ctx.currentTime + 0.2);
-      // Double beep
       setTimeout(() => {
         const osc2 = ctx.createOscillator();
         const gain2 = ctx.createGain();
@@ -50,6 +57,8 @@ export function RestTimer({
         gain2.gain.value = 0.15;
         osc2.start();
         osc2.stop(ctx.currentTime + 0.3);
+        // Close context after sounds finish
+        setTimeout(() => ctx.close(), 500);
       }, 300);
     } catch {
       // Audio not available
@@ -97,7 +106,6 @@ export function RestTimer({
 
   return (
     <>
-      {/* Full screen flash overlay */}
       {flashActive && (
         <div className="fixed inset-0 bg-term-green/20 z-[200] pointer-events-none screen-flash" />
       )}
@@ -118,14 +126,12 @@ export function RestTimer({
           </button>
         </div>
 
-        {/* Big time display */}
         <div className="text-center mb-3">
           <span className="text-4xl font-bold text-term-green font-mono tabular-nums">
             {formatTime(remaining)}
           </span>
         </div>
 
-        {/* Progress bar */}
         <div className="h-1 bg-term-gray">
           <div
             className="h-full bg-term-green transition-all duration-200"

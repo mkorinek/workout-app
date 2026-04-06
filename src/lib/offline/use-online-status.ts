@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { getPendingCount } from "./idb-store";
 import { replayMutations } from "./sync-manager";
 
 export function useOnlineStatus() {
   const [isOnline, setIsOnline] = useState(true);
   const [pendingSync, setPendingSync] = useState(0);
-  const [syncing, setSyncing] = useState(false);
+  const syncingRef = useRef(false);
 
   const updatePendingCount = useCallback(async () => {
     try {
@@ -19,17 +19,17 @@ export function useOnlineStatus() {
   }, []);
 
   const syncNow = useCallback(async () => {
-    if (syncing) return;
-    setSyncing(true);
+    if (syncingRef.current) return;
+    syncingRef.current = true;
     try {
       await replayMutations();
       await updatePendingCount();
     } catch {
       // Sync failed
     } finally {
-      setSyncing(false);
+      syncingRef.current = false;
     }
-  }, [syncing, updatePendingCount]);
+  }, [updatePendingCount]);
 
   useEffect(() => {
     setIsOnline(navigator.onLine);
@@ -53,5 +53,5 @@ export function useOnlineStatus() {
     };
   }, [syncNow, updatePendingCount]);
 
-  return { isOnline, pendingSync, syncing };
+  return { isOnline, pendingSync, syncing: syncingRef.current };
 }

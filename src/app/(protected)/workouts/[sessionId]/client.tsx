@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { SetRow } from "@/components/workout/set-row";
 import { RestTimer } from "@/components/workout/rest-timer";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
 import {
   addSet,
@@ -18,7 +17,7 @@ import {
 } from "@/actions/sessions";
 import { checkAndUpdatePR } from "@/actions/records";
 import { checkAchievements } from "@/actions/achievements";
-import { formatTime } from "@/lib/utils";
+import { formatDate, calculateVolume } from "@/lib/utils";
 
 interface SetData {
   id: string;
@@ -165,18 +164,8 @@ export function WorkoutSessionClient({
     }
   }, [session.id, session.template_id, router, addToast]);
 
-  const completedSets = sets.filter((s) => s.completed).length;
-  const totalVolume = sets
-    .filter((s) => s.completed)
-    .reduce((sum, s) => sum + Number(s.weight_kg) * s.reps, 0);
-
-  // Group sets by exercise for display
-  const exerciseGroups = sets.reduce((acc, set) => {
-    const name = set.exercise_name || "unnamed";
-    if (!acc[name]) acc[name] = [];
-    acc[name].push(set);
-    return acc;
-  }, {} as Record<string, SetData[]>);
+  const completedSets = useMemo(() => sets.filter((s) => s.completed).length, [sets]);
+  const totalVolume = useMemo(() => calculateVolume(sets), [sets]);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
@@ -187,7 +176,7 @@ export function WorkoutSessionClient({
             {isCompleted ? "> workout complete" : "> active workout"}
           </h1>
           <span className="text-[10px] text-term-gray-light tabular-nums">
-            {new Date(session.started_at).toLocaleDateString()}
+            {formatDate(session.started_at)}
           </span>
         </div>
 

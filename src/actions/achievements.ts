@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { calculateVolume } from "@/lib/utils";
 
 export async function getAchievements() {
   const supabase = await createClient();
@@ -26,72 +27,41 @@ export async function checkAchievements(sessionId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { newAchievements: [] };
 
-  const newAchievements: { name: string; description: string; icon: string }[] = [];
+  // Fetch all independent data in parallel
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
 
-  // Get all achievement definitions
-  const { data: allAchievements } = await supabase
-    .from("achievements")
-    .select("*");
+  const [
+    { data: allAchievements },
+    { data: unlocked },
+    { data: currentSession },
+    { data: currentSets },
+    { count: totalWorkouts },
+    { data: recentSessions },
+    { count: weeklyWorkouts },
+  ] = await Promise.all([
+    supabase.from("achievements").select("id, name, description, category, condition_type, condition_value, icon"),
+    supabase.from("user_achievements").select("achievement_id").eq("user_id", user.id),
+    supabase.from("workout_sessions").select("started_at, completed_at").eq("id", sessionId).single(),
+    supabase.from("workout_sets").select("exercise_name, weight_kg, reps, completed").eq("session_id", sessionId),
+    supabase.from("workout_sessions").select("id", { count: "exact", head: true }).eq("user_id", user.id).not("completed_at", "is", null),
+    supabase.from("workout_sessions").select("started_at").eq("user_id", user.id).not("completed_at", "is", null).order("started_at", { ascending: false }).limit(31),
+    supabase.from("workout_sessions").select("id", { count: "exact", head: true }).eq("user_id", user.id).not("completed_at", "is", null).gte("started_at", weekAgo.toISOString()),
+  ]);
 
-  // Get already unlocked
-  const { data: unlocked } = await supabase
-    .from("user_achievements")
-    .select("achievement_id")
-    .eq("user_id", user.id);
+  if (!allAchievements) return { newAchievements: [] };
 
   const unlockedIds = new Set(unlocked?.map((u) => u.achievement_id) ?? []);
 
-  if (!allAchievements) return { newAchievements };
-
-  // Get user stats
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("total_volume_kg")
-    .eq("id", user.id)
-    .single();
-
-  // Current session data
-  const { data: currentSession } = await supabase
-    .from("workout_sessions")
-    .select("started_at, completed_at")
-    .eq("id", sessionId)
-    .single();
-
-  const { data: currentSets } = await supabase
-    .from("workout_sets")
-    .select("*")
-    .eq("session_id", sessionId);
-
-  // Total completed workouts
-  const { count: totalWorkouts } = await supabase
-    .from("workout_sessions")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", user.id)
-    .not("completed_at", "is", null);
-
-  // Total completed sets
+  // Total completed sets — count via completed sets in user's sessions
+  // Use a simpler approach: count from workout_sets joined to user sessions
   const { count: totalSets } = await supabase
     .from("workout_sets")
-    .select("id", { count: "exact", head: true })
+    .select("id, workout_sessions!inner(user_id)", { count: "exact", head: true })
     .eq("completed", true)
-    .in(
-      "session_id",
-      (await supabase
-        .from("workout_sessions")
-        .select("id")
-        .eq("user_id", user.id)
-      ).data?.map((s) => s.id) ?? []
-    );
+    .eq("workout_sessions.user_id", user.id);
 
   // Streak calculation
-  const { data: recentSessions } = await supabase
-    .from("workout_sessions")
-    .select("started_at")
-    .eq("user_id", user.id)
-    .not("completed_at", "is", null)
-    .order("started_at", { ascending: false })
-    .limit(31);
-
   let streak = 0;
   if (recentSessions && recentSessions.length > 0) {
     const today = new Date();
@@ -110,32 +80,21 @@ export async function checkAchievements(sessionId: string) {
     }
   }
 
-  // Weekly workouts
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
-  const { count: weeklyWorkouts } = await supabase
-    .from("workout_sessions")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", user.id)
-    .not("completed_at", "is", null)
-    .gte("started_at", weekAgo.toISOString());
-
   // Session stats
-  const sessionVolume = currentSets
-    ?.filter((s) => s.completed)
-    .reduce((sum, s) => sum + Number(s.weight_kg) * s.reps, 0) ?? 0;
+  const sessionVolume = calculateVolume(currentSets ?? []);
   const maxSetWeight = Math.max(...(currentSets?.map((s) => Number(s.weight_kg)) ?? [0]));
   const setsInSession = currentSets?.filter((s) => s.completed).length ?? 0;
   const uniqueExercises = new Set(currentSets?.map((s) => s.exercise_name)).size;
 
-  // Session duration
   let durationMinutes = 0;
   if (currentSession?.started_at && currentSession?.completed_at) {
     durationMinutes = (new Date(currentSession.completed_at).getTime() - new Date(currentSession.started_at).getTime()) / 60000;
   }
 
-  // After midnight check
   const startHour = currentSession ? new Date(currentSession.started_at).getHours() : 12;
+
+  const newAchievements: { name: string; description: string; icon: string }[] = [];
+  const toInsert: { user_id: string; achievement_id: string }[] = [];
 
   for (const achievement of allAchievements) {
     if (unlockedIds.has(achievement.id)) continue;
@@ -175,20 +134,20 @@ export async function checkAchievements(sessionId: string) {
     }
 
     if (met) {
-      const { error } = await supabase
-        .from("user_achievements")
-        .insert({ user_id: user.id, achievement_id: achievement.id });
-
-      if (!error) {
-        newAchievements.push({
-          name: achievement.name,
-          description: achievement.category === "hidden"
-            ? getHiddenDescription(achievement.condition_type)
-            : achievement.description,
-          icon: achievement.icon,
-        });
-      }
+      toInsert.push({ user_id: user.id, achievement_id: achievement.id });
+      newAchievements.push({
+        name: achievement.name,
+        description: achievement.category === "hidden"
+          ? getHiddenDescription(achievement.condition_type)
+          : achievement.description,
+        icon: achievement.icon,
+      });
     }
+  }
+
+  // Batch insert all unlocked achievements
+  if (toInsert.length > 0) {
+    await supabase.from("user_achievements").insert(toInsert);
   }
 
   return { newAchievements };

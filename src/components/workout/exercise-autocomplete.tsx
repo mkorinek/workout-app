@@ -21,6 +21,7 @@ export function ExerciseAutocomplete({
   const [saving, setSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const blurTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const fetchSuggestions = useCallback(async (query: string) => {
@@ -37,6 +38,7 @@ export function ExerciseAutocomplete({
     timeoutRef.current = setTimeout(() => fetchSuggestions(value), 200);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (blurTimeoutRef.current) clearTimeout(blurTimeoutRef.current);
     };
   }, [value, fetchSuggestions]);
 
@@ -52,8 +54,7 @@ export function ExerciseAutocomplete({
   }, []);
 
   function handleBlur() {
-    // Delay to allow click on suggestion
-    setTimeout(() => {
+    blurTimeoutRef.current = setTimeout(() => {
       setShowSuggestions(false);
       if (value.trim() && !suggestions.includes(value.trim())) {
         setShowSavePrompt(true);

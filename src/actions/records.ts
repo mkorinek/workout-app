@@ -12,86 +12,65 @@ export async function checkAndUpdatePR(
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { newPRs: [] };
 
-  const newPRs: string[] = [];
   const volume = weightKg * reps;
+  const now = new Date().toISOString();
 
-  // Check max weight
-  const { data: currentWeight } = await supabase
-    .from("personal_records")
-    .select("value")
-    .eq("user_id", user.id)
-    .eq("exercise_name", exerciseName)
-    .eq("record_type", "max_weight")
-    .single();
+  // Fetch all three current records in parallel
+  const [{ data: currentWeight }, { data: currentReps }, { data: currentVolume }] =
+    await Promise.all([
+      supabase
+        .from("personal_records")
+        .select("value")
+        .eq("user_id", user.id)
+        .eq("exercise_name", exerciseName)
+        .eq("record_type", "max_weight")
+        .single(),
+      supabase
+        .from("personal_records")
+        .select("value")
+        .eq("user_id", user.id)
+        .eq("exercise_name", exerciseName)
+        .eq("record_type", "max_reps")
+        .single(),
+      supabase
+        .from("personal_records")
+        .select("value")
+        .eq("user_id", user.id)
+        .eq("exercise_name", exerciseName)
+        .eq("record_type", "max_volume")
+        .single(),
+    ]);
 
-  if (!currentWeight || weightKg > Number(currentWeight.value)) {
-    await supabase
-      .from("personal_records")
-      .upsert(
-        {
-          user_id: user.id,
-          exercise_name: exerciseName,
-          record_type: "max_weight",
-          value: weightKg,
-          achieved_at: new Date().toISOString(),
-          set_id: setId,
-        },
-        { onConflict: "user_id,exercise_name,record_type" }
+  const newPRs: string[] = [];
+  const upserts: PromiseLike<unknown>[] = [];
+
+  const maybeUpsert = (recordType: string, value: number, current: { value: number } | null) => {
+    if (!current || value > Number(current.value)) {
+      newPRs.push(recordType);
+      upserts.push(
+        supabase
+          .from("personal_records")
+          .upsert(
+            {
+              user_id: user.id,
+              exercise_name: exerciseName,
+              record_type: recordType,
+              value,
+              achieved_at: now,
+              set_id: setId,
+            },
+            { onConflict: "user_id,exercise_name,record_type" }
+          )
+          .select()
       );
-    newPRs.push("max_weight");
-  }
+    }
+  };
 
-  // Check max reps
-  const { data: currentReps } = await supabase
-    .from("personal_records")
-    .select("value")
-    .eq("user_id", user.id)
-    .eq("exercise_name", exerciseName)
-    .eq("record_type", "max_reps")
-    .single();
+  maybeUpsert("max_weight", weightKg, currentWeight);
+  maybeUpsert("max_reps", reps, currentReps);
+  maybeUpsert("max_volume", volume, currentVolume);
 
-  if (!currentReps || reps > Number(currentReps.value)) {
-    await supabase
-      .from("personal_records")
-      .upsert(
-        {
-          user_id: user.id,
-          exercise_name: exerciseName,
-          record_type: "max_reps",
-          value: reps,
-          achieved_at: new Date().toISOString(),
-          set_id: setId,
-        },
-        { onConflict: "user_id,exercise_name,record_type" }
-      );
-    newPRs.push("max_reps");
-  }
-
-  // Check max volume (single set)
-  const { data: currentVolume } = await supabase
-    .from("personal_records")
-    .select("value")
-    .eq("user_id", user.id)
-    .eq("exercise_name", exerciseName)
-    .eq("record_type", "max_volume")
-    .single();
-
-  if (!currentVolume || volume > Number(currentVolume.value)) {
-    await supabase
-      .from("personal_records")
-      .upsert(
-        {
-          user_id: user.id,
-          exercise_name: exerciseName,
-          record_type: "max_volume",
-          value: volume,
-          achieved_at: new Date().toISOString(),
-          set_id: setId,
-        },
-        { onConflict: "user_id,exercise_name,record_type" }
-      );
-    newPRs.push("max_volume");
-  }
+  if (upserts.length > 0) await Promise.all(upserts);
 
   return { newPRs };
 }
@@ -103,7 +82,7 @@ export async function getPersonalRecords() {
 
   const { data } = await supabase
     .from("personal_records")
-    .select("*")
+    .select("id, exercise_name, record_type, value, achieved_at")
     .eq("user_id", user.id)
     .order("exercise_name");
 
@@ -115,7 +94,6 @@ export async function getExerciseProgress(exerciseName: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
 
-  // Get all completed sets for this exercise, ordered by date
   const { data: sets } = await supabase
     .from("workout_sets")
     .select(`
@@ -131,7 +109,6 @@ export async function getExerciseProgress(exerciseName: string) {
 
   if (!sets) return [];
 
-  // Group by session date
   const grouped = new Map<string, { maxWeight: number; totalVolume: number; maxReps: number }>();
 
   for (const set of sets) {

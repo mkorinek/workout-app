@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { getRankFromVolume, calculateVolume } from "@/lib/utils";
 
 export async function createSession(templateId?: string) {
   const supabase = await createClient();
@@ -132,7 +133,6 @@ export async function finishWorkout(sessionId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Not authenticated" };
 
-  // Mark session as completed
   const { error } = await supabase
     .from("workout_sessions")
     .update({ completed_at: new Date().toISOString() })
@@ -140,52 +140,35 @@ export async function finishWorkout(sessionId: string) {
 
   if (error) return { error: error.message };
 
-  // Calculate session volume and update total
-  const { data: sets } = await supabase
-    .from("workout_sets")
-    .select("weight_kg, reps, completed")
-    .eq("session_id", sessionId);
-
-  if (sets) {
-    const sessionVolume = sets
-      .filter((s) => s.completed)
-      .reduce((sum, s) => sum + Number(s.weight_kg) * s.reps, 0);
-
-    // Update total volume
-    const { data: profile } = await supabase
+  // Fetch sets and profile in parallel
+  const [{ data: sets }, { data: profile }] = await Promise.all([
+    supabase
+      .from("workout_sets")
+      .select("weight_kg, reps, completed")
+      .eq("session_id", sessionId),
+    supabase
       .from("profiles")
       .select("total_volume_kg")
       .eq("id", user.id)
-      .single();
+      .single(),
+  ]);
 
-    if (profile) {
-      const newTotal = Number(profile.total_volume_kg) + sessionVolume;
-      // Compute new rank
-      const newRank = computeRank(newTotal);
+  if (sets && profile) {
+    const sessionVolume = calculateVolume(sets);
+    const newTotal = Number(profile.total_volume_kg) + sessionVolume;
 
-      await supabase
-        .from("profiles")
-        .update({
-          total_volume_kg: newTotal,
-          lifter_rank: newRank,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("id", user.id);
-    }
+    await supabase
+      .from("profiles")
+      .update({
+        total_volume_kg: newTotal,
+        lifter_rank: getRankFromVolume(newTotal),
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", user.id);
   }
 
   revalidatePath("/workouts");
   return { success: true };
-}
-
-function computeRank(totalVolume: number): string {
-  if (totalVolume >= 1_000_000) return "LEGEND";
-  if (totalVolume >= 500_000) return "ELITE";
-  if (totalVolume >= 250_000) return "VETERAN";
-  if (totalVolume >= 100_000) return "HARDENED";
-  if (totalVolume >= 25_000) return "REGULAR";
-  if (totalVolume >= 5_000) return "INITIATE";
-  return "ROOKIE";
 }
 
 export async function getSessionForTemplate(templateId: string) {
@@ -193,7 +176,6 @@ export async function getSessionForTemplate(templateId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // Get the most recent completed session using this template
   const { data: session } = await supabase
     .from("workout_sessions")
     .select("id")
@@ -206,10 +188,9 @@ export async function getSessionForTemplate(templateId: string) {
 
   if (!session) return null;
 
-  // Get its sets
   const { data: sets } = await supabase
     .from("workout_sets")
-    .select("*")
+    .select("exercise_name, set_number, weight_kg, reps, rest_seconds")
     .eq("session_id", session.id)
     .order("set_number");
 
