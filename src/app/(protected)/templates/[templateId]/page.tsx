@@ -6,6 +6,7 @@ import { getTemplate, updateTemplate, deleteTemplate } from "@/actions/templates
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ExerciseAutocomplete } from "@/components/workout/exercise-autocomplete";
+import { TrashIcon } from "@/components/icons";
 
 interface TemplateExercise {
   exercise_name: string;
@@ -62,84 +63,84 @@ export default function TemplateDetailPage() {
 
   if (loading) {
     return (
-      <div className="p-4 text-xs text-term-gray-light">
-        loading<span className="cursor-blink">_</span>
+      <div className="p-4 text-sm text-text-muted">
+        <span className="animate-pulse-subtle">Loading...</span>
       </div>
     );
   }
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-xs text-term-green uppercase tracking-widest mb-6">
-        &gt; edit template
+      <h1 className="text-lg font-bold text-text-primary mb-6">
+        Edit Template
       </h1>
 
       <div className="mb-4">
         <Input
-          label="template name"
+          label="Template name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </div>
 
-      <div className="border border-term-gray mb-4">
-        <div className="border-b border-term-gray px-3 py-2">
-          <span className="text-[10px] text-term-gray-light uppercase tracking-widest">
-            exercises
+      <div className="card mb-4 overflow-hidden">
+        <div className="border-b border-border-subtle px-4 py-2.5">
+          <span className="text-xs font-medium text-text-secondary">
+            Exercises
           </span>
         </div>
 
         {exercises.map((ex, index) => (
-          <div key={index} className="border-b border-term-gray p-3 flex items-center gap-3">
-            <span className="text-[10px] text-term-gray-light w-4">{index + 1}</span>
+          <div key={index} className="border-b border-border-subtle p-3 flex items-center gap-3">
+            <span className="text-xs text-text-muted w-4">{index + 1}</span>
             <div className="flex-1">
               <ExerciseAutocomplete
                 value={ex.exercise_name}
                 onChange={(v) => updateExercise(index, "exercise_name", v)}
               />
             </div>
-            <div className="w-12">
+            <div className="w-14">
               <input
                 type="number"
                 value={ex.sets}
                 onChange={(e) => updateExercise(index, "sets", parseInt(e.target.value) || 0)}
-                className="bg-transparent border-b border-term-gray text-term-white font-mono text-xs py-1 w-full text-right focus:border-term-green outline-none tabular-nums"
+                className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full text-right focus:border-accent outline-none tabular-nums"
                 placeholder="sets"
               />
             </div>
-            <span className="text-[10px] text-term-gray">x</span>
-            <div className="w-12">
+            <span className="text-xs text-text-muted">x</span>
+            <div className="w-14">
               <input
                 type="number"
                 value={ex.reps}
                 onChange={(e) => updateExercise(index, "reps", parseInt(e.target.value) || 0)}
-                className="bg-transparent border-b border-term-gray text-term-white font-mono text-xs py-1 w-full text-right focus:border-term-green outline-none tabular-nums"
+                className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full text-right focus:border-accent outline-none tabular-nums"
                 placeholder="reps"
               />
             </div>
             <button
               onClick={() => removeExercise(index)}
-              className="text-[10px] text-term-red hover:underline"
+              className="text-destructive opacity-60 hover:opacity-100 transition-opacity"
             >
-              [x]
+              <TrashIcon size={14} />
             </button>
           </div>
         ))}
 
         <button
           onClick={addExercise}
-          className="w-full p-3 text-xs text-term-green hover:bg-term-gray/20 transition-colors uppercase tracking-widest"
+          className="w-full p-3 text-sm text-accent font-medium hover:bg-surface-elevated transition-colors"
         >
-          + add exercise
+          + Add exercise
         </button>
       </div>
 
       <div className="flex gap-2">
         <Button onClick={handleSave} disabled={saving} className="flex-1">
-          {saving ? "saving..." : "save changes"}
+          {saving ? "Saving..." : "Save Changes"}
         </Button>
         <Button variant="danger" size="sm" onClick={handleDelete}>
-          delete
+          Delete
         </Button>
       </div>
     </div>

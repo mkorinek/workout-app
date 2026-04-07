@@ -1,51 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { deleteSession } from "@/actions/sessions";
 import { Button } from "@/components/ui/button";
+import { TrashIcon } from "@/components/icons";
 
 export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const shell = document.getElementById("app-shell");
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      shell?.classList.add("modal-open");
+    } else {
+      document.body.style.overflow = "";
+      shell?.classList.remove("modal-open");
+    }
+    return () => {
+      document.body.style.overflow = "";
+      shell?.classList.remove("modal-open");
+    };
+  }, [showModal]);
 
   return (
     <>
-      <span
-        role="button"
+      <button
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           setShowModal(true);
         }}
-        className="text-[10px] uppercase tracking-widest font-bold px-1.5 py-0.5 border border-term-red text-term-red hover:bg-term-red hover:text-term-black transition-colors cursor-pointer inline-block leading-normal"
+        className="text-destructive opacity-60 hover:opacity-100 transition-opacity p-1"
+        aria-label="Delete workout"
       >
-        delete
-      </span>
+        <TrashIcon size={14} />
+      </button>
 
-      {showModal && (
+      {showModal && mounted && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center"
+          className="fixed inset-0 z-[60] flex items-center justify-center"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             if (!deleting) setShowModal(false);
           }}
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/80" />
-
-          {/* Modal */}
+          <div className="absolute inset-0 bg-black/40" />
           <div
-            className="relative border border-term-red bg-term-black p-6 max-w-sm w-[calc(100%-2rem)]"
+            className="relative animate-slide-up bg-surface-elevated p-6 max-w-sm w-[calc(100%-2rem)] rounded-lg"
+            style={{ boxShadow: "var(--shadow-lg)" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-xs text-term-red uppercase tracking-widest mb-1 font-bold">
-              &gt; delete workout
+            <p className="text-sm font-semibold text-destructive mb-1">
+              Delete Workout
             </p>
-            <p className="text-[10px] text-term-gray-light mb-6">
-              this action cannot be undone. all sets and data for this workout will be permanently removed.
+            <p className="text-xs text-text-secondary mb-6">
+              This action cannot be undone. All sets and data for this workout will be permanently removed.
             </p>
             <div className="flex gap-2">
               <Button
@@ -60,7 +80,7 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
                 }}
                 disabled={deleting}
               >
-                {deleting ? "deleting..." : "yes, delete"}
+                {deleting ? "Deleting..." : "Yes, delete"}
               </Button>
               <Button
                 variant="ghost"
@@ -69,11 +89,12 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
                 onClick={() => setShowModal(false)}
                 disabled={deleting}
               >
-                cancel
+                Cancel
               </Button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

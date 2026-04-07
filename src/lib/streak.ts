@@ -29,20 +29,64 @@ export function getWeekEndDate(weekStart: string): string {
   return d.toISOString().split("T")[0];
 }
 
-/** Milestone color thresholds. */
+/** Milestone color thresholds — blue/violet/purple/pink/gold spectrum. */
 const STREAK_COLORS = [
-  { min: 52, color: "#00ffff" }, // cyan — legendary
-  { min: 26, color: "#ff3333" }, // red — hot
-  { min: 12, color: "#ff6600" }, // orange
-  { min: 4, color: "#ffb000" },  // amber
-  { min: 0, color: "#00ff41" },  // green — default
+  { min: 52, color: "#fbbf24" }, // gold — legendary
+  { min: 26, color: "#ec4899" }, // hot pink — dedicated
+  { min: 12, color: "#a855f7" }, // purple — committed
+  { min: 4,  color: "#7c5cfc" }, // violet — building
+  { min: 0,  color: "#5b8def" }, // blue — starting
 ] as const;
 
 export function getStreakColor(weeks: number): string {
   for (const { min, color } of STREAK_COLORS) {
     if (weeks >= min) return color;
   }
-  return "#00ff41";
+  return "#5b8def";
+}
+
+/**
+ * Compute streak update fields after a workout completion.
+ * Returns fields to merge into the profile update, or empty object if no change.
+ */
+export async function computeStreakUpdate(
+  supabase: { from: (table: string) => unknown },
+  userId: string,
+  profile: {
+    weekly_workout_goal: number | null;
+    week_start_day: number;
+    current_week_streak: number;
+    streak_last_completed_week: string | null;
+  }
+): Promise<{ current_week_streak?: number; streak_last_completed_week?: string }> {
+  if (!profile.weekly_workout_goal) return {};
+
+  const now = new Date();
+  const weekStart = getWeekStartDate(now, profile.week_start_day);
+  const weekEnd = getWeekEndDate(weekStart);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { count } = await (supabase as any)
+    .from("workout_sessions")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId)
+    .not("completed_at", "is", null)
+    .gte("completed_at", weekStart + "T00:00:00.000Z")
+    .lt("completed_at", weekEnd + "T00:00:00.000Z");
+
+  const workoutsThisWeek = count ?? 0;
+  if (workoutsThisWeek < profile.weekly_workout_goal) return {};
+
+  const lastWeek = profile.streak_last_completed_week;
+  if (lastWeek === weekStart) return {};
+
+  const previousWeek = getPreviousWeekStart(weekStart, profile.week_start_day);
+  return {
+    current_week_streak: lastWeek === previousWeek
+      ? profile.current_week_streak + 1
+      : 1,
+    streak_last_completed_week: weekStart,
+  };
 }
 
 /**

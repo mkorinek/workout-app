@@ -39,10 +39,8 @@ export default function NewWorkoutPage() {
     const result = await createSession(template.id);
     if (!result.id) return;
 
-    // Get last session's weights for this template
     const lastSets = await getSessionForTemplate(template.id);
 
-    // Pre-fill sets from template, using last session's weights if available
     let setNumber = 0;
     for (const ex of template.exercises) {
       for (let i = 0; i < ex.sets; i++) {
@@ -66,46 +64,44 @@ export default function NewWorkoutPage() {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-xs text-term-green uppercase tracking-widest mb-6">
-        &gt; new workout
+      <h1 className="text-lg font-bold text-text-primary mb-6">
+        New Workout
       </h1>
 
       {/* Blank workout */}
-      <div className="border border-term-gray p-4 mb-4">
-        <p className="text-xs text-term-white mb-3">&gt; start from scratch</p>
+      <div className="card p-4 mb-4">
+        <p className="text-sm text-text-primary mb-3">Start from scratch</p>
         <Button onClick={startBlank} disabled={starting} className="w-full">
           {starting ? (
-            <span>
-              initializing<span className="cursor-blink">_</span>
-            </span>
+            <span className="animate-pulse-subtle">Starting...</span>
           ) : (
-            "blank workout"
+            "Blank Workout"
           )}
         </Button>
       </div>
 
       {/* Templates */}
       {loading ? (
-        <div className="text-xs text-term-gray-light">
-          loading templates<span className="cursor-blink">_</span>
+        <div className="text-sm text-text-muted">
+          <span className="animate-pulse-subtle">Loading templates...</span>
         </div>
       ) : templates.length > 0 ? (
         <div>
-          <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-            or start from a saved template
+          <p className="text-xs text-text-secondary uppercase tracking-wider px-1 mb-1.5">
+            Or start from a saved template
           </p>
-          <div className="flex flex-col gap-1">
-            {templates.map((template) => (
+          <div className="card overflow-hidden">
+            {templates.map((template, i) => (
               <button
                 key={template.id}
                 onClick={() => startFromTemplate(template)}
                 disabled={starting}
-                className="border border-term-gray hover:border-term-green-dim transition-colors p-3 text-left w-full disabled:opacity-50"
+                className={`hover:bg-surface-elevated/50 transition-colors p-4 text-left w-full disabled:opacity-50 ${i < templates.length - 1 ? "border-b border-border-subtle" : ""}`}
               >
-                <p className="text-xs text-term-white mb-1">
-                  &gt; {template.name}
+                <p className="text-sm font-medium text-text-primary mb-1">
+                  {template.name}
                 </p>
-                <p className="text-[10px] text-term-gray-light">
+                <p className="text-xs text-text-muted">
                   {template.exercises
                     ?.map(
                       (e: { exercise_name: string; sets: number; reps: number }) =>
@@ -118,8 +114,8 @@ export default function NewWorkoutPage() {
           </div>
         </div>
       ) : (
-        <p className="text-[10px] text-term-gray-light">
-          &gt; no saved templates yet. finish a workout to save one.
+        <p className="text-xs text-text-muted">
+          No saved templates yet. Finish a workout to save one.
         </p>
       )}
     </div>

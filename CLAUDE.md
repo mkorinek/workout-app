@@ -50,7 +50,7 @@ Three layers in `src/lib/offline/`:
 - **Lifter Rank**: ROOKIE → INITIATE → REGULAR → HARDENED → VETERAN → ELITE → LEGEND. Based on `profiles.total_volume_kg`. Computed in `src/lib/utils.ts` and updated in `finishWorkout` action.
 - **Achievements**: 14 seeded in `achievements` table (milestone/streak/hidden). Checked via `checkAchievements` action after workout completion.
 - **Personal Records**: Checked per-set via `checkAndUpdatePR` action. Three types: max_weight, max_reps, max_volume.
-- **Weekly Streak**: User sets a weekly workout goal in profile. Completing that many workouts in a calendar week builds the streak. Missing a week resets to 0. Configurable week start day (Mon/Sun). Streak badge in top bar, progress section on `/progress`. Color milestones: green → amber (4w) → orange (12w) → red (26w) → cyan (52w). Logic in `src/lib/streak.ts`, DB columns on `profiles`.
+- **Weekly Streak**: User sets a weekly workout goal in profile. Completing that many workouts in a calendar week builds the streak. Missing a week resets to 0. Configurable week start day (Mon/Sun). Streak badge in top bar, progress section on `/progress`. Color milestones: blue (0w) → violet (4w) → purple (12w) → pink (26w) → gold (52w). Logic in `src/lib/streak.ts`, DB columns on `profiles`.
 
 ## Database
 
@@ -63,11 +63,12 @@ Requires `pg_trgm` extension for exercise autocomplete fuzzy search.
 
 ## Design System
 
-Terminal brutalist aesthetic — all monospace (JetBrains Mono), no border-radius, no shadows. Theme tokens defined in `src/app/globals.css` under `@theme`:
-- Background: `#0a0a0a`, text: `#e0e0e0`, accent: `#00ff41` (green), warning: `#ffb000`, error: `#ff3333`
-- Buttons are hollow green border, fill on hover, uppercase tracking-widest
-- Inputs are bottom-border only
-- Scanline overlay via CSS repeating-linear-gradient on body::after
+Modern minimalist aesthetic with dark/light mode (via `next-themes`, default dark). Font: Plus Jakarta Sans (via `next/font/google`). Theme tokens defined as CSS custom properties in `src/app/globals.css` with `:root` (light) and `.dark` blocks, bridged to Tailwind via `@theme`:
+- Dark: background `#0f1115`, surface `#1a1d24`, accent `#7c5cfc` (violet), secondary `#5b8def` (blue), pink `#e06cad`
+- Light: background `#f8f9fb`, surface `#ffffff`, accent `#6d4aed` (deeper violet)
+- Semantic tokens: `bg-bg`, `bg-surface`, `text-text-primary`, `text-text-secondary`, `bg-accent`, `border-border`, etc.
+- Rounded corners (6-14px radii), subtle shadows, filled accent buttons, full-border rounded inputs
+- SVG icons in `src/components/icons.tsx`, theme toggle in header
 
 ## Environment Variables
 

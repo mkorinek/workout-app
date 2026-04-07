@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getExercises, addExercise, deleteExercise } from "@/actions/exercises";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { TrashIcon } from "@/components/icons";
 
 interface Exercise {
   id: string;
@@ -40,8 +41,8 @@ export default function ExercisesPage() {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-xs text-term-green uppercase tracking-widest mb-6">
-        &gt; saved exercises
+      <h1 className="text-lg font-bold text-text-primary mb-6">
+        Saved Exercises
       </h1>
 
       {/* Add new */}
@@ -50,40 +51,40 @@ export default function ExercisesPage() {
           <Input
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            placeholder="exercise name"
+            placeholder="Exercise name"
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           />
         </div>
         <Button size="sm" onClick={handleAdd} disabled={!newName.trim()}>
-          + add
+          + Add
         </Button>
       </div>
 
       {loading ? (
-        <div className="text-xs text-term-gray-light">
-          loading<span className="cursor-blink">_</span>
+        <div className="text-sm text-text-muted">
+          <span className="animate-pulse-subtle">Loading...</span>
         </div>
       ) : exercises.length === 0 ? (
-        <div className="border border-term-gray p-8 text-center">
-          <p className="text-xs text-term-gray-light">
-            &gt; no saved exercises yet
+        <div className="card p-8 text-center">
+          <p className="text-sm text-text-muted">
+            No saved exercises yet
           </p>
         </div>
       ) : (
-        <div className="border border-term-gray">
+        <div className="card overflow-hidden">
           {exercises.map((exercise, i) => (
             <div
               key={exercise.id}
-              className={`flex items-center justify-between px-3 py-2 ${
-                i < exercises.length - 1 ? "border-b border-term-gray" : ""
+              className={`flex items-center justify-between px-4 py-3 ${
+                i < exercises.length - 1 ? "border-b border-border-subtle" : ""
               }`}
             >
-              <span className="text-xs text-term-white">&gt; {exercise.name}</span>
+              <span className="text-sm text-text-primary">{exercise.name}</span>
               <button
                 onClick={() => handleDelete(exercise.id)}
-                className="text-[10px] text-term-red hover:underline uppercase tracking-widest"
+                className="text-destructive opacity-60 hover:opacity-100 transition-opacity"
               >
-                [del]
+                <TrashIcon size={14} />
               </button>
             </div>
           ))}

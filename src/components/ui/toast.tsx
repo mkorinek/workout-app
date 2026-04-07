@@ -36,18 +36,23 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`achievement-toast border px-4 py-3 text-xs font-mono uppercase tracking-wider pointer-events-auto ${
-              toast.type === "achievement"
-                ? "border-term-amber text-term-amber bg-term-black"
-                : toast.type === "success"
-                ? "border-term-green text-term-green bg-term-black"
-                : toast.type === "error"
-                ? "border-term-red text-term-red bg-term-black"
-                : "border-term-gray text-term-white bg-term-black"
-            }`}
+            className="achievement-toast card-elevated px-4 py-3 text-sm pointer-events-auto glass text-text-primary flex items-start gap-2.5"
           >
-            {toast.type === "achievement" ? "> ACHIEVEMENT UNLOCKED: " : "> "}
-            {toast.message}
+            {toast.type === "achievement" && (
+              <span className="mt-0.5 w-2 h-2 rounded-full bg-warning shrink-0" />
+            )}
+            {toast.type === "success" && (
+              <span className="mt-0.5 w-2 h-2 rounded-full bg-success shrink-0" />
+            )}
+            {toast.type === "error" && (
+              <span className="mt-0.5 w-2 h-2 rounded-full bg-destructive shrink-0" />
+            )}
+            <div>
+              {toast.type === "achievement" && (
+                <span className="text-xs font-semibold text-warning block mb-0.5">Achievement Unlocked</span>
+              )}
+              {toast.message}
+            </div>
           </div>
         ))}
       </div>

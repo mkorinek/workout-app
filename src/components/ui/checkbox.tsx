@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { CheckIcon } from "@/components/icons";
 
 interface CheckboxProps {
   checked: boolean;
@@ -18,15 +19,15 @@ export function Checkbox({ checked, onChange, disabled, className }: CheckboxPro
       disabled={disabled}
       onClick={() => onChange(!checked)}
       className={cn(
-        "w-5 h-5 border flex items-center justify-center transition-colors font-mono text-xs shrink-0",
+        "w-5 h-5 rounded-[6px] border-2 flex items-center justify-center transition-all active:scale-[0.92] shrink-0",
         checked
-          ? "border-term-green bg-term-green text-term-black"
-          : "border-term-gray text-transparent hover:border-term-green-dim",
+          ? "bg-accent border-accent text-white"
+          : "border-border hover:border-accent/50",
         disabled && "opacity-40 cursor-not-allowed",
         className
       )}
     >
-      {checked ? "x" : "\u00A0"}
+      {checked && <CheckIcon size={14} />}
     </button>
   );
 }

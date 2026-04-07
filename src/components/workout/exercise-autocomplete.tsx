@@ -13,7 +13,7 @@ interface ExerciseAutocompleteProps {
 export function ExerciseAutocomplete({
   value,
   onChange,
-  placeholder = "exercise name",
+  placeholder = "Exercise name",
 }: ExerciseAutocompleteProps) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -42,7 +42,6 @@ export function ExerciseAutocomplete({
     };
   }, [value, fetchSuggestions]);
 
-  // Close on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -85,17 +84,16 @@ export function ExerciseAutocomplete({
         }}
         onBlur={handleBlur}
         placeholder={placeholder}
-        className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1.5 px-0 w-full focus:border-term-green outline-none transition-colors placeholder:text-term-gray"
+        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none transition-colors placeholder:text-text-muted"
       />
 
-      {/* Suggestions dropdown */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 border border-term-gray bg-term-black z-10 max-h-40 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-surface-elevated rounded-sm z-10 max-h-40 overflow-y-auto" style={{ boxShadow: "var(--shadow-lg)" }}>
           {suggestions.map((name) => (
             <button
               key={name}
               type="button"
-              className="w-full text-left px-3 py-2 text-xs text-term-white hover:bg-term-gray font-mono"
+              className="w-full text-left px-3 py-2 text-sm text-text-primary hover:bg-surface transition-colors"
               onMouseDown={(e) => {
                 e.preventDefault();
                 onChange(name);
@@ -103,33 +101,32 @@ export function ExerciseAutocomplete({
                 setShowSavePrompt(false);
               }}
             >
-              &gt; {name}
+              {name}
             </button>
           ))}
         </div>
       )}
 
-      {/* Save prompt */}
       {showSavePrompt && (
-        <div className="absolute top-full left-0 right-0 border border-term-amber bg-term-black z-10 px-3 py-2">
-          <p className="text-[10px] text-term-amber uppercase tracking-widest mb-2">
-            save &quot;{value.trim()}&quot; for future use?
+        <div className="absolute top-full left-0 right-0 mt-1 bg-surface-elevated rounded-sm z-10 px-3 py-2" style={{ boxShadow: "var(--shadow-lg)" }}>
+          <p className="text-xs text-warning font-medium mb-2">
+            Save &quot;{value.trim()}&quot; for future use?
           </p>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="text-[10px] text-term-green uppercase tracking-widest hover:underline"
+              className="text-xs text-accent font-medium hover:underline"
             >
-              {saving ? "saving..." : "[y] yes"}
+              {saving ? "Saving..." : "Yes"}
             </button>
             <button
               type="button"
               onClick={() => setShowSavePrompt(false)}
-              className="text-[10px] text-term-gray-light uppercase tracking-widest hover:underline"
+              className="text-xs text-text-muted hover:underline"
             >
-              [n] no
+              No
             </button>
           </div>
         </div>

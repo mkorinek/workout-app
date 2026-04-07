@@ -23,9 +23,9 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
   const unlockedIds = new Set(unlocked.map((u) => u.achievement_id));
 
   const categories = [
-    { key: "milestone", label: "milestones" },
-    { key: "streak", label: "streaks" },
-    { key: "hidden", label: "hidden" },
+    { key: "milestone", label: "Milestones" },
+    { key: "streak", label: "Streaks" },
+    { key: "hidden", label: "Hidden" },
   ];
 
   return (
@@ -35,9 +35,9 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
         if (achievements.length === 0) return null;
 
         return (
-          <div key={cat.key} className="border border-term-gray">
-            <div className="border-b border-term-gray px-3 py-2">
-              <span className="text-[10px] text-term-green uppercase tracking-widest">
+          <div key={cat.key} className="card overflow-hidden">
+            <div className="border-b border-border-subtle px-4 py-2.5">
+              <span className="text-xs font-semibold text-text-secondary">
                 {cat.label}
               </span>
             </div>
@@ -50,35 +50,27 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
               return (
                 <div
                   key={achievement.id}
-                  className={`px-3 py-2 flex items-center gap-3 ${
-                    i < achievements.length - 1 ? "border-b border-term-gray" : ""
+                  className={`px-4 py-3 flex items-center gap-3 ${
+                    i < achievements.length - 1 ? "border-b border-border-subtle" : ""
                   } ${isUnlocked ? "" : "opacity-40"}`}
                 >
-                  <span
-                    className={`text-base font-bold ${
-                      isUnlocked ? "text-term-amber" : "text-term-gray"
-                    }`}
-                  >
+                  <span className="text-lg">
                     {achievement.icon}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p
-                      className={`text-xs ${
-                        isUnlocked ? "text-term-white" : "text-term-gray-light"
-                      }`}
-                    >
+                    <p className={`text-sm ${isUnlocked ? "text-text-primary font-medium" : "text-text-muted"}`}>
                       {isUnlocked || achievement.category !== "hidden"
                         ? achievement.name
                         : "???"}
                     </p>
-                    <p className="text-[10px] text-term-gray-light truncate">
+                    <p className="text-xs text-text-muted truncate">
                       {isUnlocked || achievement.category !== "hidden"
                         ? achievement.description
                         : "???"}
                     </p>
                   </div>
                   {isUnlocked && userAchievement && (
-                    <span className="text-[10px] text-term-green tabular-nums shrink-0">
+                    <span className="text-[10px] text-accent tabular-nums shrink-0">
                       {new Date(userAchievement.unlocked_at).toLocaleDateString()}
                     </span>
                   )}
@@ -89,7 +81,7 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
         );
       })}
 
-      <p className="text-[10px] text-term-gray-light text-center">
+      <p className="text-xs text-text-muted text-center">
         {unlocked.length}/{all.length} unlocked
       </p>
     </div>

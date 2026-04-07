@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { formatDate } from "@/lib/utils";
 
 interface PR {
   id: string;
@@ -16,7 +15,6 @@ interface PRBoardProps {
 }
 
 export function PRBoard({ records }: PRBoardProps) {
-  // Group by exercise
   const grouped = records.reduce((acc, pr) => {
     if (!acc[pr.exercise_name]) acc[pr.exercise_name] = [];
     acc[pr.exercise_name].push(pr);
@@ -24,9 +22,9 @@ export function PRBoard({ records }: PRBoardProps) {
   }, {} as Record<string, PR[]>);
 
   const typeLabels: Record<string, string> = {
-    max_weight: "weight",
-    max_reps: "reps",
-    max_volume: "volume",
+    max_weight: "Weight",
+    max_reps: "Reps",
+    max_volume: "Volume",
   };
 
   const typeUnits: Record<string, string> = {
@@ -37,34 +35,34 @@ export function PRBoard({ records }: PRBoardProps) {
 
   if (records.length === 0) {
     return (
-      <div className="border border-term-gray p-6 text-center">
-        <p className="text-xs text-term-gray-light">
-          &gt; no personal records yet. start lifting.
+      <div className="card p-6 text-center">
+        <p className="text-sm text-text-muted">
+          No personal records yet. Start lifting.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="border border-term-gray">
-      <div className="border-b border-term-gray px-3 py-2">
-        <span className="text-[10px] text-term-amber uppercase tracking-widest font-bold">
-          personal records
+    <div className="card overflow-hidden">
+      <div className="border-b border-border-subtle px-4 py-2.5">
+        <span className="text-xs font-semibold text-warning">
+          Personal Records
         </span>
       </div>
       {Object.entries(grouped).map(([exercise, prs], i) => (
         <div
           key={exercise}
-          className={`px-3 py-2 ${
-            i < Object.keys(grouped).length - 1 ? "border-b border-term-gray" : ""
+          className={`px-4 py-3 ${
+            i < Object.keys(grouped).length - 1 ? "border-b border-border-subtle" : ""
           }`}
         >
-          <p className="text-xs text-term-white mb-1">&gt; {exercise}</p>
+          <p className="text-sm text-text-primary font-medium mb-1.5">{exercise}</p>
           <div className="flex gap-3 flex-wrap">
             {prs.map((pr) => (
-              <div key={pr.id} className="flex items-center gap-1">
-                <Badge variant="amber">{typeLabels[pr.record_type]}</Badge>
-                <span className="text-xs text-term-white tabular-nums">
+              <div key={pr.id} className="flex items-center gap-1.5">
+                <Badge variant="warning">{typeLabels[pr.record_type]}</Badge>
+                <span className="text-sm text-text-primary tabular-nums">
                   {Number(pr.value)}{typeUnits[pr.record_type]}
                 </span>
               </div>

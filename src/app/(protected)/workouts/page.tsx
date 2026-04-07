@@ -11,27 +11,26 @@ export default async function WorkoutsPage() {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xs text-term-green uppercase tracking-widest">
-          &gt; workout log
+        <h1 className="text-lg font-bold text-text-primary">
+          Workout Log
         </h1>
         <Link href="/workouts/new">
-          <Button size="sm">+ new</Button>
+          <Button size="sm">+ New</Button>
         </Link>
       </div>
 
       {sessions.length === 0 ? (
-        <div className="border border-term-gray p-8 text-center">
-          <pre className="text-term-gray-light text-xs mb-4">
-{`> no workouts yet
-> start your first session`}
-          </pre>
+        <div className="card p-8 text-center">
+          <p className="text-sm text-text-muted mb-4">
+            No workouts yet. Start your first session.
+          </p>
           <Link href="/workouts/new">
-            <Button>start workout</Button>
+            <Button>Start Workout</Button>
           </Link>
         </div>
       ) : (
-        <div className="flex flex-col gap-1">
-          {sessions.map((session) => {
+        <div className="card overflow-hidden">
+          {sessions.map((session, i) => {
             const sets = session.workout_sets ?? [];
             const completedSets = sets.filter((s: { completed: boolean }) => s.completed).length;
             const totalVolume = sets
@@ -45,35 +44,36 @@ export default async function WorkoutsPage() {
               <Link
                 key={session.id}
                 href={`/workouts/${session.id}`}
-                className="border border-term-gray hover:border-term-green-dim transition-colors p-3 block"
+                className={`hover:bg-surface-elevated/50 transition-colors p-4 block ${i < sessions.length - 1 ? "border-b border-border-subtle" : ""}`}
+                style={{ animationDelay: `${i * 50}ms` }}
               >
                 <div className="flex items-start justify-between">
-                  <div>
+                  <div className="flex-1 min-w-0">
                     {templateName && (
-                      <p className="text-xs text-term-green mb-1">&gt; {templateName}</p>
+                      <p className="text-sm font-semibold text-accent mb-1">{templateName}</p>
                     )}
-                    <div className="flex gap-3 text-[10px] text-term-gray-light uppercase tracking-widest">
+                    <div className="flex gap-3 text-xs text-text-secondary">
                       <span>{completedSets} sets</span>
-                      <span>{totalVolume.toLocaleString()}kg</span>
+                      <span>{totalVolume.toLocaleString()} kg</span>
                     </div>
                     {exercises.length > 0 && (
-                      <p className="text-[10px] text-term-gray mt-1 truncate">
+                      <p className="text-xs text-text-muted mt-1 truncate">
                         {exercises.join(" / ")}
                       </p>
                     )}
                   </div>
-                  <div className="flex flex-col items-end gap-1 shrink-0">
+                  <div className="flex flex-col items-end gap-1.5 shrink-0 ml-3">
                     {isActive ? (
-                      <Badge variant="amber">active</Badge>
+                      <Badge variant="warning">Active</Badge>
                     ) : (
-                      <Badge variant="green">done</Badge>
+                      <Badge variant="success">Done</Badge>
                     )}
                     <DeleteSessionButton sessionId={session.id} />
                   </div>
                 </div>
 
-                <div className="flex justify-end mt-1">
-                  <span className="text-[10px] text-term-gray-light tabular-nums">
+                <div className="flex justify-end mt-2">
+                  <span className="text-[10px] text-text-muted tabular-nums">
                     {formatDate(session.started_at)}
                   </span>
                 </div>
