@@ -2,8 +2,9 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { calculateVolume } from "@/lib/utils";
+import { cache } from "react";
 
-export async function getAchievements() {
+export const getAchievements = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { all: [], unlocked: [] };
@@ -20,7 +21,7 @@ export async function getAchievements() {
     all: all ?? [],
     unlocked: unlocked ?? [],
   };
-}
+});
 
 export async function checkAchievements(sessionId: string) {
   const supabase = await createClient();
@@ -148,6 +149,7 @@ export async function checkAchievements(sessionId: string) {
   // Batch insert all unlocked achievements
   if (toInsert.length > 0) {
     await supabase.from("user_achievements").insert(toInsert);
+
   }
 
   return { newAchievements };

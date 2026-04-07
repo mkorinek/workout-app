@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { cache } from "react";
 
 export async function searchExercises(query: string) {
   const supabase = await createClient();
@@ -28,10 +29,11 @@ export async function addExercise(name: string) {
     .upsert({ user_id: user.id, name: name.trim() }, { onConflict: "user_id,name" });
 
   if (error) return { error: error.message };
+
   return { success: true };
 }
 
-export async function getExercises() {
+export const getExercises = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
@@ -43,7 +45,7 @@ export async function getExercises() {
     .order("name");
 
   return data ?? [];
-}
+});
 
 export async function deleteExercise(id: string) {
   const supabase = await createClient();
@@ -57,5 +59,6 @@ export async function deleteExercise(id: string) {
     .eq("user_id", user.id);
 
   if (error) return { error: error.message };
+
   return { success: true };
 }

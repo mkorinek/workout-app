@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { ToastProvider } from "@/components/ui/toast";
 import { computeDisplayStreak } from "@/lib/streak";
 import { CacheSeed } from "@/components/cache/cache-seed";
+import { AccentSeed } from "@/components/accent-provider";
 import { PageTransition } from "@/components/nav/page-transition";
 
 export default async function ProtectedLayout({
@@ -16,13 +17,16 @@ export default async function ProtectedLayout({
   children: React.ReactNode;
 }) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  // Use getSession() instead of getUser() — middleware already verified auth
+  // via getUser(). getSession() reads the JWT from cookies (no HTTP round-trip).
+  const { data: { session } } = await supabase.auth.getSession();
 
-  if (!user) redirect("/login");
+  if (!session?.user) redirect("/login");
+  const user = session.user;
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("*")
+    .select("lifter_rank, weekly_workout_goal, current_week_streak, streak_last_completed_week, week_start_day, display_name, accent_color")
     .eq("id", user.id)
     .single();
 
@@ -39,6 +43,7 @@ export default async function ProtectedLayout({
   return (
     <ToastProvider>
       <CacheSeed profile={profile} />
+      <AccentSeed index={profile?.accent_color ?? 0} />
       <div id="app-shell" className="flex flex-col min-h-screen">
         {/* Top bar */}
         <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass">

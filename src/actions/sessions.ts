@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
 import { computeStreakUpdate } from "@/lib/streak";
 
@@ -35,7 +36,7 @@ export async function getSession(sessionId: string) {
   return data;
 }
 
-export async function getSessions() {
+export const getSessions = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
@@ -48,7 +49,7 @@ export async function getSessions() {
     .limit(50);
 
   return data ?? [];
-}
+});
 
 export async function addSet(
   sessionId: string,
@@ -72,6 +73,37 @@ export async function addSet(
     })
     .select()
     .single();
+
+  if (error) return { error: error.message };
+  revalidatePath(`/workouts/${sessionId}`);
+  return { data };
+}
+
+export async function addSets(
+  sessionId: string,
+  sets: {
+    exerciseName: string;
+    setNumber: number;
+    weightKg: number;
+    reps: number;
+    restSeconds: number;
+  }[]
+) {
+  const supabase = await createClient();
+
+  const rows = sets.map((s) => ({
+    session_id: sessionId,
+    exercise_name: s.exerciseName,
+    set_number: s.setNumber,
+    weight_kg: s.weightKg,
+    reps: s.reps,
+    rest_seconds: s.restSeconds,
+  }));
+
+  const { data, error } = await supabase
+    .from("workout_sets")
+    .insert(rows)
+    .select();
 
   if (error) return { error: error.message };
   revalidatePath(`/workouts/${sessionId}`);

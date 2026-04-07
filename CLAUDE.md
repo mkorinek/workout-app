@@ -25,8 +25,12 @@ The `--webpack` flag is required because `@serwist/next` does not support Turbop
 ### Data Flow
 
 - **Server Actions** (`src/actions/`) handle all Supabase mutations and queries. Pages call these directly — no API routes.
+- **Read functions** (`getProfile`, `getSessions`, etc.) are wrapped with React `cache()` for per-request deduplication — if the same function is called in both layout and page during SSR, Supabase is hit only once.
 - **Supabase SSR client** (`src/lib/supabase/server.ts`) is used in server components and actions. **Browser client** (`src/lib/supabase/client.ts`) is used only in the login page for OAuth.
-- **Middleware** (`src/middleware.ts`) handles auth: skips `/login`, `/auth/*`, `/offline`; redirects unauthenticated users to `/login` on all other routes. Does NOT use the separate `lib/supabase/middleware.ts` helper — auth logic is inlined in middleware.ts.
+- **Middleware** (`src/middleware.ts`) handles auth via `getUser()`: skips `/login`, `/auth/*`, `/offline`; redirects unauthenticated users to `/login` on all other routes.
+- **Protected layout** (`src/app/(protected)/layout.tsx`) uses `getSession()` (not `getUser()`) to avoid a redundant HTTP round-trip — middleware already verified auth.
+
+**Important**: `unstable_cache` cannot be used with Supabase's cookie-based auth (`cookies()` is a dynamic data source blocked inside `unstable_cache`). Use React `cache()` for request-level dedup instead. Cross-navigation caching is handled by the client-side Zustand cache layer.
 
 ### Route Structure
 
@@ -34,9 +38,24 @@ All authenticated pages live under `src/app/(protected)/` which wraps content in
 
 - `/workouts` — session list + new workout entry point
 - `/workouts/[sessionId]` — SSR page → `client.tsx` handles interactive workout logging (sets, timer, PR detection, achievement checks)
+- `/workouts/[sessionId]/summary` — post-workout summary (PRs, achievements, stats)
+- `/workouts/new` — blank workout or start from template (batch set insert via `addSets()`)
 - `/templates` — saved workout templates
+- `/templates/[templateId]` — edit template
+- `/exercises` — saved exercise list (client component, uses `useCached`)
 - `/progress` — charts (Recharts) + PR board + achievement board
 - `/profile` — settings (rest pause, timer notifications, weekly workout goal, week start day)
+
+All routes have `loading.tsx` skeleton screens for instant perceived navigation.
+
+### Client-Side Cache
+
+Zustand store in `src/lib/cache/app-store.ts` with configurable stale times (30s–300s per resource). Key pieces:
+- **`useCached(key, fetcher)`** — hook that returns cached data, triggers background refresh when stale
+- **`withInvalidation(action, ...keys)`** — wrapper that invalidates cache keys after mutations
+- **`prefetchRoute(href)`** — prefetches data for a route on nav hover/focus
+- **`CacheSeed`** — invisible component that hydrates Zustand cache from server-fetched data
+- **`Skeleton`** (`src/components/ui/skeleton.tsx`) — shared pulse animation component used by all `loading.tsx` files
 
 ### Offline System
 
@@ -63,12 +82,13 @@ Requires `pg_trgm` extension for exercise autocomplete fuzzy search.
 
 ## Design System
 
-Modern minimalist aesthetic with dark/light mode (via `next-themes`, default dark). Font: Plus Jakarta Sans (via `next/font/google`). Theme tokens defined as CSS custom properties in `src/app/globals.css` with `:root` (light) and `.dark` blocks, bridged to Tailwind via `@theme`:
-- Dark: background `#0f1115`, surface `#1a1d24`, accent `#7c5cfc` (violet), secondary `#5b8def` (blue), pink `#e06cad`
-- Light: background `#f8f9fb`, surface `#ffffff`, accent `#6d4aed` (deeper violet)
-- Semantic tokens: `bg-bg`, `bg-surface`, `text-text-primary`, `text-text-secondary`, `bg-accent`, `border-border`, etc.
+iOS-inspired minimalist aesthetic with dark/light mode (via `next-themes`, default dark). Font: Plus Jakarta Sans (via `next/font/google`). Theme tokens defined as CSS custom properties in `src/app/globals.css` with `:root` (light) and `.dark` blocks, bridged to Tailwind via `@theme`:
+- Dark: background `#000000`, surface `#1C1C1E`, surface-elevated `#2C2C2E`, accent `#0A84FF` (system blue)
+- Light: background `#F2F2F7`, surface `#ffffff`, accent `#007AFF` (system blue)
+- Semantic tokens: `bg-bg`, `bg-surface`, `bg-surface-elevated`, `text-text-primary`, `text-text-secondary`, `text-text-muted`, `bg-accent`, `border-border`, `border-border-subtle`, etc.
 - Rounded corners (6-14px radii), subtle shadows, filled accent buttons, full-border rounded inputs
 - SVG icons in `src/components/icons.tsx`, theme toggle in header
+- Nav: glass-morphism bottom bar with morphing blob indicator (`nav-glass` class)
 
 ## Environment Variables
 

@@ -2,10 +2,11 @@
 
 import { createClient, requireAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
 import { getWeekStartDate, getWeekEndDate, computeDisplayStreak, computeStreakUpdate } from "@/lib/streak";
 
-export async function getProfile() {
+export const getProfile = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
@@ -17,7 +18,7 @@ export async function getProfile() {
     .single();
 
   return data;
-}
+});
 
 export async function updateProfile(updates: {
   default_rest_seconds?: number;
@@ -27,6 +28,7 @@ export async function updateProfile(updates: {
   display_name?: string;
   weekly_workout_goal?: number | null;
   week_start_day?: number;
+  accent_color?: number;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -271,7 +273,7 @@ export async function adminCheckAchievements() {
   return { success: true, newAchievements };
 }
 
-export async function getStreakData() {
+export const getStreakData = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
@@ -309,4 +311,4 @@ export async function getStreakData() {
     weekStartDay: profile.week_start_day,
     workoutsThisWeek: count ?? 0,
   };
-}
+});

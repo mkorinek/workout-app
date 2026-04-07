@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { cache } from "react";
 
 export async function checkAndUpdatePR(
   exerciseName: string,
@@ -70,12 +71,15 @@ export async function checkAndUpdatePR(
   maybeUpsert("max_reps", reps, currentReps);
   maybeUpsert("max_volume", volume, currentVolume);
 
-  if (upserts.length > 0) await Promise.all(upserts);
+  if (upserts.length > 0) {
+    await Promise.all(upserts);
+
+  }
 
   return { newPRs };
 }
 
-export async function getPersonalRecords() {
+export const getPersonalRecords = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
@@ -87,7 +91,7 @@ export async function getPersonalRecords() {
     .order("exercise_name");
 
   return data ?? [];
-}
+});
 
 export async function getExerciseProgress(exerciseName: string) {
   const supabase = await createClient();

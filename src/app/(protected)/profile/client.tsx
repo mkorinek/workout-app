@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
 import { getRankFromVolume } from "@/lib/utils";
+import { useAccent, ACCENT_PRESETS } from "@/components/accent-provider";
 
 export interface ProfileData {
   display_name: string;
@@ -41,6 +42,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
   const [testRank, setTestRank] = useState("");
   const [testStreak, setTestStreak] = useState("");
   const { addToast } = useToast();
+  const { accentIndex, setAccent } = useAccent();
 
   async function handleSave() {
     setSaving(true);
@@ -53,6 +55,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
         timer_flash: profile.timer_flash,
         weekly_workout_goal: profile.weekly_workout_goal,
         week_start_day: profile.week_start_day,
+        accent_color: accentIndex,
       }),
       "profile", "streakData"
     );
@@ -182,6 +185,28 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
             >
               Sunday
             </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-xs font-medium text-text-secondary block mb-1.5">
+            Accent color
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {ACCENT_PRESETS.map((preset, i) => (
+              <button
+                key={preset.name}
+                type="button"
+                title={preset.name}
+                onClick={() => setAccent(i)}
+                className="relative w-8 h-8 rounded-full border-2 transition-all"
+                style={{
+                  backgroundColor: preset.dark,
+                  borderColor: accentIndex === i ? preset.dark : "transparent",
+                  boxShadow: accentIndex === i ? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.dark}` : "none",
+                }}
+              />
+            ))}
           </div>
         </div>
 

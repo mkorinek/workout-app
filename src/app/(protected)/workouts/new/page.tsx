@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { createSession, getSessionForTemplate } from "@/actions/sessions";
+import { createSession, getSessionForTemplate, addSets } from "@/actions/sessions";
 import { getTemplates } from "@/actions/templates";
-import { addSet } from "@/actions/sessions";
 
 interface Template {
   id: string;
@@ -41,6 +40,7 @@ export default function NewWorkoutPage() {
 
     const lastSets = await getSessionForTemplate(template.id);
 
+    const setsToAdd: Parameters<typeof addSets>[1] = [];
     let setNumber = 0;
     for (const ex of template.exercises) {
       for (let i = 0; i < ex.sets; i++) {
@@ -48,16 +48,16 @@ export default function NewWorkoutPage() {
         const lastSet = lastSets?.find(
           (s) => s.exercise_name === ex.exercise_name && s.set_number === setNumber
         );
-        await addSet(
-          result.id,
-          ex.exercise_name,
+        setsToAdd.push({
+          exerciseName: ex.exercise_name,
           setNumber,
-          lastSet ? Number(lastSet.weight_kg) : 0,
-          lastSet ? lastSet.reps : ex.reps,
-          lastSet ? lastSet.rest_seconds : 60
-        );
+          weightKg: lastSet ? Number(lastSet.weight_kg) : 0,
+          reps: lastSet ? lastSet.reps : ex.reps,
+          restSeconds: lastSet ? lastSet.rest_seconds : 60,
+        });
       }
     }
+    await addSets(result.id, setsToAdd);
 
     router.push(`/workouts/${result.id}`);
   }

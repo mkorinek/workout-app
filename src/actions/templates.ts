@@ -2,8 +2,9 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
-export async function getTemplates() {
+export const getTemplates = cache(async () => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
@@ -15,7 +16,7 @@ export async function getTemplates() {
     .order("updated_at", { ascending: false });
 
   return data ?? [];
-}
+});
 
 export async function getTemplate(templateId: string) {
   const supabase = await createClient();
@@ -48,6 +49,7 @@ export async function createTemplate(
     .single();
 
   if (error) return { error: error.message };
+
   revalidatePath("/templates");
   return { id: data.id };
 }
@@ -95,6 +97,7 @@ export async function createTemplateFromSession(sessionId: string, name: string)
     .single();
 
   if (error) return { error: error.message };
+
   revalidatePath("/templates");
   return { id: data.id };
 }
@@ -104,6 +107,8 @@ export async function updateTemplate(
   updates: { name?: string; exercises?: { exercise_name: string; sets: number; reps: number }[] }
 ) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase
     .from("workout_templates")
@@ -111,12 +116,15 @@ export async function updateTemplate(
     .eq("id", templateId);
 
   if (error) return { error: error.message };
+
   revalidatePath("/templates");
   return { success: true };
 }
 
 export async function deleteTemplate(templateId: string) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase
     .from("workout_templates")
@@ -124,6 +132,7 @@ export async function deleteTemplate(templateId: string) {
     .eq("id", templateId);
 
   if (error) return { error: error.message };
+
   revalidatePath("/templates");
   return { success: true };
 }
