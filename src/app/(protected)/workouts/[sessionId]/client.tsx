@@ -21,6 +21,8 @@ import {
 } from "@/actions/sessions";
 import { checkAndUpdatePR } from "@/actions/records";
 import { checkAchievements } from "@/actions/achievements";
+import { withInvalidation } from "@/lib/cache/invalidate";
+import { useAppStore } from "@/lib/cache/app-store";
 import { formatDate, calculateVolume } from "@/lib/utils";
 import type { SetData, SetMutableField } from "@/types/workout";
 import Link from "next/link";
@@ -212,7 +214,10 @@ export function WorkoutSessionClient({
 
   const handleFinish = useCallback(async () => {
     setFinishing(true);
-    await finishWorkout(session.id);
+    await withInvalidation(
+      () => finishWorkout(session.id),
+      "sessions", "profile", "records", "achievements", "streakData"
+    );
 
     const { newAchievements } = await checkAchievements(session.id);
     for (const a of newAchievements) {
@@ -224,12 +229,20 @@ export function WorkoutSessionClient({
 
   const handleDeleteSession = useCallback(async () => {
     setDeleting(true);
+    // Optimistic: remove from Zustand cache immediately
+    const store = useAppStore.getState();
+    const current = store.sessions.data;
+    if (current) {
+      store.set("sessions", current.filter((s) => s.id !== session.id));
+    }
     const result = await deleteSession(session.id);
     if (result.error) {
+      if (current) store.set("sessions", current);
       addToast(result.error, "error");
       setDeleting(false);
       setConfirmDelete(false);
     } else {
+      store.invalidate("sessions");
       router.push("/workouts");
     }
   }, [session.id, router, addToast]);

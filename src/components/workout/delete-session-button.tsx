@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { deleteSession } from "@/actions/sessions";
+import { withInvalidation } from "@/lib/cache/invalidate";
+import { useAppStore } from "@/lib/cache/app-store";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@/components/icons";
 
@@ -74,7 +76,15 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
                 className="flex-1"
                 onClick={async () => {
                   setDeleting(true);
-                  await deleteSession(sessionId);
+                  const store = useAppStore.getState();
+                  const current = store.sessions.data;
+                  if (current) {
+                    store.set("sessions", current.filter((s) => s.id !== sessionId));
+                  }
+                  const result = await withInvalidation(() => deleteSession(sessionId), "sessions");
+                  if (result && "error" in result) {
+                    if (current) store.set("sessions", current);
+                  }
                   setShowModal(false);
                   router.refresh();
                 }}

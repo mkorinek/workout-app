@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { getTemplate, updateTemplate, deleteTemplate } from "@/actions/templates";
+import { withInvalidation } from "@/lib/cache/invalidate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ExerciseAutocomplete } from "@/components/workout/exercise-autocomplete";
@@ -36,12 +37,12 @@ export default function TemplateDetailPage() {
 
   async function handleSave() {
     setSaving(true);
-    await updateTemplate(templateId, { name, exercises });
+    await withInvalidation(() => updateTemplate(templateId, { name, exercises }), "templates");
     setSaving(false);
   }
 
   async function handleDelete() {
-    await deleteTemplate(templateId);
+    await withInvalidation(() => deleteTemplate(templateId), "templates");
     router.push("/templates");
   }
 

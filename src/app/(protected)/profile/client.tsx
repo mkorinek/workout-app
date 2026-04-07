@@ -10,6 +10,7 @@ import {
   adminCheckAchievements,
 } from "@/actions/profile";
 import { signOut } from "@/actions/auth";
+import { withInvalidation, invalidateAll } from "@/lib/cache/invalidate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -43,15 +44,18 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
 
   async function handleSave() {
     setSaving(true);
-    await updateProfile({
-      display_name: profile.display_name,
-      default_rest_seconds: profile.default_rest_seconds,
-      timer_sound: profile.timer_sound,
-      timer_vibration: profile.timer_vibration,
-      timer_flash: profile.timer_flash,
-      weekly_workout_goal: profile.weekly_workout_goal,
-      week_start_day: profile.week_start_day,
-    });
+    await withInvalidation(
+      () => updateProfile({
+        display_name: profile.display_name,
+        default_rest_seconds: profile.default_rest_seconds,
+        timer_sound: profile.timer_sound,
+        timer_vibration: profile.timer_vibration,
+        timer_flash: profile.timer_flash,
+        weekly_workout_goal: profile.weekly_workout_goal,
+        week_start_day: profile.week_start_day,
+      }),
+      "profile", "streakData"
+    );
     setSaving(false);
     addToast("Settings saved", "success");
   }
@@ -320,7 +324,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                     disabled={adminAction}
                     onClick={async () => {
                       setAdminAction(true);
-                      const result = await adminCheckAchievements();
+                      const result = await withInvalidation(() => adminCheckAchievements(), "achievements");
                       if ("error" in result) addToast(result.error, "error");
                       else {
                         const count = result.newAchievements?.length ?? 0;
@@ -337,7 +341,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                     disabled={adminAction}
                     onClick={async () => {
                       setAdminAction(true);
-                      const result = await adminCreateDummyWorkout();
+                      const result = await withInvalidation(() => adminCreateDummyWorkout(), "sessions", "profile", "records", "streakData");
                       if ("error" in result) addToast(result.error, "error");
                       else addToast("Dummy workout created", "success");
                       setAdminAction(false);
@@ -390,7 +394,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
         onClose={() => setConfirmReset(false)}
         onConfirm={async () => {
           setAdminAction(true);
-          const result = await resetProfile();
+          const result = await withInvalidation(() => resetProfile(), "profile", "achievements", "streakData");
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
@@ -416,6 +420,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
+            invalidateAll();
             addToast("All history deleted", "success");
             setProfile((p) => ({ ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" }));
           }

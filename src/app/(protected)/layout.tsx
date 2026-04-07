@@ -7,6 +7,8 @@ import { SyncIndicator } from "@/components/nav/sync-indicator";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ToastProvider } from "@/components/ui/toast";
 import { computeDisplayStreak } from "@/lib/streak";
+import { CacheSeed } from "@/components/cache/cache-seed";
+import { PageTransition } from "@/components/nav/page-transition";
 
 export default async function ProtectedLayout({
   children,
@@ -36,6 +38,7 @@ export default async function ProtectedLayout({
 
   return (
     <ToastProvider>
+      <CacheSeed profile={profile} />
       <div id="app-shell" className="flex flex-col min-h-screen">
         {/* Top bar */}
         <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass">
@@ -53,8 +56,8 @@ export default async function ProtectedLayout({
         </header>
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto pb-24 animate-fade-in">
-          {children}
+        <main className="flex-1 overflow-y-auto pb-24">
+          <PageTransition>{children}</PageTransition>
         </main>
 
         {/* Bottom nav */}

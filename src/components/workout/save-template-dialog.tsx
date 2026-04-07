@@ -5,6 +5,7 @@ import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createTemplateFromSession } from "@/actions/templates";
+import { withInvalidation } from "@/lib/cache/invalidate";
 
 interface SaveTemplateDialogProps {
   open: boolean;
@@ -19,7 +20,7 @@ export function SaveTemplateDialog({ open, onClose, sessionId }: SaveTemplateDia
   async function handleSave() {
     if (!name.trim()) return;
     setSaving(true);
-    await createTemplateFromSession(sessionId, name.trim());
+    await withInvalidation(() => createTemplateFromSession(sessionId, name.trim()), "templates");
     setSaving(false);
     onClose();
   }

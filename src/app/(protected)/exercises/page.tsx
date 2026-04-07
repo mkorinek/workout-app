@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getExercises, addExercise, deleteExercise } from "@/actions/exercises";
+import { useCached } from "@/lib/cache/use-cached";
+import { withInvalidation } from "@/lib/cache/invalidate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TrashIcon } from "@/components/icons";
@@ -13,30 +15,17 @@ interface Exercise {
 }
 
 export default function ExercisesPage() {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const exercises = (useCached("exercises", getExercises) ?? []) as Exercise[];
   const [newName, setNewName] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadExercises();
-  }, []);
-
-  async function loadExercises() {
-    const data = await getExercises();
-    setExercises(data as Exercise[]);
-    setLoading(false);
-  }
 
   async function handleAdd() {
     if (!newName.trim()) return;
-    await addExercise(newName.trim());
+    await withInvalidation(() => addExercise(newName.trim()), "exercises");
     setNewName("");
-    loadExercises();
   }
 
   async function handleDelete(id: string) {
-    await deleteExercise(id);
-    loadExercises();
+    await withInvalidation(() => deleteExercise(id), "exercises");
   }
 
   return (
@@ -60,11 +49,7 @@ export default function ExercisesPage() {
         </Button>
       </div>
 
-      {loading ? (
-        <div className="text-sm text-text-muted">
-          <span className="animate-pulse-subtle">Loading...</span>
-        </div>
-      ) : exercises.length === 0 ? (
+      {exercises.length === 0 ? (
         <div className="card p-8 text-center">
           <p className="text-sm text-text-muted">
             No saved exercises yet
