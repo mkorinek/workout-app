@@ -41,7 +41,11 @@
       "WebFetch(domain:www.conventionalcommits.org)",
       "Bash(git checkout:*)",
       "mcp__chrome-devtools__list_pages",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)"
     ]
   }
 }

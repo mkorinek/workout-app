@@ -3,22 +3,12 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-
-interface SetData {
-  id?: string;
-  exercise_name: string;
-  set_number: number;
-  weight_kg: number;
-  reps: number;
-  rest_seconds: number;
-  completed: boolean;
-  note?: string | null;
-}
+import type { SetData, SetMutableField } from "@/types/workout";
 
 interface SetRowProps {
   set: SetData;
   displayNumber?: number;
-  onUpdate: (field: string, value: string | number | boolean) => void;
+  onUpdate: (field: SetMutableField, value: string | number) => void;
   onComplete: (completed: boolean) => void;
   onDelete: () => void;
   isPR?: boolean;

@@ -1,9 +1,9 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, requireAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
-import { getWeekStartDate, getWeekEndDate, getPreviousWeekStart, computeDisplayStreak } from "@/lib/streak";
+import { getWeekStartDate, getWeekEndDate, computeDisplayStreak, computeStreakUpdate } from "@/lib/streak";
 
 export async function getProfile() {
   const supabase = await createClient();
@@ -43,19 +43,11 @@ export async function updateProfile(updates: {
 }
 
 export async function resetProfile() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
+  const auth = await requireAdmin();
+  if ("error" in auth) return auth;
+  const { supabase, user } = auth;
 
-  // Admin guard
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  if (!profile?.is_admin) return { error: "Not authorized" };
 
-  // Reset profile stats and clear achievements in parallel
   const [profileResult, achievementsResult] = await Promise.all([
     supabase
       .from("profiles")
@@ -83,19 +75,11 @@ export async function resetProfile() {
 }
 
 export async function deleteAllHistory() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
+  const auth = await requireAdmin();
+  if ("error" in auth) return auth;
+  const { supabase, user } = auth;
 
-  // Admin guard
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  if (!profile?.is_admin) return { error: "Not authorized" };
 
-  // Delete sessions (cascades to sets), PRs, and achievements in parallel
   const [sessionsResult, prsResult, achievementsResult] = await Promise.all([
     supabase
       .from("workout_sessions")
@@ -141,16 +125,9 @@ export async function adminUpdateStats(updates: {
   lifter_rank?: string;
   current_week_streak?: number;
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  if (!profile?.is_admin) return { error: "Not authorized" };
+  const auth = await requireAdmin();
+  if ("error" in auth) return auth;
+  const { supabase, user } = auth;
 
   // When setting streak > 0, also set streak_last_completed_week so computeDisplayStreak works
   const finalUpdates: Record<string, unknown> = { ...updates, updated_at: new Date().toISOString() };
@@ -178,16 +155,9 @@ export async function adminUpdateStats(updates: {
 }
 
 export async function adminCreateDummyWorkout() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  if (!profile?.is_admin) return { error: "Not authorized" };
+  const auth = await requireAdmin();
+  if ("error" in auth) return auth;
+  const { supabase, user } = auth;
 
   const exercises = [
     { name: "Bench Press", weightRange: [40, 100], repsRange: [5, 12] },
@@ -251,7 +221,6 @@ export async function adminCreateDummyWorkout() {
 
   if (setsError) return { error: setsError.message };
 
-  // Update profile stats (volume, rank, streak) — same logic as finishWorkout
   const { data: currentProfile } = await supabase
     .from("profiles")
     .select("total_volume_kg, weekly_workout_goal, week_start_day, current_week_streak, streak_last_completed_week")
@@ -261,44 +230,14 @@ export async function adminCreateDummyWorkout() {
   if (currentProfile) {
     const sessionVolume = calculateVolume(sets);
     const newTotal = Number(currentProfile.total_volume_kg) + sessionVolume;
-    const profileUpdate: Record<string, unknown> = {
+    const streakFields = await computeStreakUpdate(supabase, user.id, currentProfile);
+
+    await supabase.from("profiles").update({
       total_volume_kg: newTotal,
       lifter_rank: getRankFromVolume(newTotal),
       updated_at: new Date().toISOString(),
-    };
-
-    // Weekly streak logic
-    if (currentProfile.weekly_workout_goal) {
-      const now = new Date();
-      const weekStart = getWeekStartDate(now, currentProfile.week_start_day);
-      const weekEnd = getWeekEndDate(weekStart);
-
-      const { count } = await supabase
-        .from("workout_sessions")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .not("completed_at", "is", null)
-        .gte("completed_at", weekStart + "T00:00:00.000Z")
-        .lt("completed_at", weekEnd + "T00:00:00.000Z");
-
-      const workoutsThisWeek = count ?? 0;
-      if (workoutsThisWeek >= currentProfile.weekly_workout_goal) {
-        const lastWeek = currentProfile.streak_last_completed_week;
-        if (lastWeek === weekStart) {
-          // Already counted this week
-        } else {
-          const previousWeek = getPreviousWeekStart(weekStart, currentProfile.week_start_day);
-          if (lastWeek === previousWeek) {
-            profileUpdate.current_week_streak = currentProfile.current_week_streak + 1;
-          } else {
-            profileUpdate.current_week_streak = 1;
-          }
-          profileUpdate.streak_last_completed_week = weekStart;
-        }
-      }
-    }
-
-    await supabase.from("profiles").update(profileUpdate).eq("id", user.id);
+      ...streakFields,
+    }).eq("id", user.id);
   }
 
   revalidatePath("/");
@@ -308,16 +247,9 @@ export async function adminCreateDummyWorkout() {
 }
 
 export async function adminCheckAchievements() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: "Not authenticated" };
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single();
-  if (!profile?.is_admin) return { error: "Not authorized" };
+  const auth = await requireAdmin();
+  if ("error" in auth) return auth;
+  const { supabase, user } = auth;
 
   // Find the latest completed session
   const { data: latestSession } = await supabase

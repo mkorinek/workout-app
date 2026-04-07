@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ExerciseGroup } from "@/components/workout/exercise-group";
 import { ExercisePickerModal } from "@/components/workout/exercise-picker-modal";
@@ -8,6 +8,7 @@ import { RestTimer } from "@/components/workout/rest-timer";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
 import {
   addSet,
@@ -21,19 +22,8 @@ import {
 import { checkAndUpdatePR } from "@/actions/records";
 import { checkAchievements } from "@/actions/achievements";
 import { formatDate, calculateVolume } from "@/lib/utils";
+import type { SetData, SetMutableField } from "@/types/workout";
 import Link from "next/link";
-
-interface SetData {
-  id: string;
-  exercise_name: string;
-  set_number: number;
-  weight_kg: number;
-  reps: number;
-  rest_seconds: number;
-  completed: boolean;
-  completed_at: string | null;
-  note?: string | null;
-}
 
 interface WorkoutSessionClientProps {
   session: {
@@ -137,8 +127,10 @@ export function WorkoutSessionClient({
     [sets, session.id, defaultRestSeconds]
   );
 
+  const updateTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
   const handleUpdate = useCallback(
-    async (index: number, field: string, value: string | number | boolean) => {
+    (index: number, field: SetMutableField, value: string | number) => {
       const set = sets[index];
       if (!set?.id) return;
 
@@ -148,7 +140,16 @@ export function WorkoutSessionClient({
         return updated;
       });
 
-      await updateSet(set.id, { [field]: value });
+      const key = `${set.id}-${field}`;
+      const existing = updateTimers.current.get(key);
+      if (existing) clearTimeout(existing);
+      updateTimers.current.set(
+        key,
+        setTimeout(() => {
+          updateTimers.current.delete(key);
+          updateSet(set.id, { [field]: value });
+        }, 500)
+      );
     },
     [sets]
   );
@@ -351,46 +352,16 @@ export function WorkoutSessionClient({
         </button>
       </div>
 
-      {/* Delete confirmation modal */}
-      {confirmDelete && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          onClick={() => { if (!deleting) setConfirmDelete(false); }}
-        >
-          <div className="absolute inset-0 bg-black/80" />
-          <div
-            className="relative border border-term-red bg-term-black p-6 max-w-sm w-[calc(100%-2rem)]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p className="text-xs text-term-red uppercase tracking-widest mb-1 font-bold">
-              &gt; delete workout
-            </p>
-            <p className="text-[10px] text-term-gray-light mb-6">
-              this action cannot be undone. all sets and data for this workout will be permanently removed.
-            </p>
-            <div className="flex gap-2">
-              <Button
-                variant="danger"
-                size="sm"
-                className="flex-1"
-                onClick={handleDeleteSession}
-                disabled={deleting}
-              >
-                {deleting ? "deleting..." : "yes, delete"}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex-1"
-                onClick={() => setConfirmDelete(false)}
-                disabled={deleting}
-              >
-                cancel
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={confirmDelete}
+        onClose={() => setConfirmDelete(false)}
+        onConfirm={handleDeleteSession}
+        title="delete workout"
+        description="this action cannot be undone. all sets and data for this workout will be permanently removed."
+        confirmLabel="yes, delete"
+        loadingLabel="deleting..."
+        loading={deleting}
+      />
 
       {/* Exercise picker modal */}
       <ExercisePickerModal

@@ -2,17 +2,7 @@
 
 import { SetRow } from "@/components/workout/set-row";
 import { Button } from "@/components/ui/button";
-
-interface SetData {
-  id: string;
-  exercise_name: string;
-  set_number: number;
-  weight_kg: number;
-  reps: number;
-  rest_seconds: number;
-  completed: boolean;
-  completed_at: string | null;
-}
+import type { SetData, SetMutableField } from "@/types/workout";
 
 interface ExerciseGroupProps {
   exerciseName: string;
@@ -21,7 +11,7 @@ interface ExerciseGroupProps {
   collapsed: boolean;
   onToggleCollapse: () => void;
   onAddSet: () => void;
-  onUpdateSet: (globalIndex: number, field: string, value: string | number | boolean) => void;
+  onUpdateSet: (globalIndex: number, field: SetMutableField, value: string | number) => void;
   onCompleteSet: (globalIndex: number, completed: boolean) => void;
   onDeleteSet: (globalIndex: number) => void;
   onDeleteExercise: () => void;
