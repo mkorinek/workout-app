@@ -106,7 +106,6 @@ export function WorkoutSessionClient({
 
   const handleAddSetForExercise = useCallback(
     async (exerciseName: string) => {
-      // Find last set for this exercise to copy weight/reps
       const exerciseSets = sets.filter((s) => s.exercise_name === exerciseName);
       const lastSet = exerciseSets[exerciseSets.length - 1];
       const newSetNumber = sets.length + 1;
@@ -168,7 +167,6 @@ export function WorkoutSessionClient({
       if (completed) {
         await completeSet(set.id);
 
-        // Check for PRs
         if (set.weight_kg > 0 && set.reps > 0) {
           const { newPRs } = await checkAndUpdatePR(
             set.exercise_name,
@@ -183,7 +181,6 @@ export function WorkoutSessionClient({
           }
         }
 
-        // Start rest timer
         setTimerDuration(set.rest_seconds || defaultRestSeconds);
         setShowTimer(true);
       } else {
@@ -217,7 +214,6 @@ export function WorkoutSessionClient({
     setFinishing(true);
     await finishWorkout(session.id);
 
-    // Check achievements
     const { newAchievements } = await checkAchievements(session.id);
     for (const a of newAchievements) {
       addToast(a.name, "achievement");
@@ -259,21 +255,21 @@ export function WorkoutSessionClient({
       {/* Header */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-xs text-term-green uppercase tracking-widest">
-            {isCompleted ? "> workout complete" : "> active workout"}
+          <h1 className="text-lg font-bold text-text-primary">
+            {isCompleted ? "Workout Complete" : "Active Workout"}
           </h1>
-          <span className="text-[10px] text-term-gray-light tabular-nums">
+          <span className="text-xs text-text-muted tabular-nums">
             {formatDate(session.started_at)}
           </span>
         </div>
 
         {/* Stats bar */}
-        <div className="flex gap-4 text-[10px] text-term-gray-light uppercase tracking-widest">
+        <div className="flex gap-4 text-xs text-text-secondary">
           <span>
-            sets: <span className="text-term-white">{completedSets}/{sets.length}</span>
+            Sets: <span className="text-text-primary font-medium">{completedSets}/{sets.length}</span>
           </span>
           <span>
-            vol: <span className="text-term-white">{totalVolume.toLocaleString()}kg</span>
+            Volume: <span className="text-text-primary font-medium">{totalVolume.toLocaleString()} kg</span>
           </span>
         </div>
       </div>
@@ -282,9 +278,9 @@ export function WorkoutSessionClient({
       {isCompleted && (
         <Link
           href={`/workouts/${session.id}/summary`}
-          className="block mb-4 border border-term-green p-3 text-center text-xs text-term-green uppercase tracking-widest hover:bg-term-green hover:text-term-black transition-colors"
+          className="block mb-4 bg-accent text-white p-3 text-center text-sm font-semibold rounded-md hover:bg-accent-hover transition-colors"
         >
-          view summary
+          View Summary
         </Link>
       )}
 
@@ -304,8 +300,8 @@ export function WorkoutSessionClient({
 
       {/* Exercise Groups */}
       {grouped.length === 0 ? (
-        <div className="border border-term-gray p-6 text-center text-term-gray-light text-xs mb-4">
-          &gt; no exercises yet. add one below.
+        <div className="bg-surface shadow-sm rounded-lg p-6 text-center text-text-muted text-sm mb-4">
+          No exercises yet. Add one below.
         </div>
       ) : (
         <div className="mb-4">
@@ -333,22 +329,22 @@ export function WorkoutSessionClient({
       {!isCompleted && (
         <div className="flex gap-2">
           <Button onClick={() => setShowExercisePicker(true)} className="flex-1">
-            + add exercise
+            + Add Exercise
           </Button>
           <Button
             variant="ghost"
             onClick={handleFinish}
             disabled={finishing || sets.length === 0}
           >
-            {finishing ? "finishing..." : "finish"}
+            {finishing ? "Finishing..." : "Finish"}
           </Button>
         </div>
       )}
 
       {/* Delete workout */}
-      <div className="mt-4 border-t border-term-gray pt-4">
+      <div className="mt-6 pt-4">
         <button onClick={() => setConfirmDelete(true)}>
-          <Badge variant="red">delete workout</Badge>
+          <Badge variant="destructive">Delete workout</Badge>
         </button>
       </div>
 
@@ -356,21 +352,19 @@ export function WorkoutSessionClient({
         open={confirmDelete}
         onClose={() => setConfirmDelete(false)}
         onConfirm={handleDeleteSession}
-        title="delete workout"
-        description="this action cannot be undone. all sets and data for this workout will be permanently removed."
-        confirmLabel="yes, delete"
-        loadingLabel="deleting..."
+        title="Delete Workout"
+        description="This action cannot be undone. All sets and data for this workout will be permanently removed."
+        confirmLabel="Yes, delete"
+        loadingLabel="Deleting..."
         loading={deleting}
       />
 
-      {/* Exercise picker modal */}
       <ExercisePickerModal
         open={showExercisePicker}
         onClose={() => setShowExercisePicker(false)}
         onSelect={handleAddExercise}
       />
 
-      {/* Save template dialog (for completed non-template workouts viewed directly) */}
       <SaveTemplateDialog
         open={showSaveTemplate}
         onClose={() => {

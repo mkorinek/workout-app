@@ -53,34 +53,35 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
       week_start_day: profile.week_start_day,
     });
     setSaving(false);
+    addToast("Settings saved", "success");
   }
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-xs text-term-green uppercase tracking-widest mb-6">
-        &gt; profile
+      <h1 className="text-lg font-bold text-text-primary mb-6">
+        Profile
       </h1>
 
       {/* Rank display */}
-      <div className="border border-term-gray p-4 mb-6">
-        <span className="text-term-green text-lg font-bold">
-          [{profile.lifter_rank}@gym]$
+      <div className="card p-4 mb-6">
+        <span className="text-accent text-xl font-bold">
+          {profile.lifter_rank}
         </span>
-        <p className="text-[10px] text-term-gray-light mt-1">
-          total volume: {profile.total_volume_kg.toLocaleString()} kg
+        <p className="text-xs text-text-muted mt-1">
+          Total volume: {profile.total_volume_kg.toLocaleString()} kg
         </p>
       </div>
 
       <div className="flex flex-col gap-6">
         <Input
-          label="display name"
+          label="Display name"
           value={profile.display_name}
           onChange={(e) => setProfile({ ...profile, display_name: e.target.value })}
         />
 
         <div>
-          <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-            default rest pause (seconds)
+          <label className="text-xs font-medium text-text-secondary block mb-1.5">
+            Default rest pause (seconds)
           </label>
           <input
             type="number"
@@ -91,13 +92,13 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                 default_rest_seconds: parseInt(e.target.value) || 60,
               })
             }
-            className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1.5 w-24 focus:border-term-green outline-none tabular-nums"
+            className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums"
           />
         </div>
 
         <div>
-          <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-            timer notifications
+          <p className="text-xs font-medium text-text-secondary mb-3">
+            Timer notifications
           </p>
           <div className="flex flex-col gap-3">
             <label className="flex items-center gap-3 cursor-pointer">
@@ -105,118 +106,118 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                 checked={profile.timer_sound}
                 onChange={(v) => setProfile({ ...profile, timer_sound: v })}
               />
-              <span className="text-xs text-term-white">sound (beep)</span>
+              <span className="text-sm text-text-primary">Sound (beep)</span>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
               <Checkbox
                 checked={profile.timer_vibration}
                 onChange={(v) => setProfile({ ...profile, timer_vibration: v })}
               />
-              <span className="text-xs text-term-white">vibration</span>
+              <span className="text-sm text-text-primary">Vibration</span>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
               <Checkbox
                 checked={profile.timer_flash}
                 onChange={(v) => setProfile({ ...profile, timer_flash: v })}
               />
-              <span className="text-xs text-term-white">screen flash</span>
+              <span className="text-sm text-text-primary">Screen flash</span>
             </label>
           </div>
         </div>
 
         <div>
-          <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-            weekly workout goal
+          <label className="text-xs font-medium text-text-secondary block mb-1.5">
+            Weekly workout goal
           </label>
-          <p className="text-[10px] text-term-gray mb-2">
-            complete this many workouts each week to build your streak
+          <p className="text-xs text-text-muted mb-2">
+            Complete this many workouts each week to build your streak
           </p>
           <input
             type="number"
             min={1}
             max={14}
             value={profile.weekly_workout_goal ?? ""}
-            placeholder="not set"
+            placeholder="Not set"
             onChange={(e) =>
               setProfile({
                 ...profile,
                 weekly_workout_goal: e.target.value ? parseInt(e.target.value) : null,
               })
             }
-            className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1.5 w-24 focus:border-term-green outline-none tabular-nums"
+            className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums placeholder:text-text-muted"
           />
         </div>
 
         <div>
-          <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-            week start day
+          <label className="text-xs font-medium text-text-secondary block mb-1.5">
+            Week start day
           </label>
-          <p className="text-[10px] text-term-gray mb-2">
-            when does your training week begin?
+          <p className="text-xs text-text-muted mb-2">
+            When does your training week begin?
           </p>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => setProfile({ ...profile, week_start_day: 1 })}
-              className={`border px-3 py-1.5 text-xs uppercase tracking-widest font-mono transition-colors ${
+              className={`border px-3 py-1.5 text-sm rounded-sm transition-colors ${
                 profile.week_start_day === 1
-                  ? "border-term-green text-term-green bg-term-green/10"
-                  : "border-term-gray text-term-gray-light hover:border-term-green"
+                  ? "border-accent text-accent bg-accent-muted"
+                  : "border-border text-text-muted hover:border-accent/50"
               }`}
             >
-              monday
+              Monday
             </button>
             <button
               type="button"
               onClick={() => setProfile({ ...profile, week_start_day: 0 })}
-              className={`border px-3 py-1.5 text-xs uppercase tracking-widest font-mono transition-colors ${
+              className={`border px-3 py-1.5 text-sm rounded-sm transition-colors ${
                 profile.week_start_day === 0
-                  ? "border-term-green text-term-green bg-term-green/10"
-                  : "border-term-gray text-term-gray-light hover:border-term-green"
+                  ? "border-accent text-accent bg-accent-muted"
+                  : "border-border text-text-muted hover:border-accent/50"
               }`}
             >
-              sunday
+              Sunday
             </button>
           </div>
         </div>
 
         <Button onClick={handleSave} disabled={saving}>
-          {saving ? "saving..." : "save settings"}
+          {saving ? "Saving..." : "Save Settings"}
         </Button>
 
-        <hr className="border-term-gray" />
+        <div className="mt-2" />
 
         <form action={signOut}>
           <Button variant="danger" type="submit" className="w-full">
-            sign out
+            Sign Out
           </Button>
         </form>
 
         {profile.is_admin && (
           <>
-            <hr className="border-term-gray" />
+            <div className="mt-2" />
 
             <div>
-              <h2 className="text-xs text-term-red uppercase tracking-widest mb-4">
-                &gt; admin
+              <h2 className="text-sm font-semibold text-destructive mb-4">
+                Admin
               </h2>
 
-              <div className="border border-term-gray p-3 mb-4">
-                <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-                  test settings
+              <div className="card p-4 mb-4">
+                <p className="text-xs font-medium text-text-secondary mb-3">
+                  Test Settings
                 </p>
                 <div className="flex flex-col gap-3">
                   <div className="flex items-end gap-2">
                     <div className="flex-1">
-                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-                        volume (kg)
+                      <label className="text-xs font-medium text-text-secondary block mb-1">
+                        Volume (kg)
                       </label>
                       <input
                         type="number"
                         value={testVolume}
                         onChange={(e) => setTestVolume(e.target.value)}
                         placeholder={String(profile.total_volume_kg)}
-                        className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none tabular-nums"
+                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none tabular-nums"
                       />
                     </div>
                     <Button
@@ -228,28 +229,28 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                         const result = await adminUpdateStats({ total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) });
                         if ("error" in result) addToast(result.error, "error");
                         else {
-                          addToast(`volume set to ${vol}kg`, "success");
+                          addToast(`Volume set to ${vol}kg`, "success");
                           setProfile((p) => ({ ...p, total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) }));
                           setTestVolume("");
                         }
                         setAdminAction(false);
                       }}
                     >
-                      set
+                      Set
                     </Button>
                   </div>
 
                   <div className="flex items-end gap-2">
                     <div className="flex-1">
-                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-                        rank
+                      <label className="text-xs font-medium text-text-secondary block mb-1">
+                        Rank
                       </label>
                       <select
                         value={testRank}
                         onChange={(e) => setTestRank(e.target.value)}
-                        className="bg-term-black border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none"
+                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none"
                       >
-                        <option value="">current: {profile.lifter_rank}</option>
+                        <option value="">Current: {profile.lifter_rank}</option>
                         {["ROOKIE", "INITIATE", "REGULAR", "HARDENED", "VETERAN", "ELITE", "LEGEND"].map((r) => (
                           <option key={r} value={r}>{r}</option>
                         ))}
@@ -263,21 +264,21 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                         const result = await adminUpdateStats({ lifter_rank: testRank });
                         if ("error" in result) addToast(result.error, "error");
                         else {
-                          addToast(`rank set to ${testRank}`, "success");
+                          addToast(`Rank set to ${testRank}`, "success");
                           setProfile((p) => ({ ...p, lifter_rank: testRank }));
                           setTestRank("");
                         }
                         setAdminAction(false);
                       }}
                     >
-                      set
+                      Set
                     </Button>
                   </div>
 
                   <div className="flex items-end gap-2">
                     <div className="flex-1">
-                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
-                        weekly streak
+                      <label className="text-xs font-medium text-text-secondary block mb-1">
+                        Weekly Streak
                       </label>
                       <input
                         type="number"
@@ -285,7 +286,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                         value={testStreak}
                         onChange={(e) => setTestStreak(e.target.value)}
                         placeholder="0"
-                        className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none tabular-nums"
+                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none tabular-nums"
                       />
                     </div>
                     <Button
@@ -297,21 +298,21 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                         const result = await adminUpdateStats({ current_week_streak: streak });
                         if ("error" in result) addToast(result.error, "error");
                         else {
-                          addToast(`streak set to ${streak}`, "success");
+                          addToast(`Streak set to ${streak}`, "success");
                           setTestStreak("");
                         }
                         setAdminAction(false);
                       }}
                     >
-                      set
+                      Set
                     </Button>
                   </div>
                 </div>
               </div>
 
-              <div className="border border-term-gray p-3 mb-4">
-                <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-                  test actions
+              <div className="card p-4 mb-4">
+                <p className="text-xs font-medium text-text-secondary mb-3">
+                  Test Actions
                 </p>
                 <div className="flex flex-col gap-2">
                   <Button
@@ -323,12 +324,12 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       if ("error" in result) addToast(result.error, "error");
                       else {
                         const count = result.newAchievements?.length ?? 0;
-                        addToast(count > 0 ? `${count} new achievement${count > 1 ? "s" : ""} unlocked` : "no new achievements", "success");
+                        addToast(count > 0 ? `${count} new achievement${count > 1 ? "s" : ""} unlocked` : "No new achievements", "success");
                       }
                       setAdminAction(false);
                     }}
                   >
-                    check achievements
+                    Check Achievements
                   </Button>
 
                   <Button
@@ -338,18 +339,18 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       setAdminAction(true);
                       const result = await adminCreateDummyWorkout();
                       if ("error" in result) addToast(result.error, "error");
-                      else addToast("dummy workout created", "success");
+                      else addToast("Dummy workout created", "success");
                       setAdminAction(false);
                     }}
                   >
-                    create dummy workout
+                    Create Dummy Workout
                   </Button>
                 </div>
               </div>
 
-              <div className="border border-term-red/30 p-3">
-                <p className="text-[10px] text-term-red uppercase tracking-widest mb-3">
-                  danger zone
+              <div className="card p-4">
+                <p className="text-xs font-semibold text-destructive mb-3">
+                  Danger Zone
                 </p>
                 <div className="flex flex-col gap-2">
                   <div>
@@ -358,10 +359,10 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       className="w-full"
                       onClick={() => setConfirmReset(true)}
                     >
-                      reset profile
+                      Reset Profile
                     </Button>
-                    <p className="text-[10px] text-term-gray mt-1">
-                      zeros volume, rank, streak, achievements. keeps workouts and exercises.
+                    <p className="text-xs text-text-muted mt-1">
+                      Zeros volume, rank, streak, achievements. Keeps workouts and exercises.
                     </p>
                   </div>
 
@@ -371,10 +372,10 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       className="w-full"
                       onClick={() => setConfirmDeleteHistory(true)}
                     >
-                      delete all history
+                      Delete All History
                     </Button>
-                    <p className="text-[10px] text-term-gray mt-1">
-                      deletes all workouts, sets, PRs, achievements. keeps account and exercises.
+                    <p className="text-xs text-text-muted mt-1">
+                      Deletes all workouts, sets, PRs, achievements. Keeps account and exercises.
                     </p>
                   </div>
                 </div>
@@ -393,16 +394,16 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
-            addToast("profile reset", "success");
+            addToast("Profile reset", "success");
             setProfile((p) => ({ ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" }));
           }
           setAdminAction(false);
           setConfirmReset(false);
         }}
-        title="reset profile"
-        description="this will zero out your volume, rank, streak, and all achievements. workout history and exercises will not be affected. this cannot be undone."
-        confirmLabel="yes, reset"
-        loadingLabel="resetting..."
+        title="Reset Profile"
+        description="This will zero out your volume, rank, streak, and all achievements. Workout history and exercises will not be affected. This cannot be undone."
+        confirmLabel="Yes, reset"
+        loadingLabel="Resetting..."
         loading={adminAction}
       />
 
@@ -415,16 +416,16 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
-            addToast("all history deleted", "success");
+            addToast("All history deleted", "success");
             setProfile((p) => ({ ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" }));
           }
           setAdminAction(false);
           setConfirmDeleteHistory(false);
         }}
-        title="delete all history"
-        description="this will permanently delete ALL workout sessions, sets, personal records, and achievements. your account and exercises will be preserved. this cannot be undone."
-        confirmLabel="yes, delete everything"
-        loadingLabel="deleting..."
+        title="Delete All History"
+        description="This will permanently delete ALL workout sessions, sets, personal records, and achievements. Your account and exercises will be preserved. This cannot be undone."
+        confirmLabel="Yes, delete everything"
+        loadingLabel="Deleting..."
         loading={adminAction}
       />
     </div>

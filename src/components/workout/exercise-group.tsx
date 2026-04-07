@@ -2,6 +2,7 @@
 
 import { SetRow } from "@/components/workout/set-row";
 import { Button } from "@/components/ui/button";
+import { ChevronDownIcon, ChevronUpIcon, TrashIcon } from "@/components/icons";
 import type { SetData, SetMutableField } from "@/types/workout";
 
 interface ExerciseGroupProps {
@@ -36,37 +37,37 @@ export function ExerciseGroup({
   const completedCount = sets.filter((s) => s.completed).length;
 
   return (
-    <div className="border border-term-gray mb-2">
+    <div className="card mb-3 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-term-gray">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border-subtle">
         <button
           type="button"
           onClick={onToggleCollapse}
           className="flex items-center gap-2 flex-1 min-w-0 text-left"
         >
-          <span className="text-xs text-term-green uppercase tracking-widest truncate">
-            {exerciseName || "unnamed exercise"}
+          <span className="text-sm font-semibold text-text-primary truncate">
+            {exerciseName || "Unnamed exercise"}
           </span>
-          <span className="text-[10px] text-term-gray-light tabular-nums shrink-0">
+          <span className="text-xs text-text-muted tabular-nums shrink-0">
             {completedCount}/{sets.length}
           </span>
         </button>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="text-term-gray-light hover:text-term-white text-xs"
+            className="text-text-muted hover:text-text-secondary transition-colors p-1"
           >
-            {collapsed ? "[+]" : "[-]"}
+            {collapsed ? <ChevronDownIcon size={16} /> : <ChevronUpIcon size={16} />}
           </button>
           {!disabled && (
             <button
               type="button"
               onClick={onDeleteExercise}
-              className="text-term-red hover:text-term-red text-xs opacity-60 hover:opacity-100"
+              className="text-destructive opacity-60 hover:opacity-100 transition-opacity p-1"
             >
-              [x]
+              <TrashIcon size={14} />
             </button>
           )}
         </div>
@@ -92,7 +93,7 @@ export function ExerciseGroup({
           {!disabled && (
             <div className="px-3 py-2">
               <Button size="sm" onClick={onAddSet} className="w-full">
-                + add set
+                + Add set
               </Button>
             </div>
           )}

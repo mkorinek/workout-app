@@ -19,7 +19,6 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
   const inputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  // Focus input when modal opens
   useEffect(() => {
     if (open) {
       setQuery("");
@@ -58,14 +57,12 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
     const trimmed = query.trim();
     if (!trimmed) return;
 
-    // Check if it matches an existing result
     const match = results.find((r) => r.toLowerCase() === trimmed.toLowerCase());
     if (match) {
       handleSelect(match);
       return;
     }
 
-    // Show save prompt for new exercise
     setShowSavePrompt(true);
   }
 
@@ -82,9 +79,8 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
   }
 
   return (
-    <Modal open={open} onClose={onClose} title="add exercise">
+    <Modal open={open} onClose={onClose} title="Add Exercise">
       <div className="flex flex-col gap-3">
-        {/* Search input */}
         <input
           ref={inputRef}
           type="text"
@@ -99,15 +95,14 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
               handleConfirmCustom();
             }
           }}
-          placeholder="search exercises..."
-          className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-2 px-0 w-full focus:border-term-green outline-none transition-colors placeholder:text-term-gray"
+          placeholder="Search exercises..."
+          className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-2.5 px-3 w-full focus:ring-2 focus:ring-accent outline-none transition-all placeholder:text-text-muted"
         />
 
-        {/* Results */}
         <div className="max-h-60 overflow-y-auto">
           {searching && (
-            <p className="text-[10px] text-term-gray-light uppercase tracking-widest py-2">
-              searching...
+            <p className="text-xs text-text-muted py-2">
+              Searching...
             </p>
           )}
 
@@ -116,53 +111,51 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
               key={name}
               type="button"
               onClick={() => handleSelect(name)}
-              className="w-full text-left px-2 py-2.5 text-xs text-term-white hover:bg-term-gray font-mono border-b border-term-gray last:border-0 transition-colors"
+              className="w-full text-left px-3 py-2.5 text-sm text-text-primary hover:bg-surface rounded-sm transition-colors"
             >
-              &gt; {name}
+              {name}
             </button>
           ))}
 
           {!searching && query.length > 0 && results.length === 0 && !showSavePrompt && (
-            <p className="text-[10px] text-term-gray-light uppercase tracking-widest py-2">
-              no matches. press enter to add &quot;{query.trim()}&quot;
+            <p className="text-xs text-text-muted py-2">
+              No matches. Press enter to add &quot;{query.trim()}&quot;
             </p>
           )}
         </div>
 
-        {/* Save prompt for new exercise */}
         {showSavePrompt && (
-          <div className="border border-term-amber p-3">
-            <p className="text-[10px] text-term-amber uppercase tracking-widest mb-3">
-              save &quot;{query.trim()}&quot; for future use?
+          <div className="bg-warning-muted shadow-sm rounded-sm p-3">
+            <p className="text-xs text-warning font-medium mb-3">
+              Save &quot;{query.trim()}&quot; for future use?
             </p>
             <div className="flex gap-3">
               <button
                 type="button"
                 onClick={handleSaveAndSelect}
                 disabled={saving}
-                className="text-[10px] text-term-green uppercase tracking-widest hover:underline"
+                className="text-xs text-accent font-medium hover:underline"
               >
-                {saving ? "saving..." : "[y] save & add"}
+                {saving ? "Saving..." : "Save & add"}
               </button>
               <button
                 type="button"
                 onClick={handleUseWithoutSaving}
-                className="text-[10px] text-term-gray-light uppercase tracking-widest hover:underline"
+                className="text-xs text-text-muted hover:underline"
               >
-                [n] just use it
+                Just use it
               </button>
             </div>
           </div>
         )}
 
-        {/* Use custom name button (when there are results but user wants their typed name) */}
         {query.trim() && results.length > 0 && !results.some((r) => r.toLowerCase() === query.trim().toLowerCase()) && (
           <button
             type="button"
             onClick={handleConfirmCustom}
-            className="text-[10px] text-term-gray-light uppercase tracking-widest hover:text-term-white text-left py-1"
+            className="text-xs text-text-muted hover:text-text-secondary text-left py-1"
           >
-            + use &quot;{query.trim()}&quot; as new exercise
+            + Use &quot;{query.trim()}&quot; as new exercise
           </button>
         )}
       </div>

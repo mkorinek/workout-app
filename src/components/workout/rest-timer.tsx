@@ -57,7 +57,6 @@ export function RestTimer({
         gain2.gain.value = 0.15;
         osc2.start();
         osc2.stop(ctx.currentTime + 0.3);
-        // Close context after sounds finish
         setTimeout(() => ctx.close(), 500);
       }, 300);
     } catch {
@@ -107,34 +106,34 @@ export function RestTimer({
   return (
     <>
       {flashActive && (
-        <div className="fixed inset-0 bg-term-green/20 z-[200] pointer-events-none screen-flash" />
+        <div className="fixed inset-0 bg-accent/15 z-[200] pointer-events-none screen-flash" />
       )}
 
-      <div className="border border-term-green p-4">
+      <div className="card glow-accent p-4">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-[10px] text-term-green uppercase tracking-widest">
-            rest timer
+          <span className="text-xs font-medium text-accent">
+            Rest Timer
           </span>
           <button
             onClick={() => {
               setActive(false);
               onSkip();
             }}
-            className="text-[10px] text-term-gray-light uppercase tracking-widest hover:text-term-white"
+            className="text-xs text-text-muted hover:text-text-secondary transition-colors"
           >
-            [skip]
+            Skip
           </button>
         </div>
 
         <div className="text-center mb-3">
-          <span className="text-4xl font-bold text-term-green font-mono tabular-nums">
+          <span className="text-4xl font-bold text-accent tabular-nums">
             {formatTime(remaining)}
           </span>
         </div>
 
-        <div className="h-1 bg-term-gray">
+        <div className="h-1.5 bg-border rounded-full overflow-hidden">
           <div
-            className="h-full bg-term-green transition-all duration-200"
+            className="h-full bg-accent rounded-full transition-all duration-200"
             style={{ width: `${progress * 100}%` }}
           />
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { ChevronDownIcon, ChevronUpIcon, TrashIcon } from "@/components/icons";
 import type { SetData, SetMutableField } from "@/types/workout";
 
 interface SetRowProps {
@@ -20,14 +21,14 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
 
   return (
     <div
-      className={`border-b border-term-gray py-3 px-2 ${
+      className={`border-b border-border-subtle py-3 px-3 ${
         set.completed ? "opacity-60" : ""
       }`}
     >
       <div className="flex items-center gap-3">
         {/* Set number */}
-        <span className="text-[10px] text-term-gray-light w-6 shrink-0 tabular-nums">
-          #{displayNumber ?? set.set_number}
+        <span className="text-xs text-text-muted w-5 shrink-0 tabular-nums">
+          {displayNumber ?? set.set_number}
         </span>
 
         {/* Checkbox */}
@@ -44,7 +45,7 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
             value={set.weight_kg || ""}
             onChange={(e) => onUpdate("weight_kg", parseFloat(e.target.value) || 0)}
             placeholder="kg"
-            className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full text-right focus:border-term-green outline-none placeholder:text-term-gray tabular-nums"
+            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
             disabled={disabled}
           />
         </div>
@@ -56,26 +57,26 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
             value={set.reps || ""}
             onChange={(e) => onUpdate("reps", parseInt(e.target.value) || 0)}
             placeholder="reps"
-            className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full text-right focus:border-term-green outline-none placeholder:text-term-gray tabular-nums"
+            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
             disabled={disabled}
           />
         </div>
 
         {/* PR badge */}
-        {isPR && <Badge variant="amber">PR</Badge>}
+        {isPR && <Badge variant="warning">PR</Badge>}
 
         {/* Note indicator */}
         {set.note && !expanded && (
-          <span className="text-[10px] text-term-amber shrink-0">*</span>
+          <span className="text-[10px] text-accent-pink shrink-0">*</span>
         )}
 
         {/* Expand for note */}
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
-          className="text-term-gray-light hover:text-term-white text-xs shrink-0"
+          className="text-text-muted hover:text-text-secondary transition-colors shrink-0"
         >
-          {expanded ? "[-]" : "[+]"}
+          {expanded ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
         </button>
 
         {/* Delete */}
@@ -83,41 +84,34 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
           <button
             type="button"
             onClick={onDelete}
-            className="text-term-red text-xs shrink-0 opacity-60 hover:opacity-100"
+            className="text-destructive shrink-0 opacity-60 hover:opacity-100 transition-opacity"
           >
-            [x]
+            <TrashIcon size={14} />
           </button>
         )}
       </div>
 
       {/* Expanded: note + rest time */}
       {expanded && (
-        <div className="mt-2 ml-9 flex flex-col gap-2">
-          {/* Note */}
-          <div>
-            <input
-              type="text"
-              value={set.note ?? ""}
-              onChange={(e) => onUpdate("note", e.target.value)}
-              placeholder="note (e.g. felt heavy, too easy...)"
-              className="bg-transparent border-b border-term-gray text-term-white font-mono text-xs py-1 w-full focus:border-term-green outline-none placeholder:text-term-gray"
-              disabled={disabled}
-            />
-          </div>
-
-          {/* Rest time */}
+        <div className="mt-3 ml-8 flex flex-col gap-2">
+          <input
+            type="text"
+            value={set.note ?? ""}
+            onChange={(e) => onUpdate("note", e.target.value)}
+            placeholder="Add a note..."
+            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full focus:border-accent outline-none placeholder:text-text-muted"
+            disabled={disabled}
+          />
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-term-gray-light uppercase tracking-widest">
-              rest
-            </span>
+            <span className="text-xs text-text-muted">Rest</span>
             <input
               type="number"
               value={set.rest_seconds}
               onChange={(e) => onUpdate("rest_seconds", parseInt(e.target.value) || 60)}
-              className="bg-transparent border-b border-term-gray text-term-white font-mono text-xs py-1 w-12 text-right focus:border-term-green outline-none tabular-nums"
+              className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-14 text-right focus:border-accent outline-none tabular-nums"
               disabled={disabled}
             />
-            <span className="text-[10px] text-term-gray-light">s</span>
+            <span className="text-xs text-text-muted">s</span>
           </div>
         </div>
       )}

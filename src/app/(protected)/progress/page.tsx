@@ -24,29 +24,29 @@ export default async function ProgressPage() {
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-xs text-term-green uppercase tracking-widest mb-6">
-        &gt; progress
+      <h1 className="text-lg font-bold text-text-primary mb-6">
+        Progress
       </h1>
 
       {/* Rank progress */}
-      <div className="border border-term-gray p-4 mb-6">
+      <div className="bg-surface shadow-sm rounded-lg p-4 mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-term-green text-sm font-bold">
-            [{currentRank}@gym]$
+          <span className="text-accent text-sm font-bold">
+            {currentRank}
           </span>
           {nextRank && (
-            <span className="text-[10px] text-term-gray-light uppercase tracking-widest">
-              next: {nextRank.name}
+            <span className="text-xs text-text-muted">
+              Next: {nextRank.name}
             </span>
           )}
         </div>
-        <p className="text-[10px] text-term-gray-light mb-2">
-          total volume: {totalVolume.toLocaleString()} kg
+        <p className="text-xs text-text-muted mb-3">
+          Total volume: {totalVolume.toLocaleString()} kg
         </p>
         {nextRank && (
-          <div className="h-1 bg-term-gray">
+          <div className="h-1.5 bg-border rounded-full overflow-hidden">
             <div
-              className="h-full bg-term-green transition-all"
+              className="h-full bg-accent rounded-full transition-all"
               style={{
                 width: `${Math.min(100, (totalVolume / nextRank.volumeNeeded) * 100)}%`,
               }}
@@ -66,8 +66,8 @@ export default async function ProgressPage() {
 
       {/* Charts */}
       <div className="mb-6">
-        <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-          exercise progress
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          Exercise Progress
         </p>
         <ProgressClient exerciseNames={exerciseNames} />
       </div>
@@ -79,8 +79,8 @@ export default async function ProgressPage() {
 
       {/* Achievements */}
       <div>
-        <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
-          achievements
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          Achievements
         </p>
         <AchievementBoard
           all={achievements.all as { id: string; name: string; description: string; category: string; icon: string }[]}

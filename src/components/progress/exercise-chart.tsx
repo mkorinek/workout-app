@@ -31,63 +31,64 @@ export function ExerciseChart({ exerciseName, metric }: ExerciseChartProps) {
 
   if (loading) {
     return (
-      <div className="h-48 flex items-center justify-center text-xs text-term-gray-light">
-        loading<span className="cursor-blink">_</span>
+      <div className="h-48 flex items-center justify-center text-sm text-text-muted">
+        <span className="animate-pulse-subtle">Loading...</span>
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="h-48 flex items-center justify-center text-xs text-term-gray-light">
-        &gt; no data for {exerciseName}
+      <div className="h-48 flex items-center justify-center text-sm text-text-muted">
+        No data for {exerciseName}
       </div>
     );
   }
 
   const metricLabels = {
-    maxWeight: "max weight (kg)",
-    totalVolume: "total volume (kg)",
-    maxReps: "max reps",
+    maxWeight: "Max Weight (kg)",
+    totalVolume: "Total Volume (kg)",
+    maxReps: "Max Reps",
   };
 
   return (
     <div>
-      <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-2">
+      <p className="text-xs font-medium text-text-secondary mb-3">
         {metricLabels[metric]}
       </p>
       <ResponsiveContainer width="100%" height={200}>
         <LineChart data={data}>
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 9, fill: "#555555" }}
+            tick={{ fontSize: 10, fill: "var(--color-text-muted)" }}
             tickFormatter={(v) => {
               const d = new Date(v);
               return `${d.getMonth() + 1}/${d.getDate()}`;
             }}
-            stroke="#333333"
+            stroke="var(--color-border)"
           />
           <YAxis
-            tick={{ fontSize: 9, fill: "#555555" }}
-            stroke="#333333"
+            tick={{ fontSize: 10, fill: "var(--color-text-muted)" }}
+            stroke="var(--color-border)"
             width={40}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#0a0a0a",
-              border: "1px solid #333333",
-              fontFamily: "JetBrains Mono, monospace",
-              fontSize: "10px",
-              color: "#e0e0e0",
+              backgroundColor: "var(--color-surface-elevated)",
+              border: "none",
+              borderRadius: "var(--radius-md)",
+              fontSize: "12px",
+              color: "var(--color-text-primary)",
+              boxShadow: "var(--shadow-lg)",
             }}
           />
           <Line
             type="monotone"
             dataKey={metric}
-            stroke="#00ff41"
+            stroke="var(--color-accent)"
             strokeWidth={2}
-            dot={{ fill: "#00ff41", r: 3, strokeWidth: 0 }}
-            activeDot={{ fill: "#00ff41", r: 5, strokeWidth: 0 }}
+            dot={{ fill: "var(--color-accent)", r: 3, strokeWidth: 0 }}
+            activeDot={{ fill: "var(--color-accent)", r: 5, strokeWidth: 0 }}
           />
         </LineChart>
       </ResponsiveContainer>

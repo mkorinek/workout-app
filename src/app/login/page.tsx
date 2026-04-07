@@ -20,39 +20,31 @@ export default function LoginPage() {
   return (
     <div className="flex-1 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        {/* Terminal header */}
-        <div className="border border-term-gray mb-8">
-          <div className="border-b border-term-gray px-4 py-2 text-term-green text-xs uppercase tracking-widest">
-            system login
-          </div>
-          <div className="p-6">
-            <pre className="text-term-green text-sm mb-6 leading-relaxed">
-{`> WORKOUT LOGGER v1.0
-> initializing...
-> ready.`}
-            </pre>
-            <p className="text-term-gray-light text-xs mb-8 uppercase tracking-wider">
-              authenticate to continue_
+        <div className="card-elevated overflow-hidden">
+          <div className="p-8 text-center">
+            <h1 className="text-2xl font-bold text-text-primary mb-2">
+              Workout
+            </h1>
+            <p className="text-sm text-text-muted mb-8">
+              Track your progress, hit PRs, build streaks.
             </p>
 
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full border border-term-green text-term-green py-3 px-4 uppercase tracking-widest text-xs font-bold hover:bg-term-green hover:text-term-black transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-accent text-white py-3 px-4 text-sm font-semibold hover:bg-accent-hover transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed rounded-md"
             >
               {loading ? (
-                <span>
-                  connecting<span className="cursor-blink">_</span>
-                </span>
+                <span className="animate-pulse-subtle">Connecting...</span>
               ) : (
-                "> sign in with google"
+                "Sign in with Google"
               )}
             </button>
           </div>
         </div>
 
-        <p className="text-term-gray-light text-[10px] text-center uppercase tracking-widest">
-          all data encrypted &middot; your gains are safe
+        <p className="text-text-muted text-[10px] text-center mt-4">
+          All data encrypted &middot; Your gains are safe
         </p>
       </div>
     </div>

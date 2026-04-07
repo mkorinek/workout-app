@@ -12,18 +12,18 @@ export function SyncIndicator() {
   return (
     <div className="flex items-center gap-1.5">
       {!isOnline && (
-        <span className="text-[10px] text-term-amber uppercase tracking-widest">
-          offline
+        <span className="text-[10px] text-warning font-medium">
+          Offline
         </span>
       )}
       {pendingSync > 0 && (
-        <span className="text-[10px] text-term-amber uppercase tracking-widest">
-          {syncing ? "syncing..." : `${pendingSync} pending`}
+        <span className="text-[10px] text-warning font-medium">
+          {syncing ? "Syncing..." : `${pendingSync} pending`}
         </span>
       )}
       <span
         className={`w-1.5 h-1.5 rounded-full ${
-          isOnline ? "bg-term-green" : "bg-term-amber"
+          isOnline ? "bg-success" : "bg-warning"
         }`}
       />
     </div>

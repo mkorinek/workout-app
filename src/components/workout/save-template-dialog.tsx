@@ -25,24 +25,24 @@ export function SaveTemplateDialog({ open, onClose, sessionId }: SaveTemplateDia
   }
 
   return (
-    <Modal open={open} onClose={onClose} title="save as template">
+    <Modal open={open} onClose={onClose} title="Save as Template">
       <div className="flex flex-col gap-4">
-        <p className="text-xs text-term-gray-light">
-          &gt; save this workout as a reusable template
+        <p className="text-sm text-text-secondary">
+          Save this workout as a reusable template
         </p>
         <Input
-          label="template name"
+          label="Template name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. push day"
+          placeholder="e.g. Push Day"
           autoFocus
         />
         <div className="flex gap-2 justify-end">
           <Button variant="ghost" size="sm" onClick={onClose}>
-            cancel
+            Cancel
           </Button>
           <Button size="sm" onClick={handleSave} disabled={saving || !name.trim()}>
-            {saving ? "saving..." : "save"}
+            {saving ? "Saving..." : "Save"}
           </Button>
         </div>
       </div>

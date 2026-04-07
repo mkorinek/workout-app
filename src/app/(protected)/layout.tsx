@@ -4,6 +4,7 @@ import { BottomNav } from "@/components/nav/bottom-nav";
 import { RankBadge } from "@/components/achievements/rank-badge";
 import { StreakBadge } from "@/components/achievements/streak-badge";
 import { SyncIndicator } from "@/components/nav/sync-indicator";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ToastProvider } from "@/components/ui/toast";
 import { computeDisplayStreak } from "@/lib/streak";
 
@@ -35,23 +36,24 @@ export default async function ProtectedLayout({
 
   return (
     <ToastProvider>
-      <div className="flex flex-col min-h-screen">
+      <div id="app-shell" className="flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="border-b border-term-gray px-4 py-3 flex items-center justify-between shrink-0">
-          <div className="flex items-center">
+        <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass">
+          <div className="flex items-center gap-2">
             <RankBadge rank={rank} />
             {hasStreakGoal && <StreakBadge streak={streak} />}
           </div>
           <div className="flex items-center gap-3">
             <SyncIndicator />
-            <span className="text-term-gray-light text-[10px] uppercase tracking-widest">
+            <span className="text-xs text-text-muted">
               {profile?.display_name ?? "user"}
             </span>
+            <ThemeToggle />
           </div>
         </header>
 
         {/* Main content */}
-        <main className="flex-1 overflow-y-auto pb-20">
+        <main className="flex-1 overflow-y-auto pb-24 animate-fade-in">
           {children}
         </main>
 
