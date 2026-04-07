@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ExerciseAutocomplete } from "./exercise-autocomplete";
 import { Badge } from "@/components/ui/badge";
 
 interface SetData {
@@ -13,10 +12,12 @@ interface SetData {
   reps: number;
   rest_seconds: number;
   completed: boolean;
+  note?: string | null;
 }
 
 interface SetRowProps {
   set: SetData;
+  displayNumber?: number;
   onUpdate: (field: string, value: string | number | boolean) => void;
   onComplete: (completed: boolean) => void;
   onDelete: () => void;
@@ -24,7 +25,7 @@ interface SetRowProps {
   disabled?: boolean;
 }
 
-export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: SetRowProps) {
+export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isPR, disabled }: SetRowProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -36,7 +37,7 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
       <div className="flex items-center gap-3">
         {/* Set number */}
         <span className="text-[10px] text-term-gray-light w-6 shrink-0 tabular-nums">
-          #{set.set_number}
+          #{displayNumber ?? set.set_number}
         </span>
 
         {/* Checkbox */}
@@ -46,16 +47,8 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
           disabled={disabled}
         />
 
-        {/* Exercise name */}
-        <div className="flex-1 min-w-0">
-          <ExerciseAutocomplete
-            value={set.exercise_name}
-            onChange={(v) => onUpdate("exercise_name", v)}
-          />
-        </div>
-
         {/* Weight */}
-        <div className="w-16 shrink-0">
+        <div className="w-20 shrink-0">
           <input
             type="number"
             value={set.weight_kg || ""}
@@ -67,7 +60,7 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
         </div>
 
         {/* Reps */}
-        <div className="w-12 shrink-0">
+        <div className="w-16 shrink-0">
           <input
             type="number"
             value={set.reps || ""}
@@ -81,7 +74,12 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
         {/* PR badge */}
         {isPR && <Badge variant="amber">PR</Badge>}
 
-        {/* Expand/more */}
+        {/* Note indicator */}
+        {set.note && !expanded && (
+          <span className="text-[10px] text-term-amber shrink-0">*</span>
+        )}
+
+        {/* Expand for note */}
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
@@ -89,11 +87,35 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
         >
           {expanded ? "[-]" : "[+]"}
         </button>
+
+        {/* Delete */}
+        {!disabled && (
+          <button
+            type="button"
+            onClick={onDelete}
+            className="text-term-red text-xs shrink-0 opacity-60 hover:opacity-100"
+          >
+            [x]
+          </button>
+        )}
       </div>
 
-      {/* Expanded row: rest time + delete */}
+      {/* Expanded: note + rest time */}
       {expanded && (
-        <div className="mt-2 ml-9 flex items-center gap-4">
+        <div className="mt-2 ml-9 flex flex-col gap-2">
+          {/* Note */}
+          <div>
+            <input
+              type="text"
+              value={set.note ?? ""}
+              onChange={(e) => onUpdate("note", e.target.value)}
+              placeholder="note (e.g. felt heavy, too easy...)"
+              className="bg-transparent border-b border-term-gray text-term-white font-mono text-xs py-1 w-full focus:border-term-green outline-none placeholder:text-term-gray"
+              disabled={disabled}
+            />
+          </div>
+
+          {/* Rest time */}
           <div className="flex items-center gap-2">
             <span className="text-[10px] text-term-gray-light uppercase tracking-widest">
               rest
@@ -107,13 +129,6 @@ export function SetRow({ set, onUpdate, onComplete, onDelete, isPR, disabled }: 
             />
             <span className="text-[10px] text-term-gray-light">s</span>
           </div>
-          <button
-            type="button"
-            onClick={onDelete}
-            className="text-[10px] text-term-red uppercase tracking-widest hover:underline"
-          >
-            [del]
-          </button>
         </div>
       )}
     </div>

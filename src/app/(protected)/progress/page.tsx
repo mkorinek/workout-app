@@ -6,7 +6,7 @@ import { PRBoard } from "@/components/progress/pr-board";
 import { AchievementBoard } from "@/components/achievements/achievement-board";
 import { WeeklyStreakSection } from "@/components/progress/weekly-streak";
 import { ProgressClient } from "./client";
-import { getRankFromVolume, getNextRank } from "@/lib/utils";
+import { getNextRank } from "@/lib/utils";
 
 export default async function ProgressPage() {
   const [records, achievements, profile, exercises, streakData] = await Promise.all([
@@ -18,7 +18,7 @@ export default async function ProgressPage() {
   ]);
 
   const totalVolume = Number(profile?.total_volume_kg ?? 0);
-  const currentRank = getRankFromVolume(totalVolume);
+  const currentRank = (profile?.lifter_rank as string) ?? "ROOKIE";
   const nextRank = getNextRank(currentRank);
   const exerciseNames = exercises.map((e: { name: string }) => e.name);
 

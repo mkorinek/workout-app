@@ -2,7 +2,8 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { SetRow } from "@/components/workout/set-row";
+import { ExerciseGroup } from "@/components/workout/exercise-group";
+import { ExercisePickerModal } from "@/components/workout/exercise-picker-modal";
 import { RestTimer } from "@/components/workout/rest-timer";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import {
 import { checkAndUpdatePR } from "@/actions/records";
 import { checkAchievements } from "@/actions/achievements";
 import { formatDate, calculateVolume } from "@/lib/utils";
+import Link from "next/link";
 
 interface SetData {
   id: string;
@@ -30,6 +32,7 @@ interface SetData {
   rest_seconds: number;
   completed: boolean;
   completed_at: string | null;
+  note?: string | null;
 }
 
 interface WorkoutSessionClientProps {
@@ -44,6 +47,31 @@ interface WorkoutSessionClientProps {
   timerSound: boolean;
   timerVibration: boolean;
   timerFlash: boolean;
+}
+
+interface ExerciseGroupData {
+  exerciseName: string;
+  sets: SetData[];
+  globalIndices: number[];
+}
+
+function groupSetsByExercise(sets: SetData[]): ExerciseGroupData[] {
+  const groups = new Map<string, { sets: SetData[]; globalIndices: number[] }>();
+
+  sets.forEach((set, index) => {
+    const key = set.exercise_name;
+    if (!groups.has(key)) {
+      groups.set(key, { sets: [], globalIndices: [] });
+    }
+    const group = groups.get(key)!;
+    group.sets.push(set);
+    group.globalIndices.push(index);
+  });
+
+  return Array.from(groups.entries()).map(([exerciseName, data]) => ({
+    exerciseName,
+    ...data,
+  }));
 }
 
 export function WorkoutSessionClient({
@@ -63,25 +91,51 @@ export function WorkoutSessionClient({
   const [finishing, setFinishing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showExercisePicker, setShowExercisePicker] = useState(false);
+  const [collapsedExercises, setCollapsedExercises] = useState<Set<string>>(new Set());
   const isCompleted = !!session.completed_at;
 
-  const handleAddSet = useCallback(async () => {
-    const lastSet = sets[sets.length - 1];
-    const newSetNumber = sets.length + 1;
+  const handleAddExercise = useCallback(
+    async (exerciseName: string) => {
+      const newSetNumber = sets.length + 1;
+      const result = await addSet(
+        session.id,
+        exerciseName,
+        newSetNumber,
+        0,
+        0,
+        defaultRestSeconds
+      );
 
-    const result = await addSet(
-      session.id,
-      lastSet?.exercise_name ?? "",
-      newSetNumber,
-      lastSet?.weight_kg ?? 0,
-      lastSet?.reps ?? 0,
-      defaultRestSeconds
-    );
+      if (result.data) {
+        setSets((prev) => [...prev, result.data as SetData]);
+      }
+    },
+    [sets.length, session.id, defaultRestSeconds]
+  );
 
-    if (result.data) {
-      setSets((prev) => [...prev, result.data as SetData]);
-    }
-  }, [sets, session.id, defaultRestSeconds]);
+  const handleAddSetForExercise = useCallback(
+    async (exerciseName: string) => {
+      // Find last set for this exercise to copy weight/reps
+      const exerciseSets = sets.filter((s) => s.exercise_name === exerciseName);
+      const lastSet = exerciseSets[exerciseSets.length - 1];
+      const newSetNumber = sets.length + 1;
+
+      const result = await addSet(
+        session.id,
+        exerciseName,
+        newSetNumber,
+        lastSet?.weight_kg ?? 0,
+        lastSet?.reps ?? 0,
+        lastSet?.rest_seconds ?? defaultRestSeconds
+      );
+
+      if (result.data) {
+        setSets((prev) => [...prev, result.data as SetData]);
+      }
+    },
+    [sets, session.id, defaultRestSeconds]
+  );
 
   const handleUpdate = useCallback(
     async (index: number, field: string, value: string | number | boolean) => {
@@ -149,6 +203,15 @@ export function WorkoutSessionClient({
     [sets]
   );
 
+  const handleDeleteExercise = useCallback(
+    async (exerciseName: string) => {
+      const exerciseSets = sets.filter((s) => s.exercise_name === exerciseName);
+      setSets((prev) => prev.filter((s) => s.exercise_name !== exerciseName));
+      await Promise.all(exerciseSets.map((s) => deleteSet(s.id)));
+    },
+    [sets]
+  );
+
   const handleFinish = useCallback(async () => {
     setFinishing(true);
     await finishWorkout(session.id);
@@ -159,14 +222,8 @@ export function WorkoutSessionClient({
       addToast(a.name, "achievement");
     }
 
-    // If not from a template, offer to save
-    if (!session.template_id) {
-      setShowSaveTemplate(true);
-      setFinishing(false);
-    } else {
-      router.push("/workouts");
-    }
-  }, [session.id, session.template_id, router, addToast]);
+    router.push(`/workouts/${session.id}/summary`);
+  }, [session.id, router, addToast]);
 
   const handleDeleteSession = useCallback(async () => {
     setDeleting(true);
@@ -180,8 +237,21 @@ export function WorkoutSessionClient({
     }
   }, [session.id, router, addToast]);
 
+  const toggleCollapse = useCallback((exerciseName: string) => {
+    setCollapsedExercises((prev) => {
+      const next = new Set(prev);
+      if (next.has(exerciseName)) {
+        next.delete(exerciseName);
+      } else {
+        next.add(exerciseName);
+      }
+      return next;
+    });
+  }, []);
+
   const completedSets = useMemo(() => sets.filter((s) => s.completed).length, [sets]);
   const totalVolume = useMemo(() => calculateVolume(sets), [sets]);
+  const grouped = useMemo(() => groupSetsByExercise(sets), [sets]);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
@@ -207,6 +277,16 @@ export function WorkoutSessionClient({
         </div>
       </div>
 
+      {/* View summary link for completed workouts */}
+      {isCompleted && (
+        <Link
+          href={`/workouts/${session.id}/summary`}
+          className="block mb-4 border border-term-green p-3 text-center text-xs text-term-green uppercase tracking-widest hover:bg-term-green hover:text-term-black transition-colors"
+        >
+          view summary
+        </Link>
+      )}
+
       {/* Rest Timer */}
       {showTimer && (
         <div className="mb-4">
@@ -221,38 +301,38 @@ export function WorkoutSessionClient({
         </div>
       )}
 
-      {/* Sets */}
-      <div className="border border-term-gray mb-4">
-        <div className="border-b border-term-gray px-3 py-2 flex items-center">
-          <span className="text-[10px] text-term-gray-light uppercase tracking-widest flex-1">
-            # | done | exercise | kg | reps
-          </span>
+      {/* Exercise Groups */}
+      {grouped.length === 0 ? (
+        <div className="border border-term-gray p-6 text-center text-term-gray-light text-xs mb-4">
+          &gt; no exercises yet. add one below.
         </div>
-
-        {sets.length === 0 ? (
-          <div className="p-6 text-center text-term-gray-light text-xs">
-            &gt; no sets yet. add one below.
-          </div>
-        ) : (
-          sets.map((set, index) => (
-            <SetRow
-              key={set.id || index}
-              set={set}
-              onUpdate={(field, value) => handleUpdate(index, field, value)}
-              onComplete={(completed) => handleComplete(index, completed)}
-              onDelete={() => handleDelete(index)}
-              isPR={prSets.has(set.id)}
+      ) : (
+        <div className="mb-4">
+          {grouped.map((group) => (
+            <ExerciseGroup
+              key={group.exerciseName}
+              exerciseName={group.exerciseName}
+              sets={group.sets}
+              globalIndices={group.globalIndices}
+              collapsed={collapsedExercises.has(group.exerciseName)}
+              onToggleCollapse={() => toggleCollapse(group.exerciseName)}
+              onAddSet={() => handleAddSetForExercise(group.exerciseName)}
+              onUpdateSet={handleUpdate}
+              onCompleteSet={handleComplete}
+              onDeleteSet={handleDelete}
+              onDeleteExercise={() => handleDeleteExercise(group.exerciseName)}
+              prSets={prSets}
               disabled={isCompleted}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Actions */}
       {!isCompleted && (
         <div className="flex gap-2">
-          <Button onClick={handleAddSet} className="flex-1">
-            + add set
+          <Button onClick={() => setShowExercisePicker(true)} className="flex-1">
+            + add exercise
           </Button>
           <Button
             variant="ghost"
@@ -312,7 +392,14 @@ export function WorkoutSessionClient({
         </div>
       )}
 
-      {/* Save template dialog */}
+      {/* Exercise picker modal */}
+      <ExercisePickerModal
+        open={showExercisePicker}
+        onClose={() => setShowExercisePicker(false)}
+        onSelect={handleAddExercise}
+      />
+
+      {/* Save template dialog (for completed non-template workouts viewed directly) */}
       <SaveTemplateDialog
         open={showSaveTemplate}
         onClose={() => {
