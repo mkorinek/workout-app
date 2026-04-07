@@ -38,7 +38,10 @@
       "Read(//c/Users/mmart/.claude/projects/C--Users-mmart-workout-app/**)",
       "Read(//c/Users/mmart/.claude/projects/C--Users-mmart-workout-app/memory/**)",
       "Bash(vercel --version)",
-      "WebFetch(domain:www.conventionalcommits.org)"
+      "WebFetch(domain:www.conventionalcommits.org)",
+      "Bash(git checkout:*)",
+      "mcp__chrome-devtools__list_pages",
+      "Bash(npm uninstall:*)"
     ]
   }
 }

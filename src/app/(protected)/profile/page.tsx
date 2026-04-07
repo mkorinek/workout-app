@@ -1,11 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getProfile, updateProfile } from "@/actions/profile";
+import {
+  getProfile,
+  updateProfile,
+  resetProfile,
+  deleteAllHistory,
+  adminUpdateStats,
+  adminCreateDummyWorkout,
+  adminCheckAchievements,
+} from "@/actions/profile";
 import { signOut } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/toast";
 import { getRankFromVolume } from "@/lib/utils";
 
 export default function ProfilePage() {
@@ -19,9 +28,17 @@ export default function ProfilePage() {
     lifter_rank: string;
     weekly_workout_goal: number | null;
     week_start_day: number;
+    is_admin: boolean;
   } | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [confirmDeleteHistory, setConfirmDeleteHistory] = useState(false);
+  const [adminAction, setAdminAction] = useState(false);
+  const [testVolume, setTestVolume] = useState("");
+  const [testRank, setTestRank] = useState("");
+  const [testStreak, setTestStreak] = useState("");
+  const { addToast } = useToast();
 
   useEffect(() => {
     getProfile().then((data) => {
@@ -36,6 +53,7 @@ export default function ProfilePage() {
           lifter_rank: data.lifter_rank,
           weekly_workout_goal: data.weekly_workout_goal ?? null,
           week_start_day: data.week_start_day ?? 1,
+          is_admin: data.is_admin ?? false,
         });
       }
       setLoading(false);
@@ -207,7 +225,309 @@ export default function ProfilePage() {
             sign out
           </Button>
         </form>
+
+        {/* Admin Section */}
+        {profile.is_admin && (
+          <>
+            <hr className="border-term-gray" />
+
+            <div>
+              <h2 className="text-xs text-term-red uppercase tracking-widest mb-4">
+                &gt; admin
+              </h2>
+
+              {/* Test Settings */}
+              <div className="border border-term-gray p-3 mb-4">
+                <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
+                  test settings
+                </p>
+                <div className="flex flex-col gap-3">
+                  {/* Set Volume */}
+                  <div className="flex items-end gap-2">
+                    <div className="flex-1">
+                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
+                        volume (kg)
+                      </label>
+                      <input
+                        type="number"
+                        value={testVolume}
+                        onChange={(e) => setTestVolume(e.target.value)}
+                        placeholder={String(profile.total_volume_kg)}
+                        className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none tabular-nums"
+                      />
+                    </div>
+                    <Button
+                      size="sm"
+                      disabled={adminAction || !testVolume}
+                      onClick={async () => {
+                        setAdminAction(true);
+                        const vol = parseFloat(testVolume);
+                        const result = await adminUpdateStats({ total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) });
+                        if (result.error) addToast(result.error, "error");
+                        else {
+                          addToast(`volume set to ${vol}kg`, "success");
+                          setProfile((p) => p ? { ...p, total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) } : p);
+                          setTestVolume("");
+                        }
+                        setAdminAction(false);
+                      }}
+                    >
+                      set
+                    </Button>
+                  </div>
+
+                  {/* Set Rank */}
+                  <div className="flex items-end gap-2">
+                    <div className="flex-1">
+                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
+                        rank
+                      </label>
+                      <select
+                        value={testRank}
+                        onChange={(e) => setTestRank(e.target.value)}
+                        className="bg-term-black border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none"
+                      >
+                        <option value="">current: {profile.lifter_rank}</option>
+                        {["ROOKIE", "INITIATE", "REGULAR", "HARDENED", "VETERAN", "ELITE", "LEGEND"].map((r) => (
+                          <option key={r} value={r}>{r}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <Button
+                      size="sm"
+                      disabled={adminAction || !testRank}
+                      onClick={async () => {
+                        setAdminAction(true);
+                        const result = await adminUpdateStats({ lifter_rank: testRank });
+                        if (result.error) addToast(result.error, "error");
+                        else {
+                          addToast(`rank set to ${testRank}`, "success");
+                          setProfile((p) => p ? { ...p, lifter_rank: testRank } : p);
+                          setTestRank("");
+                        }
+                        setAdminAction(false);
+                      }}
+                    >
+                      set
+                    </Button>
+                  </div>
+
+                  {/* Set Streak */}
+                  <div className="flex items-end gap-2">
+                    <div className="flex-1">
+                      <label className="text-[10px] text-term-gray-light uppercase tracking-widest block mb-1">
+                        weekly streak
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        value={testStreak}
+                        onChange={(e) => setTestStreak(e.target.value)}
+                        placeholder="0"
+                        className="bg-transparent border-b border-term-gray text-term-white font-mono text-sm py-1 w-full focus:border-term-green outline-none tabular-nums"
+                      />
+                    </div>
+                    <Button
+                      size="sm"
+                      disabled={adminAction || testStreak === ""}
+                      onClick={async () => {
+                        setAdminAction(true);
+                        const streak = parseInt(testStreak);
+                        const result = await adminUpdateStats({ current_week_streak: streak });
+                        if (result.error) addToast(result.error, "error");
+                        else {
+                          addToast(`streak set to ${streak}`, "success");
+                          setTestStreak("");
+                        }
+                        setAdminAction(false);
+                      }}
+                    >
+                      set
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Test Actions */}
+              <div className="border border-term-gray p-3 mb-4">
+                <p className="text-[10px] text-term-gray-light uppercase tracking-widest mb-3">
+                  test actions
+                </p>
+                <div className="flex flex-col gap-2">
+                  <Button
+                    className="w-full"
+                    disabled={adminAction}
+                    onClick={async () => {
+                      setAdminAction(true);
+                      const result = await adminCheckAchievements();
+                      if (result.error) addToast(result.error, "error");
+                      else {
+                        const count = result.newAchievements?.length ?? 0;
+                        addToast(count > 0 ? `${count} new achievement${count > 1 ? "s" : ""} unlocked` : "no new achievements", "success");
+                      }
+                      setAdminAction(false);
+                    }}
+                  >
+                    check achievements
+                  </Button>
+
+                  <Button
+                    className="w-full"
+                    disabled={adminAction}
+                    onClick={async () => {
+                      setAdminAction(true);
+                      const result = await adminCreateDummyWorkout();
+                      if (result.error) addToast(result.error, "error");
+                      else addToast("dummy workout created", "success");
+                      setAdminAction(false);
+                    }}
+                  >
+                    create dummy workout
+                  </Button>
+                </div>
+              </div>
+
+              {/* Destructive Actions */}
+              <div className="border border-term-red/30 p-3">
+                <p className="text-[10px] text-term-red uppercase tracking-widest mb-3">
+                  danger zone
+                </p>
+                <div className="flex flex-col gap-2">
+                  <div>
+                    <Button
+                      variant="danger"
+                      className="w-full"
+                      onClick={() => setConfirmReset(true)}
+                    >
+                      reset profile
+                    </Button>
+                    <p className="text-[10px] text-term-gray mt-1">
+                      zeros volume, rank, streak, achievements. keeps workouts and exercises.
+                    </p>
+                  </div>
+
+                  <div>
+                    <Button
+                      variant="danger"
+                      className="w-full"
+                      onClick={() => setConfirmDeleteHistory(true)}
+                    >
+                      delete all history
+                    </Button>
+                    <p className="text-[10px] text-term-gray mt-1">
+                      deletes all workouts, sets, PRs, achievements. keeps account and exercises.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+
+      {/* Reset profile confirmation */}
+      {confirmReset && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          onClick={() => { if (!adminAction) setConfirmReset(false); }}
+        >
+          <div className="absolute inset-0 bg-black/80" />
+          <div
+            className="relative border border-term-red bg-term-black p-6 max-w-sm w-[calc(100%-2rem)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-xs text-term-red uppercase tracking-widest mb-1 font-bold">
+              &gt; reset profile
+            </p>
+            <p className="text-[10px] text-term-gray-light mb-6">
+              this will zero out your volume, rank, streak, and all achievements. workout history and exercises will not be affected. this cannot be undone.
+            </p>
+            <div className="flex gap-2">
+              <Button
+                variant="danger"
+                size="sm"
+                className="flex-1"
+                disabled={adminAction}
+                onClick={async () => {
+                  setAdminAction(true);
+                  const result = await resetProfile();
+                  if (result.error) {
+                    addToast(result.error, "error");
+                  } else {
+                    addToast("profile reset", "success");
+                    setProfile((p) => p ? { ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" } : p);
+                  }
+                  setAdminAction(false);
+                  setConfirmReset(false);
+                }}
+              >
+                {adminAction ? "resetting..." : "yes, reset"}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1"
+                onClick={() => setConfirmReset(false)}
+                disabled={adminAction}
+              >
+                cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete all history confirmation */}
+      {confirmDeleteHistory && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          onClick={() => { if (!adminAction) setConfirmDeleteHistory(false); }}
+        >
+          <div className="absolute inset-0 bg-black/80" />
+          <div
+            className="relative border border-term-red bg-term-black p-6 max-w-sm w-[calc(100%-2rem)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-xs text-term-red uppercase tracking-widest mb-1 font-bold">
+              &gt; delete all history
+            </p>
+            <p className="text-[10px] text-term-gray-light mb-6">
+              this will permanently delete ALL workout sessions, sets, personal records, and achievements. your account and exercises will be preserved. this cannot be undone.
+            </p>
+            <div className="flex gap-2">
+              <Button
+                variant="danger"
+                size="sm"
+                className="flex-1"
+                disabled={adminAction}
+                onClick={async () => {
+                  setAdminAction(true);
+                  const result = await deleteAllHistory();
+                  if (result.error) {
+                    addToast(result.error, "error");
+                  } else {
+                    addToast("all history deleted", "success");
+                    setProfile((p) => p ? { ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" } : p);
+                  }
+                  setAdminAction(false);
+                  setConfirmDeleteHistory(false);
+                }}
+              >
+                {adminAction ? "deleting..." : "yes, delete everything"}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1"
+                onClick={() => setConfirmDeleteHistory(false)}
+                disabled={adminAction}
+              >
+                cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

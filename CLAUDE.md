@@ -36,7 +36,7 @@ All authenticated pages live under `src/app/(protected)/` which wraps content in
 - `/workouts/[sessionId]` — SSR page → `client.tsx` handles interactive workout logging (sets, timer, PR detection, achievement checks)
 - `/templates` — saved workout templates
 - `/progress` — charts (Recharts) + PR board + achievement board
-- `/profile` — settings (rest pause, timer notifications)
+- `/profile` — settings (rest pause, timer notifications, weekly workout goal, week start day)
 
 ### Offline System
 
@@ -50,10 +50,11 @@ Three layers in `src/lib/offline/`:
 - **Lifter Rank**: ROOKIE → INITIATE → REGULAR → HARDENED → VETERAN → ELITE → LEGEND. Based on `profiles.total_volume_kg`. Computed in `src/lib/utils.ts` and updated in `finishWorkout` action.
 - **Achievements**: 14 seeded in `achievements` table (milestone/streak/hidden). Checked via `checkAchievements` action after workout completion.
 - **Personal Records**: Checked per-set via `checkAndUpdatePR` action. Three types: max_weight, max_reps, max_volume.
+- **Weekly Streak**: User sets a weekly workout goal in profile. Completing that many workouts in a calendar week builds the streak. Missing a week resets to 0. Configurable week start day (Mon/Sun). Streak badge in top bar, progress section on `/progress`. Color milestones: green → amber (4w) → orange (12w) → red (26w) → cyan (52w). Logic in `src/lib/streak.ts`, DB columns on `profiles`.
 
 ## Database
 
-Schema lives in `supabase/migrations/00001_initial_schema.sql`. 8 tables with Row Level Security:
+Schema lives in `supabase/migrations/`. Migrations: `00001_initial_schema.sql` (8 tables), `00002_weekly_streak.sql` (streak columns on profiles). All tables have Row Level Security:
 `profiles`, `exercises`, `workout_templates`, `workout_sessions`, `workout_sets`, `personal_records`, `achievements`, `user_achievements`.
 
 Key design choice: `workout_sets.exercise_name` is denormalized text (not a FK to exercises) so unsaved exercises and offline-created sets work without a valid exercise UUID.
@@ -76,3 +77,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY — Supabase anon/public key
 ```
 
 These must also be set in Vercel project settings for production.
+
+## Skills (`.claude/skills/`)
+
+- `/commit` — Conventional commits with preview, approval, and push flow
+- `/deploy` — Build check + `npx vercel --prod`
+- `/sync-knowledge` — Update CLAUDE.md and memory files

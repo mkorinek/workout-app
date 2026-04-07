@@ -104,7 +104,7 @@ export async function uncompleteSet(setId: string) {
 
 export async function updateSet(
   setId: string,
-  updates: { weight_kg?: number; reps?: number; rest_seconds?: number; exercise_name?: string }
+  updates: { weight_kg?: number; reps?: number; rest_seconds?: number; exercise_name?: string; note?: string }
 ) {
   const supabase = await createClient();
 
@@ -203,6 +203,8 @@ export async function finishWorkout(sessionId: string) {
   }
 
   revalidatePath("/workouts");
+  revalidatePath("/progress");
+  revalidatePath("/profile");
   return { success: true };
 }
 
@@ -230,6 +232,94 @@ export async function deleteSession(sessionId: string) {
   if (error) return { error: error.message };
   revalidatePath("/workouts");
   return { success: true };
+}
+
+export async function getSessionSummary(sessionId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  // Fetch session, profile, and set IDs in parallel
+  const [{ data: session }, { data: profile }] = await Promise.all([
+    supabase
+      .from("workout_sessions")
+      .select("*, workout_templates(name), workout_sets(*)")
+      .eq("id", sessionId)
+      .order("set_number", { referencedTable: "workout_sets" })
+      .single(),
+    supabase
+      .from("profiles")
+      .select("display_name, lifter_rank, current_week_streak, total_volume_kg")
+      .eq("id", user.id)
+      .single(),
+  ]);
+
+  if (!session || !session.completed_at) return null;
+
+  const sets = session.workout_sets ?? [];
+  const setIds = sets.map((s: { id: string }) => s.id);
+
+  // Fetch PRs and achievements in parallel
+  const [{ data: prs }, { data: userAchievements }] = await Promise.all([
+    setIds.length > 0
+      ? supabase
+          .from("personal_records")
+          .select("exercise_name, record_type, value")
+          .in("set_id", setIds)
+      : Promise.resolve({ data: [] }),
+    supabase
+      .from("user_achievements")
+      .select("*, achievements(*)")
+      .eq("user_id", user.id)
+      .gte("unlocked_at", session.started_at)
+      .lte(
+        "unlocked_at",
+        new Date(new Date(session.completed_at).getTime() + 30000).toISOString()
+      ),
+  ]);
+
+  // Build exercise breakdown
+  const exerciseMap = new Map<string, { sets: { weight_kg: number; reps: number }[]; volume: number }>();
+  for (const set of sets) {
+    if (!set.completed) continue;
+    const name = set.exercise_name;
+    if (!exerciseMap.has(name)) {
+      exerciseMap.set(name, { sets: [], volume: 0 });
+    }
+    const group = exerciseMap.get(name)!;
+    group.sets.push({ weight_kg: Number(set.weight_kg), reps: set.reps });
+    group.volume += Number(set.weight_kg) * set.reps;
+  }
+
+  const exerciseBreakdown = Array.from(exerciseMap.entries()).map(([name, data]) => ({
+    name,
+    ...data,
+  }));
+
+  // Duration in minutes
+  const duration = Math.round(
+    (new Date(session.completed_at).getTime() - new Date(session.started_at).getTime()) / 60000
+  );
+
+  return {
+    session: {
+      id: session.id,
+      started_at: session.started_at,
+      completed_at: session.completed_at,
+      template_id: session.template_id,
+      templateName: (session.workout_templates as { name: string } | null)?.name ?? null,
+    },
+    totalVolume: calculateVolume(sets),
+    exerciseBreakdown,
+    prs: prs ?? [],
+    profile: profile ?? { display_name: null, lifter_rank: "ROOKIE", current_week_streak: 0, total_volume_kg: 0 },
+    newAchievements: (userAchievements ?? []).map((ua: { achievements: { name: string; description: string; icon: string } }) => ({
+      name: ua.achievements.name,
+      description: ua.achievements.description,
+      icon: ua.achievements.icon,
+    })),
+    duration,
+  };
 }
 
 export async function getSessionForTemplate(templateId: string) {
