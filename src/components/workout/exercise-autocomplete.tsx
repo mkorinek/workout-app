@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { searchExercises, addExercise } from "@/actions/exercises";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 interface ExerciseAutocompleteProps {
   value: string;
@@ -107,30 +108,17 @@ export function ExerciseAutocomplete({
         </div>
       )}
 
-      {showSavePrompt && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-surface-elevated rounded-sm z-10 px-3 py-2" style={{ boxShadow: "var(--shadow-lg)" }}>
-          <p className="text-xs text-warning font-medium mb-2">
-            Save &quot;{value.trim()}&quot; for future use?
-          </p>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving}
-              className="text-xs text-accent font-medium hover:underline"
-            >
-              {saving ? "Saving..." : "Yes"}
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowSavePrompt(false)}
-              className="text-xs text-text-muted hover:underline"
-            >
-              No
-            </button>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={showSavePrompt}
+        onClose={() => setShowSavePrompt(false)}
+        onConfirm={handleSave}
+        title={`Save "${value.trim()}" for future use?`}
+        description="This exercise will be added to your saved exercises list."
+        confirmLabel="Yes"
+        loadingLabel="Saving..."
+        loading={saving}
+        variant="accent"
+      />
     </div>
   );
 }

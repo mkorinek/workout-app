@@ -28,6 +28,27 @@ const RANK_THRESHOLDS: [string, number][] = [
   ["LEGEND", 1_000_000],
 ];
 
+export function getRankColor(rank: string): string {
+  switch (rank) {
+    case "ROOKIE":
+      return "var(--color-text-muted)";
+    case "INITIATE":
+      return "var(--color-green-500)";
+    case "REGULAR":
+      return "var(--color-blue-500)";
+    case "HARDENED":
+      return "var(--color-yellow-500)";
+    case "VETERAN":
+      return "var(--color-orange-500)";
+    case "ELITE":
+      return "var(--color-red-500)";
+    case "LEGEND":
+      return "var(--color-purple-500)";
+    default:
+      return "var(--color-text-muted)";
+  }
+}
+
 export function getRankFromVolume(totalVolumeKg: number): string {
   for (let i = RANK_THRESHOLDS.length - 1; i >= 0; i--) {
     if (totalVolumeKg >= RANK_THRESHOLDS[i][1]) return RANK_THRESHOLDS[i][0];

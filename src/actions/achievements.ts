@@ -146,10 +146,15 @@ export async function checkAchievements(sessionId: string) {
     }
   }
 
-  // Batch insert all unlocked achievements
+  // Batch insert all unlocked achievements and update count
   if (toInsert.length > 0) {
-    await supabase.from("user_achievements").insert(toInsert);
-
+    await Promise.all([
+      supabase.from("user_achievements").insert(toInsert),
+      supabase.rpc("increment_achievement_count", {
+        user_id_input: user.id,
+        amount: toInsert.length,
+      }),
+    ]);
   }
 
   return { newAchievements };

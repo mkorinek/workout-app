@@ -18,6 +18,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
 import { getRankFromVolume } from "@/lib/utils";
 import { useAccent, ACCENT_PRESETS } from "@/components/accent-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export interface ProfileData {
   display_name: string;
@@ -32,7 +33,11 @@ export interface ProfileData {
   is_admin: boolean;
 }
 
-export function ProfileClient({ initialProfile }: { initialProfile: ProfileData }) {
+export function ProfileClient({
+  initialProfile,
+}: {
+  initialProfile: ProfileData;
+}) {
   const [profile, setProfile] = useState<ProfileData>(initialProfile);
   const [saving, setSaving] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -47,17 +52,19 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
   async function handleSave() {
     setSaving(true);
     await withInvalidation(
-      () => updateProfile({
-        display_name: profile.display_name,
-        default_rest_seconds: profile.default_rest_seconds,
-        timer_sound: profile.timer_sound,
-        timer_vibration: profile.timer_vibration,
-        timer_flash: profile.timer_flash,
-        weekly_workout_goal: profile.weekly_workout_goal,
-        week_start_day: profile.week_start_day,
-        accent_color: accentIndex,
-      }),
-      "profile", "streakData"
+      () =>
+        updateProfile({
+          display_name: profile.display_name,
+          default_rest_seconds: profile.default_rest_seconds,
+          timer_sound: profile.timer_sound,
+          timer_vibration: profile.timer_vibration,
+          timer_flash: profile.timer_flash,
+          weekly_workout_goal: profile.weekly_workout_goal,
+          week_start_day: profile.week_start_day,
+          accent_color: accentIndex,
+        }),
+      "profile",
+      "streakData",
     );
     setSaving(false);
     addToast("Settings saved", "success");
@@ -65,9 +72,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-lg font-bold text-text-primary mb-6">
-        Profile
-      </h1>
+      <h1 className="text-lg font-bold text-text-primary mb-6">Profile</h1>
 
       {/* Rank display */}
       <div className="card p-4 mb-6">
@@ -83,7 +88,9 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
         <Input
           label="Display name"
           value={profile.display_name}
-          onChange={(e) => setProfile({ ...profile, display_name: e.target.value })}
+          onChange={(e) =>
+            setProfile({ ...profile, display_name: e.target.value })
+          }
         />
 
         <div>
@@ -96,7 +103,7 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
             onChange={(e) =>
               setProfile({
                 ...profile,
-                default_rest_seconds: parseInt(e.target.value) || 60,
+                default_rest_seconds: parseInt(e.target.value) || 0,
               })
             }
             className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums"
@@ -148,7 +155,9 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
             onChange={(e) =>
               setProfile({
                 ...profile,
-                weekly_workout_goal: e.target.value ? parseInt(e.target.value) : null,
+                weekly_workout_goal: e.target.value
+                  ? parseInt(e.target.value)
+                  : null,
               })
             }
             className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums placeholder:text-text-muted"
@@ -203,11 +212,20 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                 style={{
                   backgroundColor: preset.dark,
                   borderColor: accentIndex === i ? preset.dark : "transparent",
-                  boxShadow: accentIndex === i ? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.dark}` : "none",
+                  boxShadow:
+                    accentIndex === i
+                      ? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.dark}`
+                      : "none",
                 }}
               />
             ))}
           </div>
+        </div>
+        <div>
+          <label className="text-xs font-medium text-text-secondary block mb-1.5">
+            Theme changer
+          </label>
+          <ThemeToggle />
         </div>
 
         <Button onClick={handleSave} disabled={saving}>
@@ -255,11 +273,18 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       onClick={async () => {
                         setAdminAction(true);
                         const vol = parseFloat(testVolume);
-                        const result = await adminUpdateStats({ total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) });
+                        const result = await adminUpdateStats({
+                          total_volume_kg: vol,
+                          lifter_rank: getRankFromVolume(vol),
+                        });
                         if ("error" in result) addToast(result.error, "error");
                         else {
                           addToast(`Volume set to ${vol}kg`, "success");
-                          setProfile((p) => ({ ...p, total_volume_kg: vol, lifter_rank: getRankFromVolume(vol) }));
+                          setProfile((p) => ({
+                            ...p,
+                            total_volume_kg: vol,
+                            lifter_rank: getRankFromVolume(vol),
+                          }));
                           setTestVolume("");
                         }
                         setAdminAction(false);
@@ -280,8 +305,18 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                         className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none"
                       >
                         <option value="">Current: {profile.lifter_rank}</option>
-                        {["ROOKIE", "INITIATE", "REGULAR", "HARDENED", "VETERAN", "ELITE", "LEGEND"].map((r) => (
-                          <option key={r} value={r}>{r}</option>
+                        {[
+                          "ROOKIE",
+                          "INITIATE",
+                          "REGULAR",
+                          "HARDENED",
+                          "VETERAN",
+                          "ELITE",
+                          "LEGEND",
+                        ].map((r) => (
+                          <option key={r} value={r}>
+                            {r}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -290,7 +325,9 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       disabled={adminAction || !testRank}
                       onClick={async () => {
                         setAdminAction(true);
-                        const result = await adminUpdateStats({ lifter_rank: testRank });
+                        const result = await adminUpdateStats({
+                          lifter_rank: testRank,
+                        });
                         if ("error" in result) addToast(result.error, "error");
                         else {
                           addToast(`Rank set to ${testRank}`, "success");
@@ -324,7 +361,9 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       onClick={async () => {
                         setAdminAction(true);
                         const streak = parseInt(testStreak);
-                        const result = await adminUpdateStats({ current_week_streak: streak });
+                        const result = await adminUpdateStats({
+                          current_week_streak: streak,
+                        });
                         if ("error" in result) addToast(result.error, "error");
                         else {
                           addToast(`Streak set to ${streak}`, "success");
@@ -349,11 +388,19 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                     disabled={adminAction}
                     onClick={async () => {
                       setAdminAction(true);
-                      const result = await withInvalidation(() => adminCheckAchievements(), "achievements");
+                      const result = await withInvalidation(
+                        () => adminCheckAchievements(),
+                        "achievements",
+                      );
                       if ("error" in result) addToast(result.error, "error");
                       else {
                         const count = result.newAchievements?.length ?? 0;
-                        addToast(count > 0 ? `${count} new achievement${count > 1 ? "s" : ""} unlocked` : "No new achievements", "success");
+                        addToast(
+                          count > 0
+                            ? `${count} new achievement${count > 1 ? "s" : ""} unlocked`
+                            : "No new achievements",
+                          "success",
+                        );
                       }
                       setAdminAction(false);
                     }}
@@ -366,7 +413,13 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                     disabled={adminAction}
                     onClick={async () => {
                       setAdminAction(true);
-                      const result = await withInvalidation(() => adminCreateDummyWorkout(), "sessions", "profile", "records", "streakData");
+                      const result = await withInvalidation(
+                        () => adminCreateDummyWorkout(),
+                        "sessions",
+                        "profile",
+                        "records",
+                        "streakData",
+                      );
                       if ("error" in result) addToast(result.error, "error");
                       else addToast("Dummy workout created", "success");
                       setAdminAction(false);
@@ -391,7 +444,8 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       Reset Profile
                     </Button>
                     <p className="text-xs text-text-muted mt-1">
-                      Zeros volume, rank, streak, achievements. Keeps workouts and exercises.
+                      Zeros volume, rank, streak, achievements. Keeps workouts
+                      and exercises.
                     </p>
                   </div>
 
@@ -404,7 +458,8 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
                       Delete All History
                     </Button>
                     <p className="text-xs text-text-muted mt-1">
-                      Deletes all workouts, sets, PRs, achievements. Keeps account and exercises.
+                      Deletes all workouts, sets, PRs, achievements. Keeps
+                      account and exercises.
                     </p>
                   </div>
                 </div>
@@ -419,12 +474,21 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
         onClose={() => setConfirmReset(false)}
         onConfirm={async () => {
           setAdminAction(true);
-          const result = await withInvalidation(() => resetProfile(), "profile", "achievements", "streakData");
+          const result = await withInvalidation(
+            () => resetProfile(),
+            "profile",
+            "achievements",
+            "streakData",
+          );
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
             addToast("Profile reset", "success");
-            setProfile((p) => ({ ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" }));
+            setProfile((p) => ({
+              ...p,
+              total_volume_kg: 0,
+              lifter_rank: "ROOKIE",
+            }));
           }
           setAdminAction(false);
           setConfirmReset(false);
@@ -447,7 +511,11 @@ export function ProfileClient({ initialProfile }: { initialProfile: ProfileData 
           } else {
             invalidateAll();
             addToast("All history deleted", "success");
-            setProfile((p) => ({ ...p, total_volume_kg: 0, lifter_rank: "ROOKIE" }));
+            setProfile((p) => ({
+              ...p,
+              total_volume_kg: 0,
+              lifter_rank: "ROOKIE",
+            }));
           }
           setAdminAction(false);
           setConfirmDeleteHistory(false);

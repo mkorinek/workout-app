@@ -109,7 +109,7 @@ export function RestTimer({
         <div className="fixed inset-0 bg-accent/15 z-[200] pointer-events-none screen-flash" />
       )}
 
-      <div className="card glow-accent p-4">
+      <div className="card glow-accent p-4 sticky top-4 z-20 mb-4">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-medium text-accent">
             Rest Timer

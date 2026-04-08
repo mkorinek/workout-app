@@ -135,9 +135,12 @@ export function WorkoutSessionClient({
       const set = sets[index];
       if (!set?.id) return;
 
+      const numValue = typeof value === "string" ? parseFloat(value) : value;
+      const parsed = isNaN(numValue) || numValue < 0 ? 0 : numValue;
+
       setSets((prev) => {
         const updated = [...prev];
-        updated[index] = { ...updated[index], [field]: value };
+        updated[index] = { ...updated[index], [field]: parsed };
         return updated;
       });
 
@@ -148,7 +151,7 @@ export function WorkoutSessionClient({
         key,
         setTimeout(() => {
           updateTimers.current.delete(key);
-          updateSet(set.id, { [field]: value });
+          updateSet(set.id, { [field]: parsed });
         }, 500)
       );
     },
@@ -184,7 +187,9 @@ export function WorkoutSessionClient({
         }
 
         setTimerDuration(set.rest_seconds || defaultRestSeconds);
-        setShowTimer(true);
+        if (set.rest_seconds !== 0) {
+          setShowTimer(true);
+        }
       } else {
         await uncompleteSet(set.id);
       }
@@ -299,16 +304,14 @@ export function WorkoutSessionClient({
 
       {/* Rest Timer */}
       {showTimer && (
-        <div className="mb-4">
-          <RestTimer
-            duration={timerDuration}
-            onComplete={() => setShowTimer(false)}
-            onSkip={() => setShowTimer(false)}
-            timerSound={timerSound}
-            timerVibration={timerVibration}
-            timerFlash={timerFlash}
-          />
-        </div>
+        <RestTimer
+          duration={timerDuration}
+          onComplete={() => setShowTimer(false)}
+          onSkip={() => setShowTimer(false)}
+          timerSound={timerSound}
+          timerVibration={timerVibration}
+          timerFlash={timerFlash}
+        />
       )}
 
       {/* Exercise Groups */}
@@ -345,7 +348,7 @@ export function WorkoutSessionClient({
             + Add Exercise
           </Button>
           <Button
-            variant="ghost"
+            variant="success"
             onClick={handleFinish}
             disabled={finishing || sets.length === 0}
           >
@@ -355,7 +358,7 @@ export function WorkoutSessionClient({
       )}
 
       {/* Delete workout */}
-      <div className="mt-6 pt-4">
+      <div className="mt-4">
         <button onClick={() => setConfirmDelete(true)}>
           <Badge variant="destructive">Delete workout</Badge>
         </button>

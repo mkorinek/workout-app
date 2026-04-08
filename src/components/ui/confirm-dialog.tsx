@@ -13,6 +13,7 @@ interface ConfirmDialogProps {
   confirmLabel?: string;
   loadingLabel?: string;
   loading?: boolean;
+  variant?: "danger" | "accent";
 }
 
 export function ConfirmDialog({
@@ -24,6 +25,7 @@ export function ConfirmDialog({
   confirmLabel = "Confirm",
   loadingLabel = "Working...",
   loading = false,
+  variant = "danger",
 }: ConfirmDialogProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -58,7 +60,7 @@ export function ConfirmDialog({
         className="relative animate-slide-up card-elevated p-6 max-w-sm w-[calc(100%-2rem)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-sm font-semibold text-destructive mb-1">
+        <p className={`text-sm font-semibold mb-1 ${variant === "accent" ? "text-accent" : "text-destructive"}`}>
           {title}
         </p>
         <p className="text-xs text-text-secondary mb-6">
@@ -66,7 +68,7 @@ export function ConfirmDialog({
         </p>
         <div className="flex gap-2">
           <Button
-            variant="danger"
+            variant={variant === "accent" ? "primary" : "danger"}
             size="sm"
             className="flex-1"
             onClick={onConfirm}

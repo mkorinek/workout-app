@@ -20,6 +20,7 @@ export const getProfile = cache(async () => {
   return data;
 });
 
+
 export async function updateProfile(updates: {
   default_rest_seconds?: number;
   timer_sound?: boolean;

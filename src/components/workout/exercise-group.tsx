@@ -65,7 +65,7 @@ export function ExerciseGroup({
             <button
               type="button"
               onClick={onDeleteExercise}
-              className="text-destructive opacity-60 hover:opacity-100 transition-opacity p-1"
+              className="text-destructive opacity-60 hover:opacity-100 transition-opacity p-1 cursor-pointer"
             >
               <TrashIcon size={14} />
             </button>

@@ -52,7 +52,10 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/login)",
       "mcp__chrome-devtools__evaluate_script",
       "Bash(find src:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git branch:*)"
     ]
   }
 }

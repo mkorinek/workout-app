@@ -41,9 +41,16 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
         {/* Weight */}
         <div className="w-20 shrink-0">
           <input
-            type="number"
+            type="text"
+            inputMode="decimal"
+            pattern="[0-9]*\.?[0-9]*"
             value={set.weight_kg || ""}
-            onChange={(e) => onUpdate("weight_kg", parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === "" || /^\d*\.?\d*$/.test(v)) {
+                onUpdate("weight_kg", v === "" ? 0 : v);
+              }
+            }}
             placeholder="kg"
             className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
             disabled={disabled}
@@ -53,9 +60,16 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
         {/* Reps */}
         <div className="w-16 shrink-0">
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={set.reps || ""}
-            onChange={(e) => onUpdate("reps", parseInt(e.target.value) || 0)}
+            onChange={(e) => {
+              const v = e.target.value;
+              if (v === "" || /^\d+$/.test(v)) {
+                onUpdate("reps", v === "" ? 0 : parseInt(v));
+              }
+            }}
             placeholder="reps"
             className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
             disabled={disabled}

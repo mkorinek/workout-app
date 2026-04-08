@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRef, useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 import { DumbbellIcon, LayoutIcon, ListIcon, ActivityIcon, UserIcon } from "@/components/icons";
 import { prefetchRoute } from "@/lib/cache/prefetch";
@@ -12,49 +12,50 @@ const NAV_ITEMS = [
   { href: "/templates", label: "Templates", icon: LayoutIcon },
   { href: "/exercises", label: "Exercises", icon: ListIcon },
   { href: "/progress", label: "Progress", icon: ActivityIcon },
-  { href: "/profile", label: "Profile", icon: UserIcon },
+  { href: "/social", label: "Social", icon: UserIcon },
 ];
 
 const ITEM_COUNT = NAV_ITEMS.length;
 
+const subscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export function BottomNav() {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-  const prevIndex = useRef(-1);
+  const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const activeIndex = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
-  const safeIndex = activeIndex >= 0 ? activeIndex : 0;
+  const hasActiveTab = activeIndex >= 0;
+  const safeIndex = hasActiveTab ? activeIndex : 0;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Animate only after mount AND after the first position is established
-  const shouldAnimate = mounted && prevIndex.current >= 0;
-  prevIndex.current = safeIndex;
-
-  // Percentage-based positioning: each item is 1/ITEM_COUNT of the container
-  // Blob sits inside with margin matching the item margin (6px = 0.375rem = m-1.5)
   const blobLeft = `calc(${(safeIndex / ITEM_COUNT) * 100}% + 6px)`;
   const blobWidth = `calc(${100 / ITEM_COUNT}% - 12px)`;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3">
-      <div className="relative flex items-stretch max-w-lg mx-auto nav-glass rounded-lg">
-        {/* Blob indicator — client-only to avoid hydration mismatch */}
+      <div className="relative flex items-stretch max-w-lg mx-auto nav-glass rounded-2xl">
+        {/* Blob indicator — smoothly morphs between tab highlight and full-width border */}
         {mounted && (
           <div
-            className="absolute top-1.5 bottom-1.5 rounded-md bg-accent/10 pointer-events-none will-change-transform"
+            className="absolute pointer-events-none"
             style={{
-              left: blobLeft,
-              width: blobWidth,
-              transition: shouldAnimate
-                ? "left 250ms cubic-bezier(0.4, 0, 0.2, 1)"
-                : "none",
+              top: hasActiveTab ? "6px" : "0px",
+              bottom: hasActiveTab ? "6px" : "0px",
+              left: hasActiveTab ? blobLeft : "0px",
+              width: hasActiveTab ? blobWidth : "100%",
+              borderRadius: hasActiveTab ? "8px" : "16px",
+              background: hasActiveTab
+                ? "var(--color-accent-muted)"
+                : "var(--color-surface)",
+              border: hasActiveTab
+                ? "1px solid transparent"
+                : "1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)",
+              transition: "all 300ms cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           />
         )}
-        {NAV_ITEMS.map((item, index) => {
+        {NAV_ITEMS.map((item) => {
           const active = pathname.startsWith(item.href);
           const Icon = item.icon;
           return (

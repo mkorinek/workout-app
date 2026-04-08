@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { getTemplate, updateTemplate, deleteTemplate } from "@/actions/templates";
+import {
+  getTemplate,
+  updateTemplate,
+  deleteTemplate,
+} from "@/actions/templates";
 import { withInvalidation } from "@/lib/cache/invalidate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +41,10 @@ export default function TemplateDetailPage() {
 
   async function handleSave() {
     setSaving(true);
-    await withInvalidation(() => updateTemplate(templateId, { name, exercises }), "templates");
+    await withInvalidation(
+      () => updateTemplate(templateId, { name, exercises }),
+      "templates",
+    );
     setSaving(false);
   }
 
@@ -50,7 +57,11 @@ export default function TemplateDetailPage() {
     setExercises((prev) => [...prev, { exercise_name: "", sets: 3, reps: 10 }]);
   }
 
-  function updateExercise(index: number, field: string, value: string | number) {
+  function updateExercise(
+    index: number,
+    field: string,
+    value: string | number,
+  ) {
     setExercises((prev) => {
       const updated = [...prev];
       updated[index] = { ...updated[index], [field]: value };
@@ -92,7 +103,10 @@ export default function TemplateDetailPage() {
         </div>
 
         {exercises.map((ex, index) => (
-          <div key={index} className="border-b border-border-subtle p-3 flex items-center gap-3">
+          <div
+            key={index}
+            className="border-b border-border-subtle p-3 flex items-center gap-3"
+          >
             <span className="text-xs text-text-muted w-4">{index + 1}</span>
             <div className="flex-1">
               <ExerciseAutocomplete
@@ -102,9 +116,13 @@ export default function TemplateDetailPage() {
             </div>
             <div className="w-14">
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={ex.sets}
-                onChange={(e) => updateExercise(index, "sets", parseInt(e.target.value) || 0)}
+                onChange={(e) =>
+                  updateExercise(index, "sets", parseInt(e.target.value) || 0)
+                }
                 className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full text-right focus:border-accent outline-none tabular-nums"
                 placeholder="sets"
               />
@@ -112,9 +130,13 @@ export default function TemplateDetailPage() {
             <span className="text-xs text-text-muted">x</span>
             <div className="w-14">
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={ex.reps}
-                onChange={(e) => updateExercise(index, "reps", parseInt(e.target.value) || 0)}
+                onChange={(e) =>
+                  updateExercise(index, "reps", parseInt(e.target.value) || 0)
+                }
                 className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full text-right focus:border-accent outline-none tabular-nums"
                 placeholder="reps"
               />

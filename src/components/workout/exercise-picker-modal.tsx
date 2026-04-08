@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Modal } from "@/components/ui/modal";
 import { searchExercises, addExercise } from "@/actions/exercises";
+import { Button } from "@/components/ui/button";
 
 interface ExercisePickerModalProps {
   open: boolean;
@@ -10,7 +11,11 @@ interface ExercisePickerModalProps {
   onSelect: (exerciseName: string) => void;
 }
 
-export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerModalProps) {
+export function ExercisePickerModal({
+  open,
+  onClose,
+  onSelect,
+}: ExercisePickerModalProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<string[]>([]);
   const [searching, setSearching] = useState(false);
@@ -57,7 +62,9 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
     const trimmed = query.trim();
     if (!trimmed) return;
 
-    const match = results.find((r) => r.toLowerCase() === trimmed.toLowerCase());
+    const match = results.find(
+      (r) => r.toLowerCase() === trimmed.toLowerCase(),
+    );
     if (match) {
       handleSelect(match);
       return;
@@ -96,34 +103,13 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
             }
           }}
           placeholder="Search exercises..."
-          className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-2.5 px-3 w-full focus:ring-2 focus:ring-accent outline-none transition-all placeholder:text-text-muted"
+          className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-2.5 px-3 w-full focus:ring-2 focus:ring-accent outline-none transition-colors placeholder:text-text-muted"
         />
-
-        <div className="max-h-60 overflow-y-auto">
-          {searching && (
-            <p className="text-xs text-text-muted py-2">
-              Searching...
-            </p>
-          )}
-
-          {!searching && results.length > 0 && results.map((name) => (
-            <button
-              key={name}
-              type="button"
-              onClick={() => handleSelect(name)}
-              className="w-full text-left px-3 py-2.5 text-sm text-text-primary hover:bg-surface rounded-sm transition-colors"
-            >
-              {name}
-            </button>
-          ))}
-
-          {!searching && query.length > 0 && results.length === 0 && !showSavePrompt && (
-            <p className="text-xs text-text-muted py-2">
-              No matches. Press enter to add &quot;{query.trim()}&quot;
-            </p>
-          )}
-        </div>
-
+        {!showSavePrompt && !searching && query.length > 0 && (
+          <Button onClick={() => handleConfirmCustom()} className="flex-1">
+            Add
+          </Button>
+        )}
         {showSavePrompt && (
           <div className="bg-warning-muted shadow-sm rounded-sm p-3">
             <p className="text-xs text-warning font-medium mb-3">
@@ -149,15 +135,38 @@ export function ExercisePickerModal({ open, onClose, onSelect }: ExercisePickerM
           </div>
         )}
 
-        {query.trim() && results.length > 0 && !results.some((r) => r.toLowerCase() === query.trim().toLowerCase()) && (
-          <button
-            type="button"
-            onClick={handleConfirmCustom}
-            className="text-xs text-text-muted hover:text-text-secondary text-left py-1"
-          >
-            + Use &quot;{query.trim()}&quot; as new exercise
-          </button>
-        )}
+        <div className="max-h-60 overflow-y-auto">
+          {searching && (
+            <p className="text-xs text-text-muted py-2">Searching...</p>
+          )}
+
+          {!searching &&
+            results.length > 0 &&
+            results.map((name) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => handleSelect(name)}
+                className="w-full text-left px-3 py-2.5 text-sm text-text-primary hover:bg-surface rounded-sm transition-colors"
+              >
+                {name}
+              </button>
+            ))}
+        </div>
+
+        {query.trim() &&
+          results.length > 0 &&
+          !results.some(
+            (r) => r.toLowerCase() === query.trim().toLowerCase(),
+          ) && (
+            <button
+              type="button"
+              onClick={handleConfirmCustom}
+              className="text-xs text-text-muted hover:text-text-secondary text-left py-1"
+            >
+              + Use &quot;{query.trim()}&quot; as new exercise
+            </button>
+          )}
       </div>
     </Modal>
   );
