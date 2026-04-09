@@ -72,7 +72,7 @@ export const useAppStore = create<AppCacheState>((set, get) => ({
   invalidate: (...keys) =>
     set(
       Object.fromEntries(
-        keys.map((k) => [k, { data: null, updatedAt: 0 }])
+        keys.map((k) => [k, { data: get()[k].data, updatedAt: 0 }])
       )
     ),
 

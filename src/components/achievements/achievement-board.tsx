@@ -1,11 +1,24 @@
 "use client";
 
+import { useTranslations, useLocale } from "next-intl";
+
 interface Achievement {
   id: string;
   name: string;
   description: string;
   category: string;
   icon: string;
+  condition_type?: string;
+}
+
+function getHiddenDescriptionKey(conditionType?: string): string {
+  switch (conditionType) {
+    case "workout_after_midnight": return "afterMidnight";
+    case "workout_duration_minutes": return "over2Hours";
+    case "exercises_in_session": return "oneExercise";
+    case "sets_in_session": return "hundredSets";
+    default: return "secretUnlocked";
+  }
 }
 
 interface UserAchievement {
@@ -20,12 +33,14 @@ interface AchievementBoardProps {
 }
 
 export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
+  const t = useTranslations("achievements");
+  const locale = useLocale();
   const unlockedIds = new Set(unlocked.map((u) => u.achievement_id));
 
   const categories = [
-    { key: "milestone", label: "Milestones" },
-    { key: "streak", label: "Streaks" },
-    { key: "hidden", label: "Hidden" },
+    { key: "milestone", label: t("milestones") },
+    { key: "streak", label: t("streaks") },
+    { key: "hidden", label: t("hidden") },
   ];
 
   return (
@@ -36,9 +51,13 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
 
         return (
           <div key={cat.key} className="card overflow-hidden">
-            <div className="border-b border-border-subtle px-4 py-2.5">
-              <span className="text-xs font-semibold text-text-secondary">
+            {/* Header — matches PR board style */}
+            <div className="flex items-center justify-between px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
                 {cat.label}
+              </span>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+                {t("unlocked")}
               </span>
             </div>
             {achievements.map((achievement, i) => {
@@ -50,7 +69,7 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
               return (
                 <div
                   key={achievement.id}
-                  className={`px-4 py-3 flex items-center gap-3 ${
+                  className={`px-4 py-2.5 flex items-center gap-3 ${
                     i < achievements.length - 1 ? "border-b border-border-subtle" : ""
                   } ${isUnlocked ? "" : "opacity-40"}`}
                 >
@@ -58,20 +77,22 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
                     {achievement.icon}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm ${isUnlocked ? "text-text-primary font-medium" : "text-text-muted"}`}>
+                    <p className={`text-sm ${isUnlocked ? "text-accent font-medium" : "text-text-muted"}`}>
                       {isUnlocked || achievement.category !== "hidden"
                         ? achievement.name
-                        : "???"}
+                        : t("hiddenPlaceholder")}
                     </p>
                     <p className="text-xs text-text-muted truncate">
-                      {isUnlocked || achievement.category !== "hidden"
+                      {achievement.category !== "hidden"
                         ? achievement.description
-                        : "???"}
+                        : isUnlocked
+                          ? t(getHiddenDescriptionKey(achievement.condition_type) as keyof IntlMessages["achievements"])
+                          : t("hiddenPlaceholder")}
                     </p>
                   </div>
                   {isUnlocked && userAchievement && (
-                    <span className="text-[10px] text-accent tabular-nums shrink-0">
-                      {new Date(userAchievement.unlocked_at).toLocaleDateString()}
+                    <span className="text-[10px] text-accent font-medium tabular-nums shrink-0">
+                      {new Date(userAchievement.unlocked_at).toLocaleDateString(locale === "cs" ? "cs-CZ" : "en-US")}
                     </span>
                   )}
                 </div>
@@ -82,7 +103,7 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
       })}
 
       <p className="text-xs text-text-muted text-center">
-        {unlocked.length}/{all.length} unlocked
+        {t("unlockedCount", { unlocked: unlocked.length, total: all.length })}
       </p>
     </div>
   );

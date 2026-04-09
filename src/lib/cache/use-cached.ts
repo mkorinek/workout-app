@@ -26,14 +26,14 @@ export function useCached<T>(
     queueMicrotask(() => setCache(key, initialData as never));
   }
 
-  // Background refresh when stale
+  // Background refresh when stale — check on mount and when key changes
   useEffect(() => {
     if (!useAppStore.getState().isStale(key) || fetchingRef.current) return;
     fetchingRef.current = true;
     fetcher()
       .then((fresh) => setCache(key, fresh as never))
       .finally(() => { fetchingRef.current = false; });
-  }); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [key, fetcher, setCache]);
 
   // Return cached data, or initialData for flicker-free first paint
   return data ?? initialData ?? null;

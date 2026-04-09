@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { BottomNav } from "@/components/nav/bottom-nav";
 import { RankBadge } from "@/components/achievements/rank-badge";
 import { StreakBadge } from "@/components/achievements/streak-badge";
@@ -26,11 +27,12 @@ export default async function ProtectedLayout({
   const { data: profile } = await supabase
     .from("profiles")
     .select(
-      "lifter_rank, weekly_workout_goal, current_week_streak, streak_last_completed_week, week_start_day, display_name, accent_color",
+      "lifter_rank, weekly_workout_goal, current_week_streak, streak_last_completed_week, week_start_day, display_name, accent_color, language",
     )
     .eq("id", user.id)
     .single();
 
+  const t = await getTranslations("appHeader");
   const rank = profile?.lifter_rank ?? "ROOKIE";
   const hasStreakGoal = !!profile?.weekly_workout_goal;
   const streak = hasStreakGoal
@@ -49,7 +51,7 @@ export default async function ProtectedLayout({
         {/* Top bar */}
         <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass">
           <div className="flex items-center gap-2 font-black text-rainbow">
-            WORKOUT APP
+            {t("title")}
           </div>
           <div className="flex items-center gap-2.5">
             <SyncIndicator />

@@ -11,33 +11,36 @@ interface MutationEntry {
   status: "pending" | "failed";
 }
 
-export async function getDB() {
-  return openDB(DB_NAME, DB_VERSION, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains("exercises")) {
-        db.createObjectStore("exercises", { keyPath: "name" });
-      }
-      if (!db.objectStoreNames.contains("active-session")) {
-        db.createObjectStore("active-session", { keyPath: "id" });
-      }
-      if (!db.objectStoreNames.contains("personal-records")) {
-        db.createObjectStore("personal-records", { keyPath: "id" });
-      }
-      if (!db.objectStoreNames.contains("mutation-queue")) {
-        const store = db.createObjectStore("mutation-queue", { keyPath: "id" });
-        store.createIndex("timestamp", "timestamp");
-      }
-    },
-  });
+let dbPromise: ReturnType<typeof openDB> | null = null;
+
+export function getDB() {
+  if (!dbPromise) {
+    dbPromise = openDB(DB_NAME, DB_VERSION, {
+      upgrade(db) {
+        if (!db.objectStoreNames.contains("exercises")) {
+          db.createObjectStore("exercises", { keyPath: "name" });
+        }
+        if (!db.objectStoreNames.contains("active-session")) {
+          db.createObjectStore("active-session", { keyPath: "id" });
+        }
+        if (!db.objectStoreNames.contains("personal-records")) {
+          db.createObjectStore("personal-records", { keyPath: "id" });
+        }
+        if (!db.objectStoreNames.contains("mutation-queue")) {
+          const store = db.createObjectStore("mutation-queue", { keyPath: "id" });
+          store.createIndex("timestamp", "timestamp");
+        }
+      },
+    });
+  }
+  return dbPromise;
 }
 
 export async function cacheExercises(exercises: { name: string }[]) {
   const db = await getDB();
   const tx = db.transaction("exercises", "readwrite");
   await tx.store.clear();
-  for (const ex of exercises) {
-    await tx.store.put(ex);
-  }
+  await Promise.all(exercises.map((ex) => tx.store.put(ex)));
   await tx.done;
 }
 

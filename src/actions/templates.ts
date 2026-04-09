@@ -1,12 +1,12 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
 export const getTemplates = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data } = await supabase
@@ -35,7 +35,7 @@ export async function createTemplate(
   exercises: { exercise_name: string; sets: number; reps: number }[]
 ) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { data, error } = await supabase
@@ -56,7 +56,7 @@ export async function createTemplate(
 
 export async function createTemplateFromSession(sessionId: string, name: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   // Get all sets from this session
@@ -107,7 +107,7 @@ export async function updateTemplate(
   updates: { name?: string; exercises?: { exercise_name: string; sets: number; reps: number }[] }
 ) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase
@@ -123,7 +123,7 @@ export async function updateTemplate(
 
 export async function deleteTemplate(templateId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase

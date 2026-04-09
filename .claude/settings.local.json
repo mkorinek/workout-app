@@ -55,7 +55,21 @@
       "Bash(find:*)",
       "Bash(git pull:*)",
       "Bash(git stash:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "WebFetch(domain:wger.de)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.exercisedb.dev)",
+      "WebFetch(domain:workoutxapp.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.exercisedb.io)",
+      "WebFetch(domain:static.exercisedb.dev)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/bootstrapping-lab/exercisedb-api/main/src/data/exercises.json\" -o /tmp/exercisedb.json)",
+      "Read(//tmp/**)",
+      "Bash(node:*)",
+      "Bash(xargs -I{} dirname {})"
     ]
   }
 }

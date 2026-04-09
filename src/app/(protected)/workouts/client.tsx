@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCached } from "@/lib/cache/use-cached";
 import { getSessions } from "@/actions/sessions";
 import type { SessionsData } from "@/lib/cache/app-store";
@@ -8,28 +11,40 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DeleteSessionButton } from "@/components/workout/delete-session-button";
+import { useToast } from "@/components/ui/toast";
 
 export function WorkoutsClient({ initialSessions }: { initialSessions: SessionsData }) {
   const sessions = useCached("sessions", getSessions, initialSessions) ?? [];
+  const searchParams = useSearchParams();
+  const { addToast } = useToast();
+  const t = useTranslations("workouts");
+  const tc = useTranslations("common");
+
+  useEffect(() => {
+    if (searchParams.get("error") === "workout_removed") {
+      addToast(t("removed"), "error");
+      window.history.replaceState(null, "", "/workouts");
+    }
+  }, [searchParams, addToast]);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-lg font-bold text-text-primary">
-          Workout Log
+          {t("title")}
         </h1>
         <Link href="/workouts/new">
-          <Button size="sm">+ New</Button>
+          <Button size="sm">{t("new")}</Button>
         </Link>
       </div>
 
       {sessions.length === 0 ? (
         <div className="card p-8 text-center">
           <p className="text-sm text-text-muted mb-4">
-            No workouts yet. Start your first session.
+            {t("noWorkouts")}
           </p>
           <Link href="/workouts/new">
-            <Button>Start Workout</Button>
+            <Button>{t("startWorkout")}</Button>
           </Link>
         </div>
       ) : (
@@ -57,8 +72,8 @@ export function WorkoutsClient({ initialSessions }: { initialSessions: SessionsD
                       <p className="text-sm font-semibold text-accent mb-1">{templateName}</p>
                     )}
                     <div className="flex gap-3 text-xs text-text-secondary">
-                      <span>{completedSets} sets</span>
-                      <span>{totalVolume.toLocaleString()} kg</span>
+                      <span>{completedSets} {tc("sets")}</span>
+                      <span>{totalVolume.toLocaleString()} {tc("kg")}</span>
                     </div>
                     {exercises.length > 0 && (
                       <p className="text-xs text-text-muted mt-1 truncate">
@@ -68,9 +83,9 @@ export function WorkoutsClient({ initialSessions }: { initialSessions: SessionsD
                   </div>
                   <div className="flex flex-col items-end gap-1.5 shrink-0 ml-3">
                     {isActive ? (
-                      <Badge variant="warning">Active</Badge>
+                      <Badge variant="warning">{t("active")}</Badge>
                     ) : (
-                      <Badge variant="success">Done</Badge>
+                      <Badge variant="success">{t("done")}</Badge>
                     )}
                     <DeleteSessionButton sessionId={session.id} />
                   </div>

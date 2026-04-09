@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { SetRow } from "@/components/workout/set-row";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon, ChevronUpIcon, TrashIcon } from "@/components/icons";
+import { ExerciseImage } from "@/components/ui/exercise-image";
 import type { SetData, SetMutableField } from "@/types/workout";
 
 interface ExerciseGroupProps {
@@ -34,23 +36,31 @@ export function ExerciseGroup({
   prSets,
   disabled,
 }: ExerciseGroupProps) {
+  const t = useTranslations("exerciseGroup");
   const completedCount = sets.filter((s) => s.completed).length;
 
   return (
     <div className="card mb-3 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border-subtle">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
         <button
           type="button"
           onClick={onToggleCollapse}
-          className="flex items-center gap-2 flex-1 min-w-0 text-left"
+          className="flex items-center gap-2.5 flex-1 min-w-0 text-left"
         >
-          <span className="text-sm font-semibold text-text-primary truncate">
-            {exerciseName || "Unnamed exercise"}
-          </span>
-          <span className="text-xs text-text-muted tabular-nums shrink-0">
-            {completedCount}/{sets.length}
-          </span>
+          <ExerciseImage
+            exerciseName={exerciseName}
+            size={40}
+            className="rounded-md"
+          />
+          <div className="min-w-0">
+            <span className="text-sm font-semibold text-text-primary truncate block">
+              {exerciseName || t("unnamed")}
+            </span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60 tabular-nums">
+              {t("setsProgress", { completed: completedCount, total: sets.length })}
+            </span>
+          </div>
         </button>
 
         <div className="flex items-center gap-1.5 shrink-0">
@@ -73,6 +83,20 @@ export function ExerciseGroup({
         </div>
       </div>
 
+      {/* Column headers */}
+      {!collapsed && (
+        <div className="flex items-center px-3 py-1.5 border-b border-border-subtle">
+          <span className="text-[10px] text-text-muted w-5 shrink-0 text-center">{t("setNumber")}</span>
+          <div className="ml-2 w-5 shrink-0" />
+          <div className="flex-1 flex items-center justify-center gap-2 mx-3">
+            <span className="flex-1 text-[10px] text-text-muted text-center">{t("kg")}</span>
+            <span className="text-[10px] text-text-muted shrink-0 invisible">×</span>
+            <span className="flex-1 text-[10px] text-text-muted text-center">{t("reps")}</span>
+          </div>
+          <div className="w-20 shrink-0" />
+        </div>
+      )}
+
       {/* Sets */}
       {!collapsed && (
         <div>
@@ -93,7 +117,7 @@ export function ExerciseGroup({
           {!disabled && (
             <div className="px-3 py-2">
               <Button size="sm" onClick={onAddSet} className="w-full">
-                + Add set
+                {t("addSet")}
               </Button>
             </div>
           )}

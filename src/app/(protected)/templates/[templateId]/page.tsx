@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   getTemplate,
   updateTemplate,
@@ -10,7 +11,8 @@ import {
 import { withInvalidation } from "@/lib/cache/invalidate";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ExerciseAutocomplete } from "@/components/workout/exercise-autocomplete";
+import { ExercisePickerModal } from "@/components/workout/exercise-picker-modal";
+import { ExerciseImage } from "@/components/ui/exercise-image";
 import { TrashIcon } from "@/components/icons";
 
 interface TemplateExercise {
@@ -23,11 +25,14 @@ export default function TemplateDetailPage() {
   const router = useRouter();
   const params = useParams();
   const templateId = params.templateId as string;
+  const t = useTranslations("templateEdit");
+  const tc = useTranslations("common");
 
   const [name, setName] = useState("");
   const [exercises, setExercises] = useState<TemplateExercise[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   useEffect(() => {
     getTemplate(templateId).then((data) => {
@@ -53,8 +58,8 @@ export default function TemplateDetailPage() {
     router.push("/templates");
   }
 
-  function addExercise() {
-    setExercises((prev) => [...prev, { exercise_name: "", sets: 3, reps: 10 }]);
+  function addExercise(exerciseName: string) {
+    setExercises((prev) => [...prev, { exercise_name: exerciseName, sets: 3, reps: 10 }]);
   }
 
   function updateExercise(
@@ -76,7 +81,7 @@ export default function TemplateDetailPage() {
   if (loading) {
     return (
       <div className="p-4 text-sm text-text-muted">
-        <span className="animate-pulse-subtle">Loading...</span>
+        <span className="animate-pulse-subtle">{t("loading")}</span>
       </div>
     );
   }
@@ -84,12 +89,12 @@ export default function TemplateDetailPage() {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <h1 className="text-lg font-bold text-text-primary mb-6">
-        Edit Template
+        {t("title")}
       </h1>
 
       <div className="mb-4">
         <Input
-          label="Template name"
+          label={t("templateName")}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -98,7 +103,7 @@ export default function TemplateDetailPage() {
       <div className="card mb-4 overflow-hidden">
         <div className="border-b border-border-subtle px-4 py-2.5">
           <span className="text-xs font-medium text-text-secondary">
-            Exercises
+            {t("exercises")}
           </span>
         </div>
 
@@ -107,13 +112,14 @@ export default function TemplateDetailPage() {
             key={index}
             className="border-b border-border-subtle p-3 flex items-center gap-3"
           >
-            <span className="text-xs text-text-muted w-4">{index + 1}</span>
-            <div className="flex-1">
-              <ExerciseAutocomplete
-                value={ex.exercise_name}
-                onChange={(v) => updateExercise(index, "exercise_name", v)}
-              />
-            </div>
+            <ExerciseImage
+              exerciseName={ex.exercise_name}
+              size={40}
+              className="rounded-md"
+            />
+            <span className="flex-1 text-sm text-text-primary truncate">
+              {ex.exercise_name || t("unnamed")}
+            </span>
             <div className="w-14">
               <input
                 type="text"
@@ -124,7 +130,7 @@ export default function TemplateDetailPage() {
                   updateExercise(index, "sets", parseInt(e.target.value) || 0)
                 }
                 className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full text-right focus:border-accent outline-none tabular-nums"
-                placeholder="sets"
+                placeholder={tc("sets")}
               />
             </div>
             <span className="text-xs text-text-muted">x</span>
@@ -151,19 +157,25 @@ export default function TemplateDetailPage() {
         ))}
 
         <button
-          onClick={addExercise}
+          onClick={() => setPickerOpen(true)}
           className="w-full p-3 text-sm text-accent font-medium hover:bg-surface-elevated transition-colors"
         >
-          + Add exercise
+          {t("addExercise")}
         </button>
+
+        <ExercisePickerModal
+          open={pickerOpen}
+          onClose={() => setPickerOpen(false)}
+          onSelect={(name) => addExercise(name)}
+        />
       </div>
 
       <div className="flex gap-2">
         <Button onClick={handleSave} disabled={saving} className="flex-1">
-          {saving ? "Saving..." : "Save Changes"}
+          {saving ? t("saving") : t("saveChanges")}
         </Button>
         <Button variant="danger" size="sm" onClick={handleDelete}>
-          Delete
+          {t("delete")}
         </Button>
       </div>
     </div>

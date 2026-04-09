@@ -5,14 +5,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Run Commands
 
 ```bash
-# Must use Node v25 via nvm4w (not the default nvm v16)
-export PATH="/c/nvm4w/nodejs:$PATH"
-
 npm run dev          # next dev --webpack (Serwist requires webpack, not Turbopack)
 npm run build        # next build --webpack
 npm start            # production server on port 3000
 npm run lint         # eslint
 ```
+
+Requires Node v25+.
 
 The `--webpack` flag is required because `@serwist/next` does not support Turbopack. Serwist is disabled in development mode via `next.config.ts`.
 
@@ -44,7 +43,8 @@ All authenticated pages live under `src/app/(protected)/` which wraps content in
 - `/templates/[templateId]` — edit template
 - `/exercises` — saved exercise list (client component, uses `useCached`)
 - `/progress` — charts (Recharts) + PR board + achievement board
-- `/profile` — settings (rest pause, timer notifications, weekly workout goal, week start day)
+- `/social` — follow/unfollow users, view followed profiles
+- `/profile` — settings (rest pause, timer notifications, weekly workout goal, week start day, accent color)
 
 All routes have `loading.tsx` skeleton screens for instant perceived navigation.
 
@@ -71,10 +71,14 @@ Three layers in `src/lib/offline/`:
 - **Personal Records**: Checked per-set via `checkAndUpdatePR` action. Three types: max_weight, max_reps, max_volume.
 - **Weekly Streak**: User sets a weekly workout goal in profile. Completing that many workouts in a calendar week builds the streak. Missing a week resets to 0. Configurable week start day (Mon/Sun). Streak badge in top bar, progress section on `/progress`. Color milestones: blue (0w) → violet (4w) → purple (12w) → pink (26w) → gold (52w). Logic in `src/lib/streak.ts`, DB columns on `profiles`.
 
+### Social
+
+Follow/unfollow system via `follows` table. Server actions in `src/actions/social.ts` (`getFollowedProfiles`, `getFollowing`, `followUser`, `unfollowUser`). Profiles have public read access (migration `00006`) to support viewing other users.
+
 ## Database
 
-Schema lives in `supabase/migrations/`. Migrations: `00001_initial_schema.sql` (8 tables), `00002_weekly_streak.sql` (streak columns on profiles). All tables have Row Level Security:
-`profiles`, `exercises`, `workout_templates`, `workout_sessions`, `workout_sets`, `personal_records`, `achievements`, `user_achievements`.
+Schema lives in `supabase/migrations/` (8 migrations: initial schema, weekly streak, set notes, admin flag, accent color, profiles public read, follows, achievement count). All tables have Row Level Security:
+`profiles`, `exercises`, `workout_templates`, `workout_sessions`, `workout_sets`, `personal_records`, `achievements`, `user_achievements`, `follows`.
 
 Key design choice: `workout_sets.exercise_name` is denormalized text (not a FK to exercises) so unsaved exercises and offline-created sets work without a valid exercise UUID.
 
@@ -87,6 +91,7 @@ iOS-inspired minimalist aesthetic with dark/light mode (via `next-themes`, defau
 - Light: background `#F2F2F7`, surface `#ffffff`, accent `#007AFF` (system blue)
 - Semantic tokens: `bg-bg`, `bg-surface`, `bg-surface-elevated`, `text-text-primary`, `text-text-secondary`, `text-text-muted`, `bg-accent`, `border-border`, `border-border-subtle`, etc.
 - Rounded corners (6-14px radii), subtle shadows, filled accent buttons, full-border rounded inputs
+- **Accent colors**: 10 presets (Blue, Indigo, Purple, Pink, Red, Orange, Yellow, Green, Teal, Mint) stored as integer index in `profiles.accent_color`. `AccentProvider` (`src/components/accent-provider.tsx`) dynamically overrides `--color-accent`, `--color-accent-hover`, `--color-accent-muted`, `--glow-accent` CSS variables at runtime. `AccentSeed` component hydrates from server-fetched profile data in the protected layout.
 - SVG icons in `src/components/icons.tsx`, theme toggle in header
 - Nav: glass-morphism bottom bar with morphing blob indicator (`nav-glass` class)
 

@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { type SupabaseClient, type User } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import { cache } from "react";
 
 export async function createClient() {
   const cookieStore = await cookies();
@@ -26,6 +27,14 @@ export async function createClient() {
     }
   );
 }
+
+// Deduplicated per-request: multiple server actions calling getAuthUser()
+// in the same request only hit Supabase Auth once.
+export const getAuthUser = cache(async () => {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  return user;
+});
 
 export async function requireAdmin(): Promise<
   { supabase: SupabaseClient; user: User } | { error: string }

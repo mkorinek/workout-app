@@ -18,7 +18,8 @@ const serwist = new Serwist({
   runtimeCaching: [
     ...defaultCache,
     {
-      matcher: /\/rest\/v1\//,
+      matcher: ({ request }) =>
+        /\/rest\/v1\//.test(request.url) && request.method === "GET",
       handler: new NetworkFirst({
         cacheName: "supabase-api",
         plugins: [

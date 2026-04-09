@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -24,20 +26,26 @@ export const viewport: Viewport = {
   themeColor: "#0f1115",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
+  maximumScale: 1,
+  userScalable: false,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={`h-full ${jakarta.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`h-full ${jakarta.variable}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col font-sans">
-        <ThemeProvider>
-          <main className="flex-1 flex flex-col">{children}</main>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider>
+            <main className="flex-1 flex flex-col">{children}</main>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { calculateVolume } from "@/lib/utils";
 import { cache } from "react";
 
 export const getAchievements = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { all: [], unlocked: [] };
 
   const [{ data: all }, { data: unlocked }] = await Promise.all([
@@ -25,7 +25,7 @@ export const getAchievements = cache(async () => {
 
 export async function checkAchievements(sessionId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { newAchievements: [] };
 
   // Fetch all independent data in parallel

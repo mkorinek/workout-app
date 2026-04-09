@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { deleteSession } from "@/actions/sessions";
 import { withInvalidation } from "@/lib/cache/invalidate";
 import { useAppStore } from "@/lib/cache/app-store";
@@ -11,6 +12,8 @@ import { TrashIcon } from "@/components/icons";
 
 export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
   const router = useRouter();
+  const t = useTranslations("activeWorkout");
+  const tc = useTranslations("common");
   const [showModal, setShowModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -43,7 +46,7 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
           setShowModal(true);
         }}
         className="text-destructive opacity-60 hover:opacity-100 transition-opacity p-1"
-        aria-label="Delete workout"
+        aria-label={t("deleteWorkout")}
       >
         <TrashIcon size={14} />
       </button>
@@ -64,10 +67,10 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-sm font-semibold text-destructive mb-1">
-              Delete Workout
+              {t("deleteTitle")}
             </p>
             <p className="text-xs text-text-secondary mb-6">
-              This action cannot be undone. All sets and data for this workout will be permanently removed.
+              {t("deleteDescription")}
             </p>
             <div className="flex gap-2">
               <Button
@@ -90,7 +93,7 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
                 }}
                 disabled={deleting}
               >
-                {deleting ? "Deleting..." : "Yes, delete"}
+                {deleting ? t("deleting") : t("yesDelete")}
               </Button>
               <Button
                 variant="ghost"
@@ -99,7 +102,7 @@ export function DeleteSessionButton({ sessionId }: { sessionId: string }) {
                 onClick={() => setShowModal(false)}
                 disabled={deleting}
               >
-                Cancel
+                {tc("cancel")}
               </Button>
             </div>
           </div>

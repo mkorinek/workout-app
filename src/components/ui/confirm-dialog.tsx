@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
 interface ConfirmDialogProps {
@@ -22,11 +23,12 @@ export function ConfirmDialog({
   onConfirm,
   title,
   description,
-  confirmLabel = "Confirm",
-  loadingLabel = "Working...",
+  confirmLabel,
+  loadingLabel,
   loading = false,
   variant = "danger",
 }: ConfirmDialogProps) {
+  const tc = useTranslations("common");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export function ConfirmDialog({
             onClick={onConfirm}
             disabled={loading}
           >
-            {loading ? loadingLabel : confirmLabel}
+            {loading ? (loadingLabel ?? tc("working")) : (confirmLabel ?? tc("confirm"))}
           </Button>
           <Button
             variant="ghost"
@@ -83,7 +85,7 @@ export function ConfirmDialog({
             onClick={onClose}
             disabled={loading}
           >
-            Cancel
+            {tc("cancel")}
           </Button>
         </div>
       </div>

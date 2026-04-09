@@ -8,7 +8,8 @@ export async function middleware(request: NextRequest) {
   if (
     pathname === "/login" ||
     pathname.startsWith("/auth/") ||
-    pathname === "/offline"
+    pathname === "/offline" ||
+    pathname.startsWith("/share/")
   ) {
     return NextResponse.next();
   }
@@ -45,6 +46,24 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
+  }
+
+  // Set locale cookie from profile preference (only if not already set)
+  const localeCookie = request.cookies.get("locale")?.value;
+  if (!localeCookie) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("language")
+      .eq("id", user.id)
+      .single();
+
+    const locale = profile?.language ?? "en";
+    supabaseResponse.cookies.set("locale", locale, {
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 365,
+    });
   }
 
   // Logged in user hitting root — go to workouts

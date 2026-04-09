@@ -3,16 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { DumbbellIcon, LayoutIcon, ListIcon, ActivityIcon, UserIcon } from "@/components/icons";
 import { prefetchRoute } from "@/lib/cache/prefetch";
 
 const NAV_ITEMS = [
-  { href: "/workouts", label: "Log", icon: DumbbellIcon },
-  { href: "/templates", label: "Templates", icon: LayoutIcon },
-  { href: "/exercises", label: "Exercises", icon: ListIcon },
-  { href: "/progress", label: "Progress", icon: ActivityIcon },
-  { href: "/social", label: "Social", icon: UserIcon },
+  { href: "/workouts", labelKey: "log" as const, icon: DumbbellIcon },
+  { href: "/templates", labelKey: "templates" as const, icon: LayoutIcon },
+  { href: "/exercises", labelKey: "exercises" as const, icon: ListIcon },
+  { href: "/progress", labelKey: "progress" as const, icon: ActivityIcon },
+  { href: "/social", labelKey: "social" as const, icon: UserIcon },
 ];
 
 const ITEM_COUNT = NAV_ITEMS.length;
@@ -23,6 +24,7 @@ const getServerSnapshot = () => false;
 
 export function BottomNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const activeIndex = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
@@ -73,7 +75,7 @@ export function BottomNav() {
               )}
             >
               <Icon size={22} />
-              <span>{item.label}</span>
+              <span>{t(item.labelKey)}</span>
             </Link>
           );
         })}

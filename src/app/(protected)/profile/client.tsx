@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   updateProfile,
+  updateLanguage,
   resetProfile,
   deleteAllHistory,
   adminUpdateStats,
@@ -11,8 +12,8 @@ import {
 } from "@/actions/profile";
 import { signOut } from "@/actions/auth";
 import { withInvalidation, invalidateAll } from "@/lib/cache/invalidate";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
@@ -31,6 +32,50 @@ export interface ProfileData {
   weekly_workout_goal: number | null;
   week_start_day: number;
   is_admin: boolean;
+  language: string;
+}
+
+function SectionHeader({ left, right }: { left: string; right?: string }) {
+  return (
+    <div className="flex items-center justify-between px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+      <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+        {left}
+      </span>
+      {right && (
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+          {right}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function SettingRow({
+  label,
+  children,
+  description,
+  last,
+}: {
+  label: string;
+  children: React.ReactNode;
+  description?: string;
+  last?: boolean;
+}) {
+  return (
+    <div
+      className={`flex items-center justify-between px-4 py-3 ${
+        last ? "" : "border-b border-border-subtle"
+      }`}
+    >
+      <div className="flex-1 min-w-0 mr-3">
+        <span className="text-sm text-text-primary">{label}</span>
+        {description && (
+          <p className="text-xs text-text-muted mt-0.5">{description}</p>
+        )}
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
+  );
 }
 
 export function ProfileClient({
@@ -48,9 +93,12 @@ export function ProfileClient({
   const [testStreak, setTestStreak] = useState("");
   const { addToast } = useToast();
   const { accentIndex, setAccent } = useAccent();
+  const t = useTranslations("profile");
+  const tc = useTranslations("common");
 
   async function handleSave() {
     setSaving(true);
+    const languageChanged = profile.language !== initialProfile.language;
     await withInvalidation(
       () =>
         updateProfile({
@@ -62,412 +110,452 @@ export function ProfileClient({
           weekly_workout_goal: profile.weekly_workout_goal,
           week_start_day: profile.week_start_day,
           accent_color: accentIndex,
+          language: profile.language,
         }),
       "profile",
       "streakData",
     );
+    if (languageChanged) {
+      await updateLanguage(profile.language);
+      window.location.reload();
+      return;
+    }
     setSaving(false);
-    addToast("Settings saved", "success");
+    addToast(t("settingsSaved"), "success");
   }
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-lg font-bold text-text-primary mb-6">Profile</h1>
+      <h1 className="text-lg font-bold text-text-primary mb-6">{t("title")}</h1>
 
-      {/* Rank display */}
-      <div className="card p-4 mb-6">
-        <span className="text-accent text-xl font-bold">
-          {profile.lifter_rank}
-        </span>
-        <p className="text-xs text-text-muted mt-1">
-          Total volume: {profile.total_volume_kg.toLocaleString()} kg
+      {/* Rank */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("lifterRank")}
         </p>
+        <div className="card overflow-hidden">
+          <SectionHeader left={t("rank")} right={t("volume")} />
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-accent text-lg font-bold">
+              {profile.lifter_rank}
+            </span>
+            <span className="text-accent font-medium tabular-nums text-sm">
+              {profile.total_volume_kg.toLocaleString()} kg
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-6">
-        <Input
-          label="Display name"
-          value={profile.display_name}
-          onChange={(e) =>
-            setProfile({ ...profile, display_name: e.target.value })
-          }
-        />
-
-        <div>
-          <label className="text-xs font-medium text-text-secondary block mb-1.5">
-            Default rest pause (seconds)
-          </label>
-          <input
-            type="number"
-            value={profile.default_rest_seconds}
-            onChange={(e) =>
-              setProfile({
-                ...profile,
-                default_rest_seconds: parseInt(e.target.value) || 0,
-              })
-            }
-            className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums"
-          />
+      {/* Account */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("account")}
+        </p>
+        <div className="card overflow-hidden">
+          <SectionHeader left={t("settings")} />
+          <SettingRow label={t("displayName")} last>
+            <input
+              type="text"
+              value={profile.display_name}
+              onChange={(e) =>
+                setProfile({ ...profile, display_name: e.target.value })
+              }
+              placeholder={t("yourName")}
+              className="bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2.5 w-36 text-right focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted"
+            />
+          </SettingRow>
         </div>
+      </div>
 
-        <div>
-          <p className="text-xs font-medium text-text-secondary mb-3">
-            Timer notifications
-          </p>
-          <div className="flex flex-col gap-3">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <Checkbox
-                checked={profile.timer_sound}
-                onChange={(v) => setProfile({ ...profile, timer_sound: v })}
-              />
-              <span className="text-sm text-text-primary">Sound (beep)</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <Checkbox
-                checked={profile.timer_vibration}
-                onChange={(v) => setProfile({ ...profile, timer_vibration: v })}
-              />
-              <span className="text-sm text-text-primary">Vibration</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <Checkbox
-                checked={profile.timer_flash}
-                onChange={(v) => setProfile({ ...profile, timer_flash: v })}
-              />
-              <span className="text-sm text-text-primary">Screen flash</span>
-            </label>
-          </div>
-        </div>
-
-        <div>
-          <label className="text-xs font-medium text-text-secondary block mb-1.5">
-            Weekly workout goal
-          </label>
-          <p className="text-xs text-text-muted mb-2">
-            Complete this many workouts each week to build your streak
-          </p>
-          <input
-            type="number"
-            min={1}
-            max={14}
-            value={profile.weekly_workout_goal ?? ""}
-            placeholder="Not set"
-            onChange={(e) =>
-              setProfile({
-                ...profile,
-                weekly_workout_goal: e.target.value
-                  ? parseInt(e.target.value)
-                  : null,
-              })
-            }
-            className="bg-surface border border-border rounded-sm text-text-primary text-sm py-2 px-3 w-24 focus:border-accent outline-none tabular-nums placeholder:text-text-muted"
-          />
-        </div>
-
-        <div>
-          <label className="text-xs font-medium text-text-secondary block mb-1.5">
-            Week start day
-          </label>
-          <p className="text-xs text-text-muted mb-2">
-            When does your training week begin?
-          </p>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setProfile({ ...profile, week_start_day: 1 })}
-              className={`border px-3 py-1.5 text-sm rounded-sm transition-colors ${
-                profile.week_start_day === 1
-                  ? "border-accent text-accent bg-accent-muted"
-                  : "border-border text-text-muted hover:border-accent/50"
-              }`}
-            >
-              Monday
-            </button>
-            <button
-              type="button"
-              onClick={() => setProfile({ ...profile, week_start_day: 0 })}
-              className={`border px-3 py-1.5 text-sm rounded-sm transition-colors ${
-                profile.week_start_day === 0
-                  ? "border-accent text-accent bg-accent-muted"
-                  : "border-border text-text-muted hover:border-accent/50"
-              }`}
-            >
-              Sunday
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label className="text-xs font-medium text-text-secondary block mb-1.5">
-            Accent color
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {ACCENT_PRESETS.map((preset, i) => (
+      {/* Workout Settings */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("workout")}
+        </p>
+        <div className="card overflow-hidden">
+          <SectionHeader left={t("settings")} right={t("value")} />
+          <SettingRow label={t("restPause")} description={t("restPauseDescription")}>
+            <input
+              type="number"
+              value={profile.default_rest_seconds}
+              onChange={(e) =>
+                setProfile({
+                  ...profile,
+                  default_rest_seconds: parseInt(e.target.value) || 0,
+                })
+              }
+              className="bg-surface-elevated rounded-sm text-accent font-medium text-sm py-1.5 px-2.5 w-20 text-right focus:ring-1 focus:ring-accent outline-none border-0 tabular-nums"
+            />
+          </SettingRow>
+          <SettingRow label={t("weeklyGoal")} description={t("weeklyGoalDescription")}>
+            <input
+              type="number"
+              min={1}
+              max={14}
+              value={profile.weekly_workout_goal ?? ""}
+              placeholder="—"
+              onChange={(e) =>
+                setProfile({
+                  ...profile,
+                  weekly_workout_goal: e.target.value
+                    ? parseInt(e.target.value)
+                    : null,
+                })
+              }
+              className="bg-surface-elevated rounded-sm text-accent font-medium text-sm py-1.5 px-2.5 w-20 text-right focus:ring-1 focus:ring-accent outline-none border-0 tabular-nums placeholder:text-text-muted/40"
+            />
+          </SettingRow>
+          <SettingRow label={t("weekStartsOn")} last>
+            <div className="flex gap-1.5">
               <button
-                key={preset.name}
                 type="button"
-                title={preset.name}
-                onClick={() => setAccent(i)}
-                className="relative w-8 h-8 rounded-full border-2 transition-all"
-                style={{
-                  backgroundColor: preset.dark,
-                  borderColor: accentIndex === i ? preset.dark : "transparent",
-                  boxShadow:
-                    accentIndex === i
-                      ? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.dark}`
-                      : "none",
-                }}
-              />
-            ))}
+                onClick={() => setProfile({ ...profile, week_start_day: 1 })}
+                className={`text-xs px-2.5 py-1 rounded-sm transition-colors ${
+                  profile.week_start_day === 1
+                    ? "bg-accent text-white font-medium"
+                    : "text-text-muted hover:text-text-secondary"
+                }`}
+              >
+                {t("mon")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setProfile({ ...profile, week_start_day: 0 })}
+                className={`text-xs px-2.5 py-1 rounded-sm transition-colors ${
+                  profile.week_start_day === 0
+                    ? "bg-accent text-white font-medium"
+                    : "text-text-muted hover:text-text-secondary"
+                }`}
+              >
+                {t("sun")}
+              </button>
+            </div>
+          </SettingRow>
+        </div>
+      </div>
+
+      {/* Timer Notifications */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("timerNotifications")}
+        </p>
+        <div className="card overflow-hidden">
+          <SectionHeader left={t("notification")} right={t("enabled")} />
+          <SettingRow label={t("soundBeep")}>
+            <Checkbox
+              checked={profile.timer_sound}
+              onChange={(v) => setProfile({ ...profile, timer_sound: v })}
+            />
+          </SettingRow>
+          <SettingRow label={t("vibration")}>
+            <Checkbox
+              checked={profile.timer_vibration}
+              onChange={(v) => setProfile({ ...profile, timer_vibration: v })}
+            />
+          </SettingRow>
+          <SettingRow label={t("screenFlash")} last>
+            <Checkbox
+              checked={profile.timer_flash}
+              onChange={(v) => setProfile({ ...profile, timer_flash: v })}
+            />
+          </SettingRow>
+        </div>
+      </div>
+
+      {/* Appearance */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("appearance")}
+        </p>
+        <div className="card overflow-hidden">
+          <SectionHeader left={t("customization")} />
+          <div className="px-4 py-3 border-b border-border-subtle">
+            <span className="text-sm text-text-primary block mb-2.5">
+              {t("accentColor")}
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {ACCENT_PRESETS.map((preset, i) => (
+                <button
+                  key={preset.name}
+                  type="button"
+                  title={preset.name}
+                  onClick={() => setAccent(i)}
+                  className="relative w-8 h-8 rounded-full border-2 transition-all"
+                  style={{
+                    backgroundColor: preset.dark,
+                    borderColor:
+                      accentIndex === i ? preset.dark : "transparent",
+                    boxShadow:
+                      accentIndex === i
+                        ? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.dark}`
+                        : "none",
+                  }}
+                />
+              ))}
+            </div>
           </div>
+          <SettingRow label={t("theme")}>
+            <ThemeToggle />
+          </SettingRow>
+          <SettingRow label={t("language")} last>
+            <div className="flex gap-1.5">
+              <button
+                type="button"
+                onClick={() => setProfile({ ...profile, language: "en" })}
+                className={`text-xs px-2.5 py-1 rounded-sm transition-colors ${
+                  profile.language === "en"
+                    ? "bg-accent text-white font-medium"
+                    : "text-text-muted hover:text-text-secondary"
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setProfile({ ...profile, language: "cs" })}
+                className={`text-xs px-2.5 py-1 rounded-sm transition-colors ${
+                  profile.language === "cs"
+                    ? "bg-accent text-white font-medium"
+                    : "text-text-muted hover:text-text-secondary"
+                }`}
+              >
+                Čeština
+              </button>
+            </div>
+          </SettingRow>
         </div>
-        <div>
-          <label className="text-xs font-medium text-text-secondary block mb-1.5">
-            Theme changer
-          </label>
-          <ThemeToggle />
-        </div>
+      </div>
 
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save Settings"}
+      {/* Save */}
+      <div className="mb-6">
+        <Button onClick={handleSave} disabled={saving} className="w-full">
+          {saving ? tc("saving") : t("saveSettings")}
         </Button>
+      </div>
 
-        <div className="mt-2" />
+      {/* Sign out */}
+      <form action={signOut} className="mb-6">
+        <Button variant="danger" type="submit" className="w-full">
+          {t("signOut")}
+        </Button>
+      </form>
 
-        <form action={signOut}>
-          <Button variant="danger" type="submit" className="w-full">
-            Sign Out
-          </Button>
-        </form>
+      {/* Admin */}
+      {profile.is_admin && (
+        <div>
+          <p className="text-xs font-medium text-destructive mb-3">{t("admin")}</p>
 
-        {profile.is_admin && (
-          <>
-            <div className="mt-2" />
-
-            <div>
-              <h2 className="text-sm font-semibold text-destructive mb-4">
-                Admin
-              </h2>
-
-              <div className="card p-4 mb-4">
-                <p className="text-xs font-medium text-text-secondary mb-3">
-                  Test Settings
-                </p>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-end gap-2">
-                    <div className="flex-1">
-                      <label className="text-xs font-medium text-text-secondary block mb-1">
-                        Volume (kg)
-                      </label>
-                      <input
-                        type="number"
-                        value={testVolume}
-                        onChange={(e) => setTestVolume(e.target.value)}
-                        placeholder={String(profile.total_volume_kg)}
-                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none tabular-nums"
-                      />
-                    </div>
-                    <Button
-                      size="sm"
-                      disabled={adminAction || !testVolume}
-                      onClick={async () => {
-                        setAdminAction(true);
-                        const vol = parseFloat(testVolume);
-                        const result = await adminUpdateStats({
-                          total_volume_kg: vol,
-                          lifter_rank: getRankFromVolume(vol),
-                        });
-                        if ("error" in result) addToast(result.error, "error");
-                        else {
-                          addToast(`Volume set to ${vol}kg`, "success");
-                          setProfile((p) => ({
-                            ...p,
-                            total_volume_kg: vol,
-                            lifter_rank: getRankFromVolume(vol),
-                          }));
-                          setTestVolume("");
-                        }
-                        setAdminAction(false);
-                      }}
-                    >
-                      Set
-                    </Button>
-                  </div>
-
-                  <div className="flex items-end gap-2">
-                    <div className="flex-1">
-                      <label className="text-xs font-medium text-text-secondary block mb-1">
-                        Rank
-                      </label>
-                      <select
-                        value={testRank}
-                        onChange={(e) => setTestRank(e.target.value)}
-                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none"
-                      >
-                        <option value="">Current: {profile.lifter_rank}</option>
-                        {[
-                          "ROOKIE",
-                          "INITIATE",
-                          "REGULAR",
-                          "HARDENED",
-                          "VETERAN",
-                          "ELITE",
-                          "LEGEND",
-                        ].map((r) => (
-                          <option key={r} value={r}>
-                            {r}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <Button
-                      size="sm"
-                      disabled={adminAction || !testRank}
-                      onClick={async () => {
-                        setAdminAction(true);
-                        const result = await adminUpdateStats({
-                          lifter_rank: testRank,
-                        });
-                        if ("error" in result) addToast(result.error, "error");
-                        else {
-                          addToast(`Rank set to ${testRank}`, "success");
-                          setProfile((p) => ({ ...p, lifter_rank: testRank }));
-                          setTestRank("");
-                        }
-                        setAdminAction(false);
-                      }}
-                    >
-                      Set
-                    </Button>
-                  </div>
-
-                  <div className="flex items-end gap-2">
-                    <div className="flex-1">
-                      <label className="text-xs font-medium text-text-secondary block mb-1">
-                        Weekly Streak
-                      </label>
-                      <input
-                        type="number"
-                        min={0}
-                        value={testStreak}
-                        onChange={(e) => setTestStreak(e.target.value)}
-                        placeholder="0"
-                        className="bg-surface border border-border rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:border-accent outline-none tabular-nums"
-                      />
-                    </div>
-                    <Button
-                      size="sm"
-                      disabled={adminAction || testStreak === ""}
-                      onClick={async () => {
-                        setAdminAction(true);
-                        const streak = parseInt(testStreak);
-                        const result = await adminUpdateStats({
-                          current_week_streak: streak,
-                        });
-                        if ("error" in result) addToast(result.error, "error");
-                        else {
-                          addToast(`Streak set to ${streak}`, "success");
-                          setTestStreak("");
-                        }
-                        setAdminAction(false);
-                      }}
-                    >
-                      Set
-                    </Button>
-                  </div>
+          <div className="card overflow-hidden mb-4">
+            <SectionHeader left={t("testSettings")} />
+            <div className="p-4 flex flex-col gap-3">
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className="text-xs text-text-muted block mb-1">
+                    {t("volumeKg")}
+                  </label>
+                  <input
+                    type="number"
+                    value={testVolume}
+                    onChange={(e) => setTestVolume(e.target.value)}
+                    placeholder={String(profile.total_volume_kg)}
+                    className="bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:ring-1 focus:ring-accent outline-none border-0 tabular-nums"
+                  />
                 </div>
+                <Button
+                  size="sm"
+                  disabled={adminAction || !testVolume}
+                  onClick={async () => {
+                    setAdminAction(true);
+                    const vol = parseFloat(testVolume);
+                    const result = await adminUpdateStats({
+                      total_volume_kg: vol,
+                      lifter_rank: getRankFromVolume(vol),
+                    });
+                    if ("error" in result) addToast(result.error, "error");
+                    else {
+                      addToast(t("volumeSetTo", { vol }), "success");
+                      setProfile((p) => ({
+                        ...p,
+                        total_volume_kg: vol,
+                        lifter_rank: getRankFromVolume(vol),
+                      }));
+                      setTestVolume("");
+                    }
+                    setAdminAction(false);
+                  }}
+                >
+                  Set
+                </Button>
               </div>
 
-              <div className="card p-4 mb-4">
-                <p className="text-xs font-medium text-text-secondary mb-3">
-                  Test Actions
-                </p>
-                <div className="flex flex-col gap-2">
-                  <Button
-                    className="w-full"
-                    disabled={adminAction}
-                    onClick={async () => {
-                      setAdminAction(true);
-                      const result = await withInvalidation(
-                        () => adminCheckAchievements(),
-                        "achievements",
-                      );
-                      if ("error" in result) addToast(result.error, "error");
-                      else {
-                        const count = result.newAchievements?.length ?? 0;
-                        addToast(
-                          count > 0
-                            ? `${count} new achievement${count > 1 ? "s" : ""} unlocked`
-                            : "No new achievements",
-                          "success",
-                        );
-                      }
-                      setAdminAction(false);
-                    }}
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className="text-xs text-text-muted block mb-1">
+                    {t("rank")}
+                  </label>
+                  <select
+                    value={testRank}
+                    onChange={(e) => setTestRank(e.target.value)}
+                    className="bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:ring-1 focus:ring-accent outline-none border-0"
                   >
-                    Check Achievements
-                  </Button>
-
-                  <Button
-                    className="w-full"
-                    disabled={adminAction}
-                    onClick={async () => {
-                      setAdminAction(true);
-                      const result = await withInvalidation(
-                        () => adminCreateDummyWorkout(),
-                        "sessions",
-                        "profile",
-                        "records",
-                        "streakData",
-                      );
-                      if ("error" in result) addToast(result.error, "error");
-                      else addToast("Dummy workout created", "success");
-                      setAdminAction(false);
-                    }}
-                  >
-                    Create Dummy Workout
-                  </Button>
+                    <option value="">{t("currentRank", { rank: profile.lifter_rank })}</option>
+                    {[
+                      "ROOKIE",
+                      "INITIATE",
+                      "REGULAR",
+                      "HARDENED",
+                      "VETERAN",
+                      "ELITE",
+                      "LEGEND",
+                    ].map((r) => (
+                      <option key={r} value={r}>
+                        {r}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+                <Button
+                  size="sm"
+                  disabled={adminAction || !testRank}
+                  onClick={async () => {
+                    setAdminAction(true);
+                    const result = await adminUpdateStats({
+                      lifter_rank: testRank,
+                    });
+                    if ("error" in result) addToast(result.error, "error");
+                    else {
+                      addToast(t("rankSetTo", { rank: testRank }), "success");
+                      setProfile((p) => ({ ...p, lifter_rank: testRank }));
+                      setTestRank("");
+                    }
+                    setAdminAction(false);
+                  }}
+                >
+                  Set
+                </Button>
               </div>
 
-              <div className="card p-4">
-                <p className="text-xs font-semibold text-destructive mb-3">
-                  Danger Zone
-                </p>
-                <div className="flex flex-col gap-2">
-                  <div>
-                    <Button
-                      variant="danger"
-                      className="w-full"
-                      onClick={() => setConfirmReset(true)}
-                    >
-                      Reset Profile
-                    </Button>
-                    <p className="text-xs text-text-muted mt-1">
-                      Zeros volume, rank, streak, achievements. Keeps workouts
-                      and exercises.
-                    </p>
-                  </div>
-
-                  <div>
-                    <Button
-                      variant="danger"
-                      className="w-full"
-                      onClick={() => setConfirmDeleteHistory(true)}
-                    >
-                      Delete All History
-                    </Button>
-                    <p className="text-xs text-text-muted mt-1">
-                      Deletes all workouts, sets, PRs, achievements. Keeps
-                      account and exercises.
-                    </p>
-                  </div>
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className="text-xs text-text-muted block mb-1">
+                    {t("weeklyStreak")}
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={testStreak}
+                    onChange={(e) => setTestStreak(e.target.value)}
+                    placeholder="0"
+                    className="bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 w-full focus:ring-1 focus:ring-accent outline-none border-0 tabular-nums"
+                  />
                 </div>
+                <Button
+                  size="sm"
+                  disabled={adminAction || testStreak === ""}
+                  onClick={async () => {
+                    setAdminAction(true);
+                    const streak = parseInt(testStreak);
+                    const result = await adminUpdateStats({
+                      current_week_streak: streak,
+                    });
+                    if ("error" in result) addToast(result.error, "error");
+                    else {
+                      addToast(t("streakSetTo", { streak }), "success");
+                      setTestStreak("");
+                    }
+                    setAdminAction(false);
+                  }}
+                >
+                  Set
+                </Button>
               </div>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+
+          <div className="card overflow-hidden mb-4">
+            <SectionHeader left={t("testActions")} />
+            <div className="p-4 flex flex-col gap-2">
+              <Button
+                className="w-full"
+                disabled={adminAction}
+                onClick={async () => {
+                  setAdminAction(true);
+                  const result = await withInvalidation(
+                    () => adminCheckAchievements(),
+                    "achievements",
+                  );
+                  if ("error" in result) addToast(result.error, "error");
+                  else {
+                    const count = result.newAchievements?.length ?? 0;
+                    addToast(
+                      count > 0
+                        ? t("newAchievements", { count })
+                        : t("noNewAchievements"),
+                      "success",
+                    );
+                  }
+                  setAdminAction(false);
+                }}
+              >
+                {t("checkAchievements")}
+              </Button>
+              <Button
+                className="w-full"
+                disabled={adminAction}
+                onClick={async () => {
+                  setAdminAction(true);
+                  const result = await withInvalidation(
+                    () => adminCreateDummyWorkout(),
+                    "sessions",
+                    "profile",
+                    "records",
+                    "streakData",
+                  );
+                  if ("error" in result) addToast(result.error, "error");
+                  else addToast(t("dummyWorkoutCreated"), "success");
+                  setAdminAction(false);
+                }}
+              >
+                {t("createDummyWorkout")}
+              </Button>
+            </div>
+          </div>
+
+          <div className="card overflow-hidden">
+            <div className="flex items-center px-4 py-2.5 border-b border-destructive/20 bg-destructive/[0.04]">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-destructive/60">
+                {t("dangerZone")}
+              </span>
+            </div>
+            <div className="p-4 flex flex-col gap-3">
+              <div>
+                <Button
+                  variant="danger"
+                  className="w-full"
+                  onClick={() => setConfirmReset(true)}
+                >
+                  {t("resetProfile")}
+                </Button>
+                <p className="text-xs text-text-muted mt-1">
+                  {t("resetDescription")}
+                </p>
+              </div>
+              <div>
+                <Button
+                  variant="danger"
+                  className="w-full"
+                  onClick={() => setConfirmDeleteHistory(true)}
+                >
+                  {t("deleteAllHistory")}
+                </Button>
+                <p className="text-xs text-text-muted mt-1">
+                  {t("deleteHistoryDescription")}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ConfirmDialog
         open={confirmReset}
@@ -483,7 +571,7 @@ export function ProfileClient({
           if ("error" in result) {
             addToast(result.error, "error");
           } else {
-            addToast("Profile reset", "success");
+            addToast(t("profileReset"), "success");
             setProfile((p) => ({
               ...p,
               total_volume_kg: 0,
@@ -493,10 +581,10 @@ export function ProfileClient({
           setAdminAction(false);
           setConfirmReset(false);
         }}
-        title="Reset Profile"
-        description="This will zero out your volume, rank, streak, and all achievements. Workout history and exercises will not be affected. This cannot be undone."
-        confirmLabel="Yes, reset"
-        loadingLabel="Resetting..."
+        title={t("resetDialogTitle")}
+        description={t("resetDialogDescription")}
+        confirmLabel={t("yesReset")}
+        loadingLabel={t("resetting")}
         loading={adminAction}
       />
 
@@ -510,7 +598,7 @@ export function ProfileClient({
             addToast(result.error, "error");
           } else {
             invalidateAll();
-            addToast("All history deleted", "success");
+            addToast(t("allHistoryDeleted"), "success");
             setProfile((p) => ({
               ...p,
               total_volume_kg: 0,
@@ -520,10 +608,10 @@ export function ProfileClient({
           setAdminAction(false);
           setConfirmDeleteHistory(false);
         }}
-        title="Delete All History"
-        description="This will permanently delete ALL workout sessions, sets, personal records, and achievements. Your account and exercises will be preserved. This cannot be undone."
-        confirmLabel="Yes, delete everything"
-        loadingLabel="Deleting..."
+        title={t("deleteHistoryDialogTitle")}
+        description={t("deleteHistoryDialogDescription")}
+        confirmLabel={t("yesDeleteEverything")}
+        loadingLabel={t("deleting")}
         loading={adminAction}
       />
     </div>

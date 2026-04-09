@@ -2,11 +2,12 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { useToast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/utils";
+
 
 interface ExerciseBreakdown {
   name: string;
@@ -47,154 +48,189 @@ interface SummaryData {
   duration: number;
 }
 
-function formatExerciseSets(sets: { weight_kg: number; reps: number }[]): string {
-  const groups = new Map<string, number>();
-  for (const set of sets) {
-    const key = `${set.reps}@${set.weight_kg}`;
-    groups.set(key, (groups.get(key) ?? 0) + 1);
-  }
-
-  return Array.from(groups.entries())
-    .map(([key, count]) => {
-      const [reps, weight] = key.split("@");
-      return `${count}x${reps} @ ${Number(weight)}kg`;
-    })
-    .join(", ");
-}
-
-function formatRecordType(type: string): string {
-  switch (type) {
-    case "max_weight": return "Max Weight";
-    case "max_reps": return "Max Reps";
-    case "max_volume": return "Max Volume";
-    default: return type;
-  }
-}
-
-function formatRecordValue(type: string, value: number): string {
-  switch (type) {
-    case "max_weight": return `${value}kg`;
-    case "max_reps": return `${value} reps`;
-    case "max_volume": return `${value}kg vol`;
-    default: return `${value}`;
-  }
+function formatTopSet(sets: { weight_kg: number; reps: number }[]): string {
+  if (sets.length === 0) return "";
+  const top = sets.reduce(
+    (best, s) => (s.weight_kg > best.weight_kg ? s : best),
+    sets[0],
+  );
+  return `${top.weight_kg}kg × ${top.reps}`;
 }
 
 export function SummaryClient({ summary }: { summary: SummaryData }) {
   const router = useRouter();
   const { addToast } = useToast();
+  const t = useTranslations("summary");
+  const tc = useTranslations("common");
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);
-
   const handleShare = useCallback(async () => {
-    const url = window.location.href;
+    const shareUrl = `${window.location.origin}/share/${summary.session.id}`;
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: "Workout Summary", url });
+        await navigator.share({ title: t("workoutSummary"), text: shareUrl });
         return;
       } catch {
         // User cancelled
       }
     }
 
-    await navigator.clipboard.writeText(url);
-    addToast("Link copied to clipboard", "success");
-  }, [addToast]);
+    await navigator.clipboard.writeText(shareUrl);
+    addToast(t("linkCopied"), "success");
+  }, [addToast, summary.session.id, t]);
 
-  const { session, totalVolume, exerciseBreakdown, prs, profile, newAchievements, duration } = summary;
+  const {
+    session,
+    totalVolume,
+    exerciseBreakdown,
+    prs,
+    profile,
+    newAchievements,
+    duration,
+  } = summary;
   const formattedDate = formatDate(session.completed_at);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-1">
+      <div className="flex items-center justify-between mb-6">
+        <div>
           <h1 className="text-lg font-bold text-text-primary">
-            Workout Complete
+            {t("title")}
           </h1>
-          <span className="text-xs text-text-muted tabular-nums">
-            {formattedDate}
-          </span>
+          {session.templateName && (
+            <p className="text-xs text-accent font-medium mt-0.5">
+              {session.templateName}
+            </p>
+          )}
         </div>
-        {session.templateName && (
-          <p className="text-sm text-accent font-medium">{session.templateName}</p>
-        )}
+        <span className="text-xs text-text-muted tabular-nums">
+          {formattedDate}
+        </span>
       </div>
 
-      {/* Volume headline */}
-      <div className="card p-5 mb-4 text-center">
-        <p className="text-xs font-medium text-text-secondary mb-1">
-          Total Volume
+      {/* Overview */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("overview")}
         </p>
-        <p className="text-3xl text-accent font-bold tabular-nums">
-          {totalVolume.toLocaleString()} kg
-        </p>
-        <p className="text-xs text-text-muted mt-1">{duration} min</p>
+        <div className="card overflow-hidden">
+          <div className="flex items-center px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+            <span className="flex-1 text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("volume")}
+            </span>
+            <span className="w-20 text-right text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("duration")}
+            </span>
+            <span className="w-20 text-right text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("exercises")}
+            </span>
+          </div>
+          <div className="flex items-center px-4 py-3">
+            <span className="flex-1 text-lg font-bold tabular-nums text-accent">
+              {totalVolume.toLocaleString()} {tc("kg")}
+            </span>
+            <span className="w-20 text-right text-sm font-medium tabular-nums text-accent">
+              {duration} {tc("min")}
+            </span>
+            <span className="w-20 text-right text-sm font-medium tabular-nums text-accent">
+              {exerciseBreakdown.length}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Exercise breakdown */}
       {exerciseBreakdown.length > 0 && (
-        <div className="mb-4">
-          <p className="text-xs font-medium text-text-secondary mb-2">
-            Exercises
+        <div className="mb-6">
+          <p className="text-xs font-medium text-text-secondary mb-3">
+            {t("exercises")}
           </p>
           <div className="card overflow-hidden">
-            {exerciseBreakdown.map((ex) => (
-              <div
-                key={ex.name}
-                className="flex items-center justify-between px-4 py-3 border-b border-border-subtle last:border-0"
-              >
-                <span className="text-sm text-text-primary truncate flex-1">
-                  {ex.name}
-                </span>
-                <span className="text-xs text-text-muted shrink-0 ml-2">
-                  {formatExerciseSets(ex.sets)}
-                </span>
-              </div>
-            ))}
+            <div className="flex items-center px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+              <span className="flex-1 text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+                {t("exercise")}
+              </span>
+              <span className="w-16 text-right text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+                {t("sets")}
+              </span>
+              <span className="w-20 text-right text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+                {t("bestSet")}
+              </span>
+            </div>
+            {exerciseBreakdown.map((ex, i) => {
+              const exercisePrs = prs.filter((pr) => pr.exercise_name === ex.name);
+              return (
+                <div
+                  key={ex.name}
+                  className={`px-4 py-2.5 ${
+                    i < exerciseBreakdown.length - 1
+                      ? "border-b border-border-subtle"
+                      : ""
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <span className="flex-1 min-w-0 mr-2 text-sm text-text-primary truncate">
+                      {ex.name}
+                    </span>
+                    <span className="w-16 text-right text-sm tabular-nums text-accent shrink-0">
+                      {ex.sets.length}
+                    </span>
+                    <span className="w-20 text-right text-sm font-medium tabular-nums text-accent shrink-0">
+                      {formatTopSet(ex.sets)}
+                    </span>
+                  </div>
+                  {exercisePrs.length > 0 && (
+                    <div className="mt-1.5 flex items-center gap-2">
+                      {exercisePrs.map((pr, j) => {
+                        const label = pr.record_type === "max_weight" ? t("weightPR") : pr.record_type === "max_reps" ? t("repsPR") : t("volumePR");
+                        const formatted = pr.record_type === "max_reps"
+                          ? String(pr.value)
+                          : `${Number(pr.value)}kg`;
+                        return (
+                          <span
+                            key={j}
+                            className="text-[10px] font-medium tabular-nums text-accent bg-accent/10 rounded-full px-2 py-0.5"
+                          >
+                            {label}: {formatted}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* PRs */}
-      {prs.length > 0 && (
-        <div className="mb-4">
-          <p className="text-xs font-medium text-text-secondary mb-2">
-            Personal Records
-          </p>
-          <div className="card overflow-hidden">
-            {prs.map((pr, i) => (
-              <div
-                key={`${pr.exercise_name}-${pr.record_type}-${i}`}
-                className="flex items-center gap-2 px-4 py-3 border-b border-border-subtle last:border-0"
-              >
-                <Badge variant="warning">PR</Badge>
-                <span className="text-sm text-text-primary">
-                  {pr.exercise_name}
-                </span>
-                <span className="text-xs text-warning ml-auto">
-                  {formatRecordType(pr.record_type)}: {formatRecordValue(pr.record_type, Number(pr.value))}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Rank & Streak */}
-      <div className="mb-4">
-        <p className="text-xs font-medium text-text-secondary mb-2">
-          Stats
+      {/* Stats */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("stats")}
         </p>
-        <div className="card px-4 py-3 flex flex-col gap-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-text-secondary">Rank</span>
-            <span className="text-accent font-bold">{profile.lifter_rank}</span>
+        <div className="card overflow-hidden">
+          <div className="flex items-center px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+            <span className="flex-1 text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("stat")}
+            </span>
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("value")}
+            </span>
+          </div>
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-border-subtle">
+            <span className="text-sm text-text-primary">{t("rank")}</span>
+            <span className="text-sm font-medium text-accent">
+              {profile.lifter_rank}
+            </span>
           </div>
           {profile.current_week_streak > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-text-secondary">Weekly Streak</span>
-              <span className="text-text-primary">{profile.current_week_streak} week{profile.current_week_streak !== 1 ? "s" : ""}</span>
+            <div className="flex items-center justify-between px-4 py-2.5">
+              <span className="text-sm text-text-primary">{t("weeklyStreak")}</span>
+              <span className="text-sm font-medium tabular-nums text-accent">
+                {t("week", { count: profile.current_week_streak })}
+              </span>
             </div>
           )}
         </div>
@@ -202,18 +238,27 @@ export function SummaryClient({ summary }: { summary: SummaryData }) {
 
       {/* Achievements */}
       {newAchievements.length > 0 && (
-        <div className="mb-4">
-          <p className="text-xs font-medium text-text-secondary mb-2">
-            Achievements Unlocked
+        <div className="mb-6">
+          <p className="text-xs font-medium text-text-secondary mb-3">
+            {t("achievementsUnlocked")}
           </p>
           <div className="card overflow-hidden">
+            <div className="flex items-center px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+                {t("new")}
+              </span>
+            </div>
             {newAchievements.map((a, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 px-4 py-3 border-b border-border-subtle last:border-0"
+                className={`flex items-center gap-3 px-4 py-2.5 ${
+                  i < newAchievements.length - 1
+                    ? "border-b border-border-subtle"
+                    : ""
+                }`}
               >
                 <span className="text-lg">{a.icon}</span>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="text-sm text-accent font-medium">{a.name}</p>
                   <p className="text-xs text-text-muted">{a.description}</p>
                 </div>
@@ -224,17 +269,17 @@ export function SummaryClient({ summary }: { summary: SummaryData }) {
       )}
 
       {/* Actions */}
-      <div className="flex gap-2 mt-6">
+      <div className="flex gap-2">
         <Button onClick={handleShare} className="flex-1">
-          Share Link
+          {t("share")}
         </Button>
         {!session.template_id && (
           <Button variant="ghost" onClick={() => setShowSaveTemplate(true)}>
-            Save Template
+            {t("saveTemplate")}
           </Button>
         )}
         <Button variant="ghost" onClick={() => router.push("/workouts")}>
-          Back
+          {tc("back")}
         </Button>
       </div>
 

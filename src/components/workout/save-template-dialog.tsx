@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,8 @@ interface SaveTemplateDialogProps {
 }
 
 export function SaveTemplateDialog({ open, onClose, sessionId }: SaveTemplateDialogProps) {
+  const t = useTranslations("saveTemplate");
+  const tc = useTranslations("common");
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -26,24 +29,24 @@ export function SaveTemplateDialog({ open, onClose, sessionId }: SaveTemplateDia
   }
 
   return (
-    <Modal open={open} onClose={onClose} title="Save as Template">
+    <Modal open={open} onClose={onClose} title={t("title")}>
       <div className="flex flex-col gap-4">
         <p className="text-sm text-text-secondary">
-          Save this workout as a reusable template
+          {t("description")}
         </p>
         <Input
-          label="Template name"
+          label={t("nameLabel")}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="e.g. Push Day"
+          placeholder={t("namePlaceholder")}
           autoFocus
         />
         <div className="flex gap-2 justify-end">
           <Button variant="ghost" size="sm" onClick={onClose}>
-            Cancel
+            {tc("cancel")}
           </Button>
           <Button size="sm" onClick={handleSave} disabled={saving || !name.trim()}>
-            {saving ? "Saving..." : "Save"}
+            {saving ? t("saving") : t("save")}
           </Button>
         </div>
       </div>

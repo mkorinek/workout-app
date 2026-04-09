@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { formatTime } from "@/lib/utils";
 
 interface RestTimerProps {
@@ -20,6 +21,7 @@ export function RestTimer({
   timerVibration,
   timerFlash,
 }: RestTimerProps) {
+  const t = useTranslations("restTimer");
   const [remaining, setRemaining] = useState(duration);
   const [active, setActive] = useState(true);
   const [flashActive, setFlashActive] = useState(false);
@@ -112,7 +114,7 @@ export function RestTimer({
       <div className="card glow-accent p-4 sticky top-4 z-20 mb-4">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-medium text-accent">
-            Rest Timer
+            {t("title")}
           </span>
           <button
             onClick={() => {
@@ -121,7 +123,7 @@ export function RestTimer({
             }}
             className="text-xs text-text-muted hover:text-text-secondary transition-colors"
           >
-            Skip
+            {t("skip")}
           </button>
         </div>
 

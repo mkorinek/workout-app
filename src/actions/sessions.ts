@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
@@ -8,7 +8,7 @@ import { computeStreakUpdate } from "@/lib/streak";
 
 export async function createSession(templateId?: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { data, error } = await supabase
@@ -38,7 +38,7 @@ export async function getSession(sessionId: string) {
 
 export const getSessions = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data } = await supabase
@@ -75,7 +75,7 @@ export async function addSet(
     .single();
 
   if (error) return { error: error.message };
-  revalidatePath(`/workouts/${sessionId}`);
+  // Skip revalidatePath — client manages state optimistically
   return { data };
 }
 
@@ -106,7 +106,7 @@ export async function addSets(
     .select();
 
   if (error) return { error: error.message };
-  revalidatePath(`/workouts/${sessionId}`);
+  // Skip revalidatePath — client manages state optimistically
   return { data };
 }
 
@@ -163,7 +163,7 @@ export async function deleteSet(setId: string) {
 
 export async function finishWorkout(sessionId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase
@@ -211,7 +211,7 @@ export async function finishWorkout(sessionId: string) {
 
 export async function deleteSession(sessionId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   // Verify ownership
@@ -237,7 +237,7 @@ export async function deleteSession(sessionId: string) {
 
 export async function getSessionSummary(sessionId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return null;
 
   // Fetch session, profile, and set IDs in parallel
@@ -325,7 +325,7 @@ export async function getSessionSummary(sessionId: string) {
 
 export async function getSessionForTemplate(templateId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return null;
 
   const { data: session } = await supabase

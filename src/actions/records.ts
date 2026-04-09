@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { cache } from "react";
 
 export async function checkAndUpdatePR(
@@ -10,37 +10,26 @@ export async function checkAndUpdatePR(
   setId: string
 ) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { newPRs: [] };
 
   const volume = weightKg * reps;
   const now = new Date().toISOString();
 
-  // Fetch all three current records in parallel
-  const [{ data: currentWeight }, { data: currentReps }, { data: currentVolume }] =
-    await Promise.all([
-      supabase
-        .from("personal_records")
-        .select("value")
-        .eq("user_id", user.id)
-        .eq("exercise_name", exerciseName)
-        .eq("record_type", "max_weight")
-        .single(),
-      supabase
-        .from("personal_records")
-        .select("value")
-        .eq("user_id", user.id)
-        .eq("exercise_name", exerciseName)
-        .eq("record_type", "max_reps")
-        .single(),
-      supabase
-        .from("personal_records")
-        .select("value")
-        .eq("user_id", user.id)
-        .eq("exercise_name", exerciseName)
-        .eq("record_type", "max_volume")
-        .single(),
-    ]);
+  // Fetch all current records in a single query
+  const { data: currentRecords } = await supabase
+    .from("personal_records")
+    .select("record_type, value")
+    .eq("user_id", user.id)
+    .eq("exercise_name", exerciseName)
+    .in("record_type", ["max_weight", "max_reps", "max_volume"]);
+
+  const recordMap = new Map(
+    (currentRecords ?? []).map((r) => [r.record_type, r])
+  );
+  const currentWeight = recordMap.get("max_weight") ?? null;
+  const currentReps = recordMap.get("max_reps") ?? null;
+  const currentVolume = recordMap.get("max_volume") ?? null;
 
   const newPRs: string[] = [];
   const upserts: PromiseLike<unknown>[] = [];
@@ -81,7 +70,7 @@ export async function checkAndUpdatePR(
 
 export const getPersonalRecords = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data } = await supabase
@@ -95,7 +84,7 @@ export const getPersonalRecords = cache(async () => {
 
 export async function getExerciseProgress(exerciseName: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data: sets } = await supabase
@@ -109,7 +98,8 @@ export async function getExerciseProgress(exerciseName: string) {
     .eq("exercise_name", exerciseName)
     .eq("completed", true)
     .eq("workout_sessions.user_id", user.id)
-    .order("completed_at", { ascending: true });
+    .order("completed_at", { ascending: false })
+    .limit(500);
 
   if (!sets) return [];
 
@@ -130,5 +120,5 @@ export async function getExerciseProgress(exerciseName: string) {
   return Array.from(grouped.entries()).map(([date, stats]) => ({
     date,
     ...stats,
-  }));
+  })).reverse();
 }

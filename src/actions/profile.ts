@@ -1,14 +1,15 @@
 "use server";
 
-import { createClient, requireAdmin } from "@/lib/supabase/server";
+import { createClient, getAuthUser, requireAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { cache } from "react";
 import { getRankFromVolume, calculateVolume } from "@/lib/utils";
 import { getWeekStartDate, getWeekEndDate, computeDisplayStreak, computeStreakUpdate } from "@/lib/streak";
 
 export const getProfile = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return null;
 
   const { data } = await supabase
@@ -30,9 +31,11 @@ export async function updateProfile(updates: {
   weekly_workout_goal?: number | null;
   week_start_day?: number;
   accent_color?: number;
+  tracked_exercises?: string[];
+  language?: string;
 }) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase
@@ -42,6 +45,31 @@ export async function updateProfile(updates: {
 
   if (error) return { error: error.message };
   revalidatePath("/profile");
+  revalidatePath("/progress");
+  return { success: true };
+}
+
+export async function updateLanguage(language: string) {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ language, updated_at: new Date().toISOString() })
+    .eq("id", user.id);
+
+  if (error) return { error: error.message };
+
+  const cookieStore = await cookies();
+  cookieStore.set("locale", language, {
+    path: "/",
+    httpOnly: false,
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 365,
+  });
+
+  revalidatePath("/", "layout");
   return { success: true };
 }
 
@@ -276,16 +304,13 @@ export async function adminCheckAchievements() {
 
 export const getStreakData = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("weekly_workout_goal, week_start_day, current_week_streak, streak_last_completed_week")
-    .eq("id", user.id)
-    .single();
-
+  // Reuse cached getProfile() instead of a separate profiles query
+  const profile = await getProfile();
   if (!profile || !profile.weekly_workout_goal) return null;
+
+  const user = await getAuthUser();
+  if (!user) return null;
 
   const now = new Date();
   const weekStart = getWeekStartDate(now, profile.week_start_day);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { createSession, getSessionForTemplate, addSets } from "@/actions/sessions";
 import { getTemplates } from "@/actions/templates";
@@ -14,6 +15,7 @@ interface Template {
 
 export default function NewWorkoutPage() {
   const router = useRouter();
+  const t = useTranslations("newWorkout");
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
@@ -65,17 +67,17 @@ export default function NewWorkoutPage() {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <h1 className="text-lg font-bold text-text-primary mb-6">
-        New Workout
+        {t("title")}
       </h1>
 
       {/* Blank workout */}
       <div className="card p-4 mb-4">
-        <p className="text-sm text-text-primary mb-3">Start from scratch</p>
+        <p className="text-sm text-text-primary mb-3">{t("startFromScratch")}</p>
         <Button onClick={startBlank} disabled={starting} className="w-full">
           {starting ? (
-            <span className="animate-pulse-subtle">Starting...</span>
+            <span className="animate-pulse-subtle">{t("starting")}</span>
           ) : (
-            "Blank Workout"
+            t("blankWorkout")
           )}
         </Button>
       </div>
@@ -83,12 +85,12 @@ export default function NewWorkoutPage() {
       {/* Templates */}
       {loading ? (
         <div className="text-sm text-text-muted">
-          <span className="animate-pulse-subtle">Loading templates...</span>
+          <span className="animate-pulse-subtle">{t("loadingTemplates")}</span>
         </div>
       ) : templates.length > 0 ? (
         <div>
           <p className="text-xs text-text-secondary uppercase tracking-wider px-1 mb-1.5">
-            Or start from a saved template
+            {t("fromTemplate")}
           </p>
           <div className="card overflow-hidden">
             {templates.map((template, i) => (
@@ -115,7 +117,7 @@ export default function NewWorkoutPage() {
         </div>
       ) : (
         <p className="text-xs text-text-muted">
-          No saved templates yet. Finish a workout to save one.
+          {t("noTemplates")}
         </p>
       )}
     </div>

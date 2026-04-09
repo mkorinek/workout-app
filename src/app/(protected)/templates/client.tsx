@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCached } from "@/lib/cache/use-cached";
 import { getTemplates } from "@/actions/templates";
 import type { TemplatesData } from "@/lib/cache/app-store";
@@ -7,17 +8,18 @@ import Link from "next/link";
 
 export function TemplatesClient({ initialTemplates }: { initialTemplates: TemplatesData }) {
   const templates = useCached("templates", getTemplates, initialTemplates) ?? [];
+  const t = useTranslations("templates");
 
   return (
     <div className="p-4 max-w-lg mx-auto">
       <h1 className="text-lg font-bold text-text-primary mb-6">
-        Saved Templates
+        {t("title")}
       </h1>
 
       {templates.length === 0 ? (
         <div className="card p-8 text-center">
           <p className="text-sm text-text-muted">
-            No templates saved yet. Finish a workout to save one.
+            {t("noTemplates")}
           </p>
         </div>
       ) : (

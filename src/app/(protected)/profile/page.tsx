@@ -22,6 +22,7 @@ export default async function ProfilePage() {
         weekly_workout_goal: data.weekly_workout_goal ?? null,
         week_start_day: data.week_start_day ?? 1,
         is_admin: data.is_admin ?? false,
+        language: data.language ?? "en",
       }}
     />
   );

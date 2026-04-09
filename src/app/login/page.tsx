@@ -2,9 +2,11 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("login");
 
   async function handleGoogleLogin() {
     setLoading(true);
@@ -23,10 +25,10 @@ export default function LoginPage() {
         <div className="card-elevated overflow-hidden">
           <div className="p-8 text-center">
             <h1 className="text-2xl font-bold text-text-primary mb-2">
-              Workout
+              {t("title")}
             </h1>
             <p className="text-sm text-text-muted mb-8">
-              Track your progress, hit PRs, build streaks.
+              {t("subtitle")}
             </p>
 
             <button
@@ -35,16 +37,16 @@ export default function LoginPage() {
               className="w-full bg-accent text-white py-3 px-4 text-sm font-semibold hover:bg-accent-hover transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed rounded-md"
             >
               {loading ? (
-                <span className="animate-pulse-subtle">Connecting...</span>
+                <span className="animate-pulse-subtle">{t("connecting")}</span>
               ) : (
-                "Sign in with Google"
+                t("signIn")
               )}
             </button>
           </div>
         </div>
 
         <p className="text-text-muted text-[10px] text-center mt-4">
-          All data encrypted &middot; Your gains are safe
+          {t("footer")}
         </p>
       </div>
     </div>

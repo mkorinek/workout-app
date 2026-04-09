@@ -2,12 +2,12 @@
 
 import { useState, useCallback, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ExerciseGroup } from "@/components/workout/exercise-group";
 import { ExercisePickerModal } from "@/components/workout/exercise-picker-modal";
 import { RestTimer } from "@/components/workout/rest-timer";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { useToast } from "@/components/ui/toast";
 import {
@@ -75,7 +75,11 @@ export function WorkoutSessionClient({
 }: WorkoutSessionClientProps) {
   const router = useRouter();
   const { addToast } = useToast();
+  const t = useTranslations("activeWorkout");
+  const tc = useTranslations("common");
   const [sets, setSets] = useState<SetData[]>(session.workout_sets);
+  const setsRef = useRef(sets);
+  setsRef.current = sets;
   const [showTimer, setShowTimer] = useState(false);
   const [timerDuration, setTimerDuration] = useState(defaultRestSeconds);
   const [prSets, setPrSets] = useState<Set<string>>(new Set());
@@ -108,9 +112,10 @@ export function WorkoutSessionClient({
 
   const handleAddSetForExercise = useCallback(
     async (exerciseName: string) => {
-      const exerciseSets = sets.filter((s) => s.exercise_name === exerciseName);
+      const currentSets = setsRef.current;
+      const exerciseSets = currentSets.filter((s) => s.exercise_name === exerciseName);
       const lastSet = exerciseSets[exerciseSets.length - 1];
-      const newSetNumber = sets.length + 1;
+      const newSetNumber = currentSets.length + 1;
 
       const result = await addSet(
         session.id,
@@ -125,14 +130,14 @@ export function WorkoutSessionClient({
         setSets((prev) => [...prev, result.data as SetData]);
       }
     },
-    [sets, session.id, defaultRestSeconds]
+    [session.id, defaultRestSeconds]
   );
 
   const updateTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
   const handleUpdate = useCallback(
     (index: number, field: SetMutableField, value: string | number) => {
-      const set = sets[index];
+      const set = setsRef.current[index];
       if (!set?.id) return;
 
       const numValue = typeof value === "string" ? parseFloat(value) : value;
@@ -155,12 +160,12 @@ export function WorkoutSessionClient({
         }, 500)
       );
     },
-    [sets]
+    []
   );
 
   const handleComplete = useCallback(
     async (index: number, completed: boolean) => {
-      const set = sets[index];
+      const set = setsRef.current[index];
       if (!set?.id) return;
 
       setSets((prev) => {
@@ -182,7 +187,7 @@ export function WorkoutSessionClient({
 
           if (newPRs.length > 0) {
             setPrSets((prev) => new Set([...prev, set.id]));
-            addToast(`${set.exercise_name} — new PR!`, "success");
+            addToast(t("newPR", { exercise: set.exercise_name }), "success");
           }
         }
 
@@ -194,27 +199,27 @@ export function WorkoutSessionClient({
         await uncompleteSet(set.id);
       }
     },
-    [sets, defaultRestSeconds, addToast]
+    [defaultRestSeconds, addToast]
   );
 
   const handleDelete = useCallback(
     async (index: number) => {
-      const set = sets[index];
+      const set = setsRef.current[index];
       if (!set?.id) return;
 
       setSets((prev) => prev.filter((_, i) => i !== index));
       await deleteSet(set.id);
     },
-    [sets]
+    []
   );
 
   const handleDeleteExercise = useCallback(
     async (exerciseName: string) => {
-      const exerciseSets = sets.filter((s) => s.exercise_name === exerciseName);
+      const exerciseSets = setsRef.current.filter((s) => s.exercise_name === exerciseName);
       setSets((prev) => prev.filter((s) => s.exercise_name !== exerciseName));
       await Promise.all(exerciseSets.map((s) => deleteSet(s.id)));
     },
-    [sets]
+    []
   );
 
   const handleFinish = useCallback(async () => {
@@ -234,7 +239,6 @@ export function WorkoutSessionClient({
 
   const handleDeleteSession = useCallback(async () => {
     setDeleting(true);
-    // Optimistic: remove from Zustand cache immediately
     const store = useAppStore.getState();
     const current = store.sessions.data;
     if (current) {
@@ -271,57 +275,75 @@ export function WorkoutSessionClient({
   return (
     <div className="p-4 max-w-lg mx-auto">
       {/* Header */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <h1 className="text-lg font-bold text-text-primary">
-            {isCompleted ? "Workout Complete" : "Active Workout"}
-          </h1>
-          <span className="text-xs text-text-muted tabular-nums">
-            {formatDate(session.started_at)}
-          </span>
-        </div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-lg font-bold text-text-primary">
+          {isCompleted ? t("complete") : t("active")}
+        </h1>
+        <span className="text-xs text-text-muted tabular-nums">
+          {formatDate(session.started_at)}
+        </span>
+      </div>
 
-        {/* Stats bar */}
-        <div className="flex gap-4 text-xs text-text-secondary">
-          <span>
-            Sets: <span className="text-text-primary font-medium">{completedSets}/{sets.length}</span>
-          </span>
-          <span>
-            Volume: <span className="text-text-primary font-medium">{totalVolume.toLocaleString()} kg</span>
-          </span>
+      {/* Stats */}
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("overview")}
+        </p>
+        <div className="card overflow-hidden">
+          <div className="flex items-center px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
+            <span className="flex-1 text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("sets")}
+            </span>
+            <span className="w-24 text-right text-[10px] font-semibold uppercase tracking-wider text-accent/60">
+              {t("volume")}
+            </span>
+          </div>
+          <div className="flex items-center px-4 py-3">
+            <span className="flex-1 text-sm font-medium tabular-nums text-accent">
+              {completedSets}/{sets.length}
+            </span>
+            <span className="w-24 text-right text-sm font-medium tabular-nums text-accent">
+              {totalVolume.toLocaleString()} {tc("kg")}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* View summary link for completed workouts */}
+      {/* View summary link */}
       {isCompleted && (
         <Link
           href={`/workouts/${session.id}/summary`}
-          className="block mb-4 bg-accent text-white p-3 text-center text-sm font-semibold rounded-md hover:bg-accent-hover transition-colors"
+          className="block mb-6 bg-accent text-white p-3 text-center text-sm font-semibold rounded-md hover:bg-accent-hover transition-colors"
         >
-          View Summary
+          {t("viewSummary")}
         </Link>
       )}
 
       {/* Rest Timer */}
       {showTimer && (
-        <RestTimer
-          duration={timerDuration}
-          onComplete={() => setShowTimer(false)}
-          onSkip={() => setShowTimer(false)}
-          timerSound={timerSound}
-          timerVibration={timerVibration}
-          timerFlash={timerFlash}
-        />
+        <div className="mb-4">
+          <RestTimer
+            duration={timerDuration}
+            onComplete={() => setShowTimer(false)}
+            onSkip={() => setShowTimer(false)}
+            timerSound={timerSound}
+            timerVibration={timerVibration}
+            timerFlash={timerFlash}
+          />
+        </div>
       )}
 
       {/* Exercise Groups */}
-      {grouped.length === 0 ? (
-        <div className="bg-surface shadow-sm rounded-lg p-6 text-center text-text-muted text-sm mb-4">
-          No exercises yet. Add one below.
-        </div>
-      ) : (
-        <div className="mb-4">
-          {grouped.map((group) => (
+      <div className="mb-6">
+        <p className="text-xs font-medium text-text-secondary mb-3">
+          {t("exercises")}
+        </p>
+        {grouped.length === 0 ? (
+          <div className="card p-6 text-center text-text-muted text-sm">
+            {t("noExercises")}
+          </div>
+        ) : (
+          grouped.map((group) => (
             <ExerciseGroup
               key={group.exerciseName}
               exerciseName={group.exerciseName}
@@ -337,30 +359,33 @@ export function WorkoutSessionClient({
               prSets={prSets}
               disabled={isCompleted}
             />
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
 
       {/* Actions */}
       {!isCompleted && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-4">
           <Button onClick={() => setShowExercisePicker(true)} className="flex-1">
-            + Add Exercise
+            {t("addExercise")}
           </Button>
           <Button
             variant="success"
             onClick={handleFinish}
             disabled={finishing || sets.length === 0}
           >
-            {finishing ? "Finishing..." : "Finish"}
+            {finishing ? t("finishing") : t("finish")}
           </Button>
         </div>
       )}
 
       {/* Delete workout */}
-      <div className="mt-4">
-        <button onClick={() => setConfirmDelete(true)}>
-          <Badge variant="destructive">Delete workout</Badge>
+      <div className="mb-4">
+        <button
+          onClick={() => setConfirmDelete(true)}
+          className="text-xs text-destructive/60 hover:text-destructive transition-colors"
+        >
+          {t("deleteWorkout")}
         </button>
       </div>
 
@@ -368,10 +393,10 @@ export function WorkoutSessionClient({
         open={confirmDelete}
         onClose={() => setConfirmDelete(false)}
         onConfirm={handleDeleteSession}
-        title="Delete Workout"
-        description="This action cannot be undone. All sets and data for this workout will be permanently removed."
-        confirmLabel="Yes, delete"
-        loadingLabel="Deleting..."
+        title={t("deleteTitle")}
+        description={t("deleteDescription")}
+        confirmLabel={t("yesDelete")}
+        loadingLabel={t("deleting")}
         loading={deleting}
       />
 

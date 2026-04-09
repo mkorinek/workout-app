@@ -1,0 +1,806 @@
+[
+  {
+    "name": "Barbell Close-grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Incline Reverse-grip Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Jm Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Close-grip Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Wide-grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Bench Dip (knees Bent)",
+    "category": "Arms"
+  },
+  {
+    "name": "Biceps Pull-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Body-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Bodyweight Kneeling Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Close-grip Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Finger Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Elbow Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Supination",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Twisting Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Waiter Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Elbow Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Finger Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Handstand",
+    "category": "Arms"
+  },
+  {
+    "name": "Incline Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Push-up Close-grip Off Dumbbell",
+    "category": "Arms"
+  },
+  {
+    "name": "Push-up on Lower Arms",
+    "category": "Arms"
+  },
+  {
+    "name": "Ring Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Side Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Side Wrist Pull Stretch",
+    "category": "Arms"
+  },
+  {
+    "name": "Stalder Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Three Bench Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Triceps Dip (between Benches)",
+    "category": "Arms"
+  },
+  {
+    "name": "Triceps Dips Floor",
+    "category": "Arms"
+  },
+  {
+    "name": "Wrist Circles",
+    "category": "Arms"
+  },
+  {
+    "name": "Archer Pull Up",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Incline Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Pullover",
+    "category": "Back"
+  },
+  {
+    "name": "Bench Pull-ups",
+    "category": "Back"
+  },
+  {
+    "name": "Cambered Bar Lying Row",
+    "category": "Back"
+  },
+  {
+    "name": "Chin-up",
+    "category": "Back"
+  },
+  {
+    "name": "Chin-ups (narrow Parallel Grip)",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Decline Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Incline Row",
+    "category": "Back"
+  },
+  {
+    "name": "Elevator",
+    "category": "Back"
+  },
+  {
+    "name": "Hyperextension (on Bench)",
+    "category": "Back"
+  },
+  {
+    "name": "Inverted Row",
+    "category": "Back"
+  },
+  {
+    "name": "Inverted Row Bent Knees",
+    "category": "Back"
+  },
+  {
+    "name": "Kipping Muscle Up",
+    "category": "Back"
+  },
+  {
+    "name": "Kneeling Lat Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Muscle Up",
+    "category": "Back"
+  },
+  {
+    "name": "One Arm Against Wall",
+    "category": "Back"
+  },
+  {
+    "name": "One Arm Chin-up",
+    "category": "Back"
+  },
+  {
+    "name": "One Arm Towel Row",
+    "category": "Back"
+  },
+  {
+    "name": "Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Rocky Pull-up Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Scapula Dips",
+    "category": "Back"
+  },
+  {
+    "name": "Seated Lower Back Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Side-to-side Chin",
+    "category": "Back"
+  },
+  {
+    "name": "Sphinx",
+    "category": "Back"
+  },
+  {
+    "name": "Standing Archer",
+    "category": "Back"
+  },
+  {
+    "name": "Standing Lateral Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Wide Grip Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Wide Grip Rear Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Bear Crawl",
+    "category": "Cardio"
+  },
+  {
+    "name": "Burpee",
+    "category": "Cardio"
+  },
+  {
+    "name": "High Knee Against Wall",
+    "category": "Cardio"
+  },
+  {
+    "name": "Jack Burpee",
+    "category": "Cardio"
+  },
+  {
+    "name": "Mountain Climber",
+    "category": "Cardio"
+  },
+  {
+    "name": "Push to Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Short Stride Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Skater Hops",
+    "category": "Cardio"
+  },
+  {
+    "name": "Ski Step",
+    "category": "Cardio"
+  },
+  {
+    "name": "Swing 360",
+    "category": "Cardio"
+  },
+  {
+    "name": "Wheel Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Barbell Decline Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Decline Wide-grip Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Incline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Wide Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Dip",
+    "category": "Chest"
+  },
+  {
+    "name": "Decline Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Decline Hammer Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Decline Twist Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Alternate Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Breeding",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Hammer Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Shoulder Raise",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Twisted Flyes",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Full Planche Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Push-up (on Box)",
+    "category": "Chest"
+  },
+  {
+    "name": "Isometric Chest Squeeze",
+    "category": "Chest"
+  },
+  {
+    "name": "Isometric Wipers",
+    "category": "Chest"
+  },
+  {
+    "name": "Korean Dips",
+    "category": "Chest"
+  },
+  {
+    "name": "Plyo Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Push and Pull Bodyweight",
+    "category": "Chest"
+  },
+  {
+    "name": "Raise Single Arm Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Single Arm Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Suspended Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Press Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Rollerout From Bench",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Seated Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Standing Ab Rollerout",
+    "category": "Core"
+  },
+  {
+    "name": "Bodyweight Incline Side Plank",
+    "category": "Core"
+  },
+  {
+    "name": "Bottoms-up",
+    "category": "Core"
+  },
+  {
+    "name": "Butt-ups",
+    "category": "Core"
+  },
+  {
+    "name": "Cocoons",
+    "category": "Core"
+  },
+  {
+    "name": "Crab Twist Toe Touch",
+    "category": "Core"
+  },
+  {
+    "name": "Dead Bug",
+    "category": "Core"
+  },
+  {
+    "name": "Flag",
+    "category": "Core"
+  },
+  {
+    "name": "Frog Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Front Plank with Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Full Maltese",
+    "category": "Core"
+  },
+  {
+    "name": "Full Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Groin Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Hip Raise (bent Knee)",
+    "category": "Core"
+  },
+  {
+    "name": "Inchworm",
+    "category": "Core"
+  },
+  {
+    "name": "Landmine 180",
+    "category": "Core"
+  },
+  {
+    "name": "Lean Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Lunge with Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Lying Elbow to Knee",
+    "category": "Core"
+  },
+  {
+    "name": "Potty Squat",
+    "category": "Core"
+  },
+  {
+    "name": "Power Point Plank",
+    "category": "Core"
+  },
+  {
+    "name": "Spine Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Straddle Maltese",
+    "category": "Core"
+  },
+  {
+    "name": "Suspended Abdominal Fallout",
+    "category": "Core"
+  },
+  {
+    "name": "Wind Sprints",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Bench Front Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Bench Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Clean and Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Front Chest Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Glute Bridge",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell High Bar Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Jump Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Low Bar Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell One Leg Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Overhead Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Romanian Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Seated Good Morning",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Side Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Single Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Speed Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Squat (on Knees)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Standing Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Sumo Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Chair Leg Extended Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Curtsey Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Contralateral Forward Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell One Arm Snatch",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Rear Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Single Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Single Leg Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Step-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Stiff Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Straight Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Supported Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Flutter Kicks",
+    "category": "Legs"
+  },
+  {
+    "name": "Frankenstein Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Glute-ham Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Iron Cross Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Kick Out Sit",
+    "category": "Legs"
+  },
+  {
+    "name": "Kneeling Jump Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Push-up Inside Leg Kick",
+    "category": "Legs"
+  },
+  {
+    "name": "Runners Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Side Bridge Hip Abduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Side Hip Abduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Side Plank Hip Adduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Snatch Pull",
+    "category": "Legs"
+  },
+  {
+    "name": "Spider Crawl Push Up",
+    "category": "Legs"
+  },
+  {
+    "name": "Split Squats",
+    "category": "Legs"
+  },
+  {
+    "name": "Squat Jerk",
+    "category": "Legs"
+  },
+  {
+    "name": "Suspended Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Twist Hip Lift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Rear Delt Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Rear Delt Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Standing Bradford Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Thruster",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Wide-grip Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Arnold Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Cuban Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Incline T-raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Iron Cross",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Push Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Rear Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Rear Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Rotation Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Alternate Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Alternate Shoulder",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Landmine Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Neck Side Stretch",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Side Push Neck Stretch",
+    "category": "Shoulders"
+  }
+]

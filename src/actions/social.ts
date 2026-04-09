@@ -1,12 +1,12 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuthUser } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
 export const getFollowing = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data } = await supabase
@@ -19,7 +19,7 @@ export const getFollowing = cache(async () => {
 
 export const getFollowedProfiles = cache(async () => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return [];
 
   const { data: follows } = await supabase
@@ -56,7 +56,7 @@ export async function searchUsers(query: string) {
 
 export async function followUser(followingId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
   if (user.id === followingId) return { error: "Cannot follow yourself" };
 
@@ -75,7 +75,7 @@ export async function followUser(followingId: string) {
 
 export async function unfollowUser(followingId: string) {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getAuthUser();
   if (!user) return { error: "Not authenticated" };
 
   const { error } = await supabase

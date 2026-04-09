@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { ChevronDownIcon, ChevronUpIcon, TrashIcon } from "@/components/icons";
@@ -17,29 +18,30 @@ interface SetRowProps {
 }
 
 export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isPR, disabled }: SetRowProps) {
+  const t = useTranslations("setRow");
   const [expanded, setExpanded] = useState(false);
 
   return (
     <div
-      className={`border-b border-border-subtle py-3 px-3 ${
-        set.completed ? "opacity-60" : ""
+      className={`border-b border-border-subtle transition-opacity ${
+        set.completed ? "opacity-50" : ""
       }`}
     >
-      <div className="flex items-center gap-3">
-        {/* Set number */}
-        <span className="text-xs text-text-muted w-5 shrink-0 tabular-nums">
+      <div className="flex items-center px-3 py-2.5">
+        {/* Left: number + checkbox */}
+        <span className="text-[10px] text-text-muted w-5 shrink-0 tabular-nums text-center">
           {displayNumber ?? set.set_number}
         </span>
+        <div className="ml-2 shrink-0">
+          <Checkbox
+            checked={set.completed}
+            onChange={onComplete}
+            disabled={disabled}
+          />
+        </div>
 
-        {/* Checkbox */}
-        <Checkbox
-          checked={set.completed}
-          onChange={onComplete}
-          disabled={disabled}
-        />
-
-        {/* Weight */}
-        <div className="w-20 shrink-0">
+        {/* Center: weight + reps inputs */}
+        <div className="flex-1 flex items-center justify-center gap-2 mx-3">
           <input
             type="text"
             inputMode="decimal"
@@ -51,14 +53,11 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
                 onUpdate("weight_kg", v === "" ? 0 : v);
               }
             }}
-            placeholder="kg"
-            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
+            placeholder="0"
+            className="flex-1 min-w-0 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
             disabled={disabled}
           />
-        </div>
-
-        {/* Reps */}
-        <div className="w-16 shrink-0">
+          <span className="text-[10px] text-text-muted shrink-0">×</span>
           <input
             type="text"
             inputMode="numeric"
@@ -70,62 +69,65 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
                 onUpdate("reps", v === "" ? 0 : parseInt(v));
               }
             }}
-            placeholder="reps"
-            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-sm py-1.5 px-2 w-full text-right focus:border-accent focus:ring-1 focus:ring-accent outline-none placeholder:text-text-muted tabular-nums"
+            placeholder="0"
+            className="flex-1 min-w-0 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
             disabled={disabled}
           />
         </div>
 
-        {/* PR badge */}
-        {isPR && <Badge variant="warning">PR</Badge>}
+        {/* Right: PR badge, expand, delete */}
+        <div className="flex items-center gap-1 shrink-0">
+          {isPR && <Badge variant="warning">PR</Badge>}
 
-        {/* Note indicator */}
-        {set.note && !expanded && (
-          <span className="text-[10px] text-accent-pink shrink-0">*</span>
-        )}
-
-        {/* Expand for note */}
-        <button
-          type="button"
-          onClick={() => setExpanded(!expanded)}
-          className="text-text-muted hover:text-text-secondary transition-colors shrink-0"
-        >
-          {expanded ? <ChevronUpIcon size={16} /> : <ChevronDownIcon size={16} />}
-        </button>
-
-        {/* Delete */}
-        {!disabled && (
           <button
             type="button"
-            onClick={onDelete}
-            className="text-destructive shrink-0 opacity-60 hover:opacity-100 transition-opacity"
+            onClick={() => setExpanded(!expanded)}
+            className="text-text-muted hover:text-text-secondary transition-colors p-1"
           >
-            <TrashIcon size={14} />
+            {expanded ? <ChevronUpIcon size={14} /> : <ChevronDownIcon size={14} />}
           </button>
-        )}
+
+          {!disabled && (
+            <button
+              type="button"
+              onClick={onDelete}
+              className="text-destructive shrink-0 opacity-40 hover:opacity-100 transition-opacity p-1"
+            >
+              <TrashIcon size={12} />
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Expanded: note + rest time */}
+      {/* Note — always visible when it exists */}
+      {set.note && !expanded && (
+        <div className="px-3 pb-2 -mt-1 ml-7">
+          <p className="text-[11px] text-accent/70 italic leading-tight">
+            {set.note}
+          </p>
+        </div>
+      )}
+
+      {/* Expanded: note input + rest time */}
       {expanded && (
-        <div className="mt-3 ml-8 flex flex-col gap-2">
+        <div className="px-3 pb-3 pt-0 flex gap-2">
           <input
             type="text"
             value={set.note ?? ""}
             onChange={(e) => onUpdate("note", e.target.value)}
-            placeholder="Add a note..."
-            className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-full focus:border-accent outline-none placeholder:text-text-muted"
+            placeholder={t("notePlaceholder")}
+            className="flex-1 bg-surface-elevated rounded-sm text-text-primary text-xs py-1.5 px-2 focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted"
             disabled={disabled}
           />
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-text-muted">Rest</span>
+          <div className="flex items-center gap-1 shrink-0">
             <input
               type="number"
               value={set.rest_seconds}
               onChange={(e) => onUpdate("rest_seconds", parseInt(e.target.value) || 60)}
-              className="bg-surface-elevated shadow-sm border-0 rounded-sm text-text-primary text-xs py-1.5 px-2 w-14 text-right focus:border-accent outline-none tabular-nums"
+              className="bg-surface-elevated rounded-sm text-text-primary text-xs py-1.5 px-1.5 w-12 text-center focus:ring-1 focus:ring-accent outline-none border-0 tabular-nums"
               disabled={disabled}
             />
-            <span className="text-xs text-text-muted">s</span>
+            <span className="text-[10px] text-text-muted">{t("seconds")}</span>
           </div>
         </div>
       )}
