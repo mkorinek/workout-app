@@ -46,7 +46,7 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
             type="text"
             inputMode="decimal"
             pattern="[0-9]*\.?[0-9]*"
-            value={set.weight_kg || ""}
+            value={set.weight_kg != null && set.weight_kg !== 0 ? set.weight_kg : ""}
             onChange={(e) => {
               const v = e.target.value;
               if (v === "" || /^\d*\.?\d*$/.test(v)) {
@@ -54,7 +54,7 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
               }
             }}
             placeholder="0"
-            className="flex-1 min-w-0 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
+            className="w-0 flex-1 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
             disabled={disabled}
           />
           <span className="text-[10px] text-text-muted shrink-0">×</span>
@@ -62,7 +62,7 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
-            value={set.reps || ""}
+            value={set.reps != null && set.reps !== 0 ? set.reps : ""}
             onChange={(e) => {
               const v = e.target.value;
               if (v === "" || /^\d+$/.test(v)) {
@@ -70,7 +70,7 @@ export function SetRow({ set, displayNumber, onUpdate, onComplete, onDelete, isP
               }
             }}
             placeholder="0"
-            className="flex-1 min-w-0 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
+            className="w-0 flex-1 bg-surface-elevated rounded-sm text-text-primary text-sm py-1.5 px-2 text-center focus:ring-1 focus:ring-accent outline-none border-0 placeholder:text-text-muted/40 tabular-nums"
             disabled={disabled}
           />
         </div>
