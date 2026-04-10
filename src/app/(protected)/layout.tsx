@@ -26,9 +26,7 @@ export default async function ProtectedLayout({
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select(
-      "lifter_rank, weekly_workout_goal, current_week_streak, streak_last_completed_week, week_start_day, display_name, accent_color, language",
-    )
+    .select("*")
     .eq("id", user.id)
     .single();
 
