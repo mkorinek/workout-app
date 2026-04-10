@@ -1,6 +1,74 @@
 [
   {
+    "name": "Active Style Cable Pushdown",
+    "category": "Arms"
+  },
+  {
+    "name": "Assisted Standing Triceps Extension (with Towel)",
+    "category": "Arms"
+  },
+  {
+    "name": "Assisted Standing Triceps Extension (with Towel) With Horizontal",
+    "category": "Arms"
+  },
+  {
+    "name": "Assisted Triceps Dip (kneeling)",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Alternating Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Band One Arm Overhead Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Side Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Band Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Alternate Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Biceps Curl (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
     "name": "Barbell Close-grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Decline Close Grip To Skull Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Drag Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Incline Close Grip Bench Press",
     "category": "Arms"
   },
   {
@@ -12,11 +80,135 @@
     "category": "Arms"
   },
   {
+    "name": "Barbell Lying Back Of The Head Tricep Extension",
+    "category": "Arms"
+  },
+  {
     "name": "Barbell Lying Close-grip Press",
     "category": "Arms"
   },
   {
+    "name": "Barbell Lying Close-grip Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Triceps Extension Double",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Lying Triceps Extension Skull Crusher",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell One Arm Floor Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Palms Down Wrist Curl Over A Bench",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Palms Up Wrist Curl Over A Bench",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Pin Presses",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Prone Incline Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Prone Incline Curl With Intensive",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Revers Wrist Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Close-grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Grip Skullcrusher",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Preacher Curl Inclined",
+    "category": "Arms"
+  },
+  {
     "name": "Barbell Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Reverse Wrist Curl - Prone Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Seated Close Grip Behind Neck Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Seated Close-grip Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Seated Overhead Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Back Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Close Grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Overhead Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Reverse Grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Reverse Grip Curl Resistance",
+    "category": "Arms"
+  },
+  {
+    "name": "Barbell Standing Wide Grip Biceps Curl",
     "category": "Arms"
   },
   {
@@ -28,7 +220,23 @@
     "category": "Arms"
   },
   {
+    "name": "Barbell Wrist Curl V. 2",
+    "category": "Arms"
+  },
+  {
     "name": "Bench Dip (knees Bent)",
+    "category": "Arms"
+  },
+  {
+    "name": "Bench Dip On Floor",
+    "category": "Arms"
+  },
+  {
+    "name": "Biceps Leg Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Biceps Narrow Pull-ups",
     "category": "Arms"
   },
   {
@@ -44,7 +252,303 @@
     "category": "Arms"
   },
   {
+    "name": "Bodyweight Side Lying Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Alternate Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Close Grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Concentration Curl Tempo",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Concentration Extension (on Knee)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Drag Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Hammer Curl (with Rope)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable High Pulley Overhead Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Incline Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Kneeling Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Lying Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Lying Close-grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Lying Triceps Extension V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable One Arm Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable One Arm Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable One Arm Reverse Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable One Arm Tricep Pushdown",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Overhead Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Overhead Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Overhead Triceps Extension (rope Attachment)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Pulldown Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Pushdown",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Pushdown (with Rope Attachment)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rear Drive",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse Grip Triceps Pushdown (sz-bar) (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse One Arm Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Reverse-grip Pushdown",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope Hammer Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope High Pulley Overhead Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope Incline Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope Incline Tricep Extension - Reverse Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope Lying On Floor Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Rope One Arm Hammer Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Seated Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Seated One Arm Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Seated Overhead Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Squatting Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Standing Back Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Standing Inner Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Standing One Arm Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Standing Pulldown (with Rope)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Standing Reverse Grip One Arm Overhead Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Triceps Pushdown (v-bar)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Triceps Pushdown (v-bar) (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Two Arm Curl On Incline Bench",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Two Arm Tricep Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Cable Wrist Curl",
+    "category": "Arms"
+  },
+  {
     "name": "Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Close-grip Push-up (on Knees)",
+    "category": "Arms"
+  },
+  {
+    "name": "Complete Style Ez Bar Lying Close Grip Triceps Extension Behind Head",
+    "category": "Arms"
+  },
+  {
+    "name": "Controlled Wrist Rollerer",
+    "category": "Arms"
+  },
+  {
+    "name": "Diamond Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternate Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternate Biceps Curl (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternate Hammer Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternate Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternate Seated Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternating Bicep Curl With Leg Raised On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Alternating Seated Bicep Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Bicep Curl Lunge With Bowling Motion",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Bicep Curl On Exercise Ball With Leg Raised",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Bicep Curl With Stork Stance",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Biceps Curl (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Biceps Curl Reverse",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Biceps Curl Squat",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Biceps Curl V Sit On Bosu Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Close Grip Press",
     "category": "Arms"
   },
   {
@@ -52,7 +556,115 @@
     "category": "Arms"
   },
   {
+    "name": "Dumbbell Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Cross Body Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Cross Body Hammer Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Decline One Arm Hammer Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Decline Triceps Extension",
+    "category": "Arms"
+  },
+  {
     "name": "Dumbbell Finger Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Forward Lunge Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Hammer Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Hammer Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Hammer Curl With Traditional",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Hammer Curls (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell High Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Hammer Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Inner Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Hammer Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Hammer Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Incline Two Arm Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Kickbacks On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Kneeling Bicep Curl Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lunge With Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Alternate Extension",
     "category": "Arms"
   },
   {
@@ -60,7 +672,367 @@
     "category": "Arms"
   },
   {
+    "name": "Dumbbell Lying Extension (across Face)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Pronated Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Supinated Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Pronation",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Pronation On Floor",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Single Extension",
+    "category": "Arms"
+  },
+  {
     "name": "Dumbbell Lying Supination",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Supination On Floor",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Supine Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Supine Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Lying Wide Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Neutral Grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Concentration Curl (on Stability Ball)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm French Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Hammer Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Hammer Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Prone Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Prone Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Prone Hammer Curl - Macro Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Reverse Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Reverse Spider Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Seated Bicep Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Seated Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Seated Neutral Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Standing Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Standing Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Triceps Extension (on Bench)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell One Arm Zottman Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench Neutral Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench One Arm Neutral Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench One Arm Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench One Arm Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench One Arm Wrist Curl - Strength Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench Revers Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Over Bench Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Palms In Incline Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Peacher Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Preacher Curl Over Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Pronate-grip Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Prone Incline Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Prone Incline Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Revers Grip Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Reverse Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Reverse Spider Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Reverse Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Alternate Hammer Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Bench Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Bent Over Alternate Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Bent Over Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Biceps Curl (on Stability Ball)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Biceps Curl To Shoulder Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Inner Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Neutral Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated One Arm Bicep Curl On Exercise Ball With Leg Raised",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated One Arm Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated One Arm Rotate",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Palms Up Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Revers Grip Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Reverse Grip One Arm Overhead Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Seated Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Alternate Hammer Curl And Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Alternating Tricep Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Bent Over One Arm Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Bent Over Two Arm Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Inner Biceps Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Kickback",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Curl (over Incline Bench)",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Curl Over Incline Bench",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Reverse Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Reverse Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Standing Zottman Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Step Up Single Leg Balance With Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Step Up Single Leg Balance With Bicep Curl - Chair Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Tate Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Tricep Kickback With Stork Stance",
     "category": "Arms"
   },
   {
@@ -72,7 +1044,131 @@
     "category": "Arms"
   },
   {
+    "name": "Dumbbell Zottman Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbell Zottman Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Dumbbells Seated Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dynamic Style Band Side Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Dynamic Style Barbell Lying Back Of The Head Tricep Extension",
+    "category": "Arms"
+  },
+  {
     "name": "Elbow Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Endurance Style One Arm Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Exercise Ball Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Exercise Ball Seated Triceps Stretch",
+    "category": "Arms"
+  },
+  {
+    "name": "Exercise Ball Seated Triceps Stretch Wide",
+    "category": "Arms"
+  },
+  {
+    "name": "Exercise Ball Supine Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Bar French Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Bar Lying Close Grip Triceps Extension Behind Head",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Bar Seated Close Grip Concentration Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Bar Standing French Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Close Grip Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Close Grip Preacher Curl - Precision Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Close-grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Decline Close Grip Face Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Decline Close Grip Face Press - Mini Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Decline Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Incline Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Jm Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Reverse Grip Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Reverse Grip Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Seated Curls",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Seated Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez Barbell Spider Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez-bar Biceps Curl (with Arm Blaster)",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez-bar Close-grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Ez-barbell Standing Wide Grip Biceps Curl",
     "category": "Arms"
   },
   {
@@ -80,11 +1176,123 @@
     "category": "Arms"
   },
   {
+    "name": "Flexible Cable Triceps Pushdown (v-bar)",
+    "category": "Arms"
+  },
+  {
     "name": "Handstand",
     "category": "Arms"
   },
   {
+    "name": "Handstand Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Hold Style Dumbbell Alternating Seated Bicep Curl On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Impossible Dips",
+    "category": "Arms"
+  },
+  {
     "name": "Incline Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Intermediate Style Dumbbell Preacher Curl Over Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Kettlebell Alternating Hang Clean",
+    "category": "Arms"
+  },
+  {
+    "name": "Kettlebell Bottoms Up Clean From The Hang Position",
+    "category": "Arms"
+  },
+  {
+    "name": "Kettlebell Double Alternating Hang Clean",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Gripper Hands",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Hammer Grip Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Overhand Triceps Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Preacher Curl V. 2",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Reverse Grip Preacher Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Reverse Grip Preacher Curl With Precision",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Seated Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Lever Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Macro Style Close-grip Push-up",
+    "category": "Arms"
+  },
+  {
+    "name": "Medicine Ball Close Grip Push Up",
+    "category": "Arms"
+  },
+  {
+    "name": "Medicine Ball Supine Chest Throw",
+    "category": "Arms"
+  },
+  {
+    "name": "Modified Push Up To Lower Arms",
+    "category": "Arms"
+  },
+  {
+    "name": "Narrow Push-up On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Olympic Barbell Hammer Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Olympic Barbell Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "One Arm Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Overhead Triceps Stretch",
+    "category": "Arms"
+  },
+  {
+    "name": "Prone Medicine Ball Close Grip Push Up",
     "category": "Arms"
   },
   {
@@ -96,7 +1304,27 @@
     "category": "Arms"
   },
   {
+    "name": "Push-up On Lower Arms - Resistance Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Resistance Band Seated Biceps Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Reverse Dip",
+    "category": "Arms"
+  },
+  {
     "name": "Ring Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Rotated Dumbbell Pronate-grip Triceps Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Rough Cable Standing One Arm Triceps Extension",
     "category": "Arms"
   },
   {
@@ -108,7 +1336,43 @@
     "category": "Arms"
   },
   {
+    "name": "Ski Ergometer",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Close-grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Machine Bicep Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Machine Decline Close Grip Bench Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Machine Incline Tricep Extension",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Machine Incline Tricep Extension - Straight Variation",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Seated Wrist Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Smith Standing Back Wrist Curl",
+    "category": "Arms"
+  },
+  {
     "name": "Stalder Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Targeted Style Smith Close-grip Bench Press",
     "category": "Arms"
   },
   {
@@ -116,7 +1380,19 @@
     "category": "Arms"
   },
   {
+    "name": "Triceps Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Triceps Dip (bench Leg)",
+    "category": "Arms"
+  },
+  {
     "name": "Triceps Dip (between Benches)",
+    "category": "Arms"
+  },
+  {
+    "name": "Triceps Dip (between Benches) - Extreme Variation",
     "category": "Arms"
   },
   {
@@ -124,11 +1400,159 @@
     "category": "Arms"
   },
   {
+    "name": "Triceps Press",
+    "category": "Arms"
+  },
+  {
+    "name": "Triceps Stretch",
+    "category": "Arms"
+  },
+  {
+    "name": "Wall Style Dumbbell One Arm French Press On Exercise Ball",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Bench Dip",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Seated Bicep Curl (on Stability Ball)",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Standing Curl",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Standing Hand Squeeze",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Three Bench Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Tricep Dips",
+    "category": "Arms"
+  },
+  {
+    "name": "Weighted Triceps Dip On High Parallel Bars",
+    "category": "Arms"
+  },
+  {
     "name": "Wrist Circles",
     "category": "Arms"
   },
   {
+    "name": "Wrist Rollerer",
+    "category": "Arms"
+  },
+  {
+    "name": "Alternate Lateral Pulldown",
+    "category": "Back"
+  },
+  {
     "name": "Archer Pull Up",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Parallel Close Grip Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Pull-up Inclined",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Standing Chin-up",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Standing Chin-up With Focused",
+    "category": "Back"
+  },
+  {
+    "name": "Assisted Standing Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Back Extension On Exercise Ball",
+    "category": "Back"
+  },
+  {
+    "name": "Back Lever",
+    "category": "Back"
+  },
+  {
+    "name": "Back Pec Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Band Assisted Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Band Close-grip Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Band Fixed Back Close Grip Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Band Fixed Back Underhand Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Band Kneeling One Arm Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Band One Arm Standing Low Row",
+    "category": "Back"
+  },
+  {
+    "name": "Band One Arm Standing Low Row - Lateral Variation",
+    "category": "Back"
+  },
+  {
+    "name": "Band One Arm Twisting Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Band Straight Leg Deadlift",
+    "category": "Back"
+  },
+  {
+    "name": "Band Underhand Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Band Underhand Pulldown With Classic",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Bent Arm Pullover",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Bent Arm Pullover - Powerful Variation",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Decline Bent Arm Pullover",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Decline Wide-grip Pullover",
     "category": "Back"
   },
   {
@@ -136,11 +1560,255 @@
     "category": "Back"
   },
   {
+    "name": "Barbell One Arm Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Pendlay Row",
+    "category": "Back"
+  },
+  {
     "name": "Barbell Pullover",
     "category": "Back"
   },
   {
+    "name": "Barbell Pullover To Press",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Reverse Grip Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Reverse Grip Incline Bench Row",
+    "category": "Back"
+  },
+  {
+    "name": "Barbell Shrug",
+    "category": "Back"
+  },
+  {
     "name": "Bench Pull-ups",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Squatting Row",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Squatting Row (with Towel)",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing Close-grip One Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing Close-grip Row",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing One Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing One Arm Row (with Towel)",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing Row",
+    "category": "Back"
+  },
+  {
+    "name": "Bodyweight Standing Row (with Towel)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Bar Lateral Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Cross-over Lateral Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Decline Seated Wide-grip Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Floor Seated Wide-grip Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable High Row (kneeling)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Incline Bench Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Incline Bench Row - Elite Variation",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Incline Pushdown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Lat Pulldown Full Range Of Motion",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Lateral Pulldown (with Rope Attachment)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Lateral Pulldown (with Rope Attachment) Core",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Lateral Pulldown With V-bar",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Low Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Low Seated Row Controlled",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Lying Extension Pullover (with Rope Attachment)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable One Arm Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable One Arm Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable One Arm Straight Back High Row (kneeling)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Palm Rotational Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Pulldown (pro Lat Bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Pushdown (straight Arm) V. 2",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Rear Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Reverse-grip Straight Back Seated High Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Rope Crossover Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Rope Elevated Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Rope Extension Incline Bench Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Rope Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Seated High Row (v-bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Seated One Arm Alternate Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Seated Row With Reverse",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Seated Wide-grip Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Squat Row (with Rope Attachment)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Squat Row (with Rope Attachment) Heavy",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Standing Row (v-bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Standing Twist Row (v-bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Straight Arm Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Straight Arm Pulldown (with Rope)",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Straight Back Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Thibaudeau Kayak Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Twisting Pull",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Twisting Pull With Intensified",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Underhand Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Upper Row",
+    "category": "Back"
+  },
+  {
+    "name": "Cable Wide Grip Rear Pulldown Behind Neck",
     "category": "Back"
   },
   {
@@ -152,7 +1820,15 @@
     "category": "Back"
   },
   {
+    "name": "Chin-up Diagonal",
+    "category": "Back"
+  },
+  {
     "name": "Chin-ups (narrow Parallel Grip)",
+    "category": "Back"
+  },
+  {
+    "name": "Close Grip Chin-up",
     "category": "Back"
   },
   {
@@ -164,7 +1840,63 @@
     "category": "Back"
   },
   {
+    "name": "Dumbbell Decline Shrug - Rigid Variation",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Decline Shrug V. 2",
+    "category": "Back"
+  },
+  {
     "name": "Dumbbell Incline Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Incline Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Incline Y-raise",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Lying Rear Delt Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell One Arm Bent-over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Palm Rotational Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Reverse Grip Incline Bench One Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Reverse Grip Incline Bench Two Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Reverse Grip Row (female)",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Reverse Grip Row (female) Hold",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Dumbbell Side Plank With Rear Fly",
+    "category": "Back"
+  },
+  {
+    "name": "Elbow Lift - Reverse Push-up",
     "category": "Back"
   },
   {
@@ -172,7 +1904,91 @@
     "category": "Back"
   },
   {
+    "name": "Exercise Ball Alternating Arm Ups",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Alternating Arm Ups With Fast",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Back Extension With Arms Extended",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Back Extension With Hands Behind Head",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Back Extension With Knees Off Ground",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Back Extension With Rotation",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Hug",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Lat Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Lower Back Stretch (pyramid)",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Lying Side Lat Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Exercise Ball Prone Leg Raise",
+    "category": "Back"
+  },
+  {
+    "name": "Extended Style Inverted Row",
+    "category": "Back"
+  },
+  {
+    "name": "Ez Bar Lying Bent Arms Pullover",
+    "category": "Back"
+  },
+  {
+    "name": "Ez Bar Reverse Grip Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Fast Band Straight Leg Deadlift",
+    "category": "Back"
+  },
+  {
+    "name": "Front Lever Reps",
+    "category": "Back"
+  },
+  {
+    "name": "Gentle Style Cable Pulldown (pro Lat Bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Gironda Sternum Chin",
+    "category": "Back"
+  },
+  {
+    "name": "Hyperextension",
+    "category": "Back"
+  },
+  {
     "name": "Hyperextension (on Bench)",
+    "category": "Back"
+  },
+  {
+    "name": "Improved Sphinx",
+    "category": "Back"
+  },
+  {
+    "name": "Intense Kettlebell Two Arm Row",
     "category": "Back"
   },
   {
@@ -184,7 +2000,43 @@
     "category": "Back"
   },
   {
+    "name": "Inverted Row On Bench",
+    "category": "Back"
+  },
+  {
+    "name": "Inverted Row V. 2",
+    "category": "Back"
+  },
+  {
+    "name": "Inverted Row With Straps",
+    "category": "Back"
+  },
+  {
+    "name": "Kettlebell Alternating Renegade Row",
+    "category": "Back"
+  },
+  {
+    "name": "Kettlebell Alternating Row",
+    "category": "Back"
+  },
+  {
+    "name": "Kettlebell One Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Kettlebell Sumo High Pull",
+    "category": "Back"
+  },
+  {
+    "name": "Kettlebell Two Arm Row",
+    "category": "Back"
+  },
+  {
     "name": "Kipping Muscle Up",
+    "category": "Back"
+  },
+  {
+    "name": "Kipping Muscle Up With Triple",
     "category": "Back"
   },
   {
@@ -192,11 +2044,143 @@
     "category": "Back"
   },
   {
+    "name": "L-pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Alternating Narrow Grip Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Assisted Chin-up",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Assisted Chin-up With Twisted",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Back Extension",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Bent-over Row With V-bar",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Front Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Gripless Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Gripless Shrug V. 2",
+    "category": "Back"
+  },
+  {
+    "name": "Lever High Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Narrow Grip Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Narrow Grip Seated Row - Strength Variation",
+    "category": "Back"
+  },
+  {
+    "name": "Lever One Arm Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever One Arm Lateral High Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever One Arm Lateral Wide Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Pullover",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Reverse Grip Lateral Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Reverse Grip Vertical Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Reverse T-bar Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Lever T Bar Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever T-bar Reverse Grip Row",
+    "category": "Back"
+  },
+  {
+    "name": "Lever Unilateral Row",
+    "category": "Back"
+  },
+  {
+    "name": "London Bridge",
+    "category": "Back"
+  },
+  {
+    "name": "Lower Back Curl",
+    "category": "Back"
+  },
+  {
+    "name": "Macro Style Weighted One Hand Pull Up",
+    "category": "Back"
+  },
+  {
+    "name": "Medicine Ball Catch And Overhead Throw",
+    "category": "Back"
+  },
+  {
+    "name": "Medicine Ball Overhead Slam",
+    "category": "Back"
+  },
+  {
+    "name": "Mixed Grip Chin-up",
+    "category": "Back"
+  },
+  {
     "name": "Muscle Up",
     "category": "Back"
   },
   {
+    "name": "Muscle-up (on Vertical Bar)",
+    "category": "Back"
+  },
+  {
     "name": "One Arm Against Wall",
+    "category": "Back"
+  },
+  {
+    "name": "One Arm Against Wall Compressed",
     "category": "Back"
   },
   {
@@ -208,7 +2192,39 @@
     "category": "Back"
   },
   {
+    "name": "Pointed Cable Palm Rotational Row",
+    "category": "Back"
+  },
+  {
+    "name": "Precision Style Lever Bent-over Row With V-bar",
+    "category": "Back"
+  },
+  {
+    "name": "Pull Up (neutral Grip)",
+    "category": "Back"
+  },
+  {
     "name": "Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Pure Chin-up",
+    "category": "Back"
+  },
+  {
+    "name": "Rear Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Resistance Band Seated Straight Back Row",
+    "category": "Back"
+  },
+  {
+    "name": "Reverse Grip Machine Lat Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Reverse Grip Pull-up",
     "category": "Back"
   },
   {
@@ -216,7 +2232,23 @@
     "category": "Back"
   },
   {
+    "name": "Roller Back Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Roller Side Lat Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Rope Climb",
+    "category": "Back"
+  },
+  {
     "name": "Scapula Dips",
+    "category": "Back"
+  },
+  {
+    "name": "Scapular Pull-up",
     "category": "Back"
   },
   {
@@ -224,11 +2256,79 @@
     "category": "Back"
   },
   {
+    "name": "Shoulder Grip Pull-up",
+    "category": "Back"
+  },
+  {
+    "name": "Side Cable High Row (kneeling)",
+    "category": "Back"
+  },
+  {
+    "name": "Side Lying Floor Stretch",
+    "category": "Back"
+  },
+  {
     "name": "Side-to-side Chin",
     "category": "Back"
   },
   {
+    "name": "Side-to-side Chin With Reverse",
+    "category": "Back"
+  },
+  {
+    "name": "Skin The Cat",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Back Shrug",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Bent Over Row With Declined",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Narrow Row",
+    "category": "Back"
+  },
+  {
+    "name": "Smith One Arm Row",
+    "category": "Back"
+  },
+  {
+    "name": "Smith One Arm Row Linear",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Reverse Grip Bent Over Row",
+    "category": "Back"
+  },
+  {
+    "name": "Smith Shrug",
+    "category": "Back"
+  },
+  {
     "name": "Sphinx",
+    "category": "Back"
+  },
+  {
+    "name": "Spine Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Squared Reverse Grip Machine Lat Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Stability Lever Narrow Grip Seated Row",
+    "category": "Back"
+  },
+  {
+    "name": "Stability Style Band Kneeling One Arm Pulldown",
     "category": "Back"
   },
   {
@@ -240,6 +2340,62 @@
     "category": "Back"
   },
   {
+    "name": "Standing Pelvic Tilt",
+    "category": "Back"
+  },
+  {
+    "name": "Suspended Row",
+    "category": "Back"
+  },
+  {
+    "name": "Twin Handle Parallel Grip Lat Pulldown",
+    "category": "Back"
+  },
+  {
+    "name": "Twisted Side-to-side Chin",
+    "category": "Back"
+  },
+  {
+    "name": "Two Toe Touch (male)",
+    "category": "Back"
+  },
+  {
+    "name": "Upper Back Stretch",
+    "category": "Back"
+  },
+  {
+    "name": "Upward Facing Dog",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted Close Grip Chin-up On Dip Cage",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted Hyperextension (on Stability Ball)",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted Muscle Up",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted Muscle Up (on Bar)",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted One Hand Pull Up",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted One Hand Pull Up Fast",
+    "category": "Back"
+  },
+  {
+    "name": "Weighted Pull-up",
+    "category": "Back"
+  },
+  {
     "name": "Wide Grip Pull-up",
     "category": "Back"
   },
@@ -248,11 +2404,39 @@
     "category": "Back"
   },
   {
+    "name": "Alternating Bear Crawl",
+    "category": "Cardio"
+  },
+  {
+    "name": "Astride Jumps (male)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Back And Forth Step",
+    "category": "Cardio"
+  },
+  {
     "name": "Bear Crawl",
     "category": "Cardio"
   },
   {
     "name": "Burpee",
+    "category": "Cardio"
+  },
+  {
+    "name": "Cycle Cross Trainer",
+    "category": "Cardio"
+  },
+  {
+    "name": "Dumbbell Burpee",
+    "category": "Cardio"
+  },
+  {
+    "name": "Half Knee Bends (male)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Half Knee Bends (male) With Blunt",
     "category": "Cardio"
   },
   {
@@ -264,7 +2448,19 @@
     "category": "Cardio"
   },
   {
+    "name": "Jack Jump (male)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Jump Rope",
+    "category": "Cardio"
+  },
+  {
     "name": "Mountain Climber",
+    "category": "Cardio"
+  },
+  {
+    "name": "Pulse Style Walk Elliptical Cross Trainer",
     "category": "Cardio"
   },
   {
@@ -273,6 +2469,18 @@
   },
   {
     "name": "Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Run (equipment)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Scissor Jumps (male)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Semi Squat Jump (male)",
     "category": "Cardio"
   },
   {
@@ -288,12 +2496,80 @@
     "category": "Cardio"
   },
   {
+    "name": "Star Jump (male)",
+    "category": "Cardio"
+  },
+  {
+    "name": "Stationary Bike Run",
+    "category": "Cardio"
+  },
+  {
+    "name": "Stationary Bike Walk",
+    "category": "Cardio"
+  },
+  {
     "name": "Swing 360",
+    "category": "Cardio"
+  },
+  {
+    "name": "Walk Elliptical Cross Trainer",
+    "category": "Cardio"
+  },
+  {
+    "name": "Walk Elliptical Cross Trainer - Expanded Variation",
+    "category": "Cardio"
+  },
+  {
+    "name": "Walking High Knees Lunge",
+    "category": "Cardio"
+  },
+  {
+    "name": "Walking On Incline Treadmill",
+    "category": "Cardio"
+  },
+  {
+    "name": "Walking On Stepmill",
     "category": "Cardio"
   },
   {
     "name": "Wheel Run",
     "category": "Cardio"
+  },
+  {
+    "name": "Archer Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Assisted Chest Dip (kneeling)",
+    "category": "Chest"
+  },
+  {
+    "name": "Assisted Seated Pectoralis Major Stretch With Stability Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Assisted Wide-grip Chest Dip (kneeling)",
+    "category": "Chest"
+  },
+  {
+    "name": "Balance Cable Incline Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Band Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Band One Arm Twisting Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Decline Bench Press",
+    "category": "Chest"
   },
   {
     "name": "Barbell Decline Pullover",
@@ -304,7 +2580,11 @@
     "category": "Chest"
   },
   {
-    "name": "Barbell Bench Press",
+    "name": "Barbell Front Raise And Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Guillotine Bench Press",
     "category": "Chest"
   },
   {
@@ -312,7 +2592,139 @@
     "category": "Chest"
   },
   {
+    "name": "Barbell Incline Bench Press Seated",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Incline Shoulder Raise",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Reverse Grip Decline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Reverse Grip Incline Bench Press",
+    "category": "Chest"
+  },
+  {
     "name": "Barbell Wide Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Wide Reverse Grip Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Barbell Wide Reverse Grip Bench Press Horizontal",
+    "category": "Chest"
+  },
+  {
+    "name": "Behind Head Chest Stretch",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Cross-over Variation",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Decline Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Decline One Arm Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Decline Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Incline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Incline Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Incline Fly (on Stability Ball)",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Low Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Lying Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Middle Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Decline Chest Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Incline Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Incline Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Incline Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Incline Press With Rigid",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Lateral Bent-over",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable One Arm Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Seated Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Standing Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Standing Up Straight Crossovers",
+    "category": "Chest"
+  },
+  {
+    "name": "Cable Upper Chest Crossovers",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest And Front Of Shoulder Stretch",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest And Front Of Shoulder Stretch Micro",
     "category": "Chest"
   },
   {
@@ -320,7 +2732,63 @@
     "category": "Chest"
   },
   {
+    "name": "Chest Dip (on Dip-pull-up Cage)",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Dip On Straight Bar",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Stretch With Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Stretch With Exercise Ball Partial",
+    "category": "Chest"
+  },
+  {
+    "name": "Chest Tap Push-up (male)",
+    "category": "Chest"
+  },
+  {
+    "name": "Clap Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Clock Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Clock Push-up Extreme",
+    "category": "Chest"
+  },
+  {
+    "name": "Contracted Kettlebell Extended Range One Arm Press On Floor",
+    "category": "Chest"
+  },
+  {
     "name": "Decline Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Deep Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Deep Smith Machine Reverse Decline Close Grip Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Drop Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Around Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Around Pullover - Intensive Variation",
     "category": "Chest"
   },
   {
@@ -328,7 +2796,19 @@
     "category": "Chest"
   },
   {
+    "name": "Dumbbell Decline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Decline Fly",
+    "category": "Chest"
+  },
+  {
     "name": "Dumbbell Decline Hammer Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Decline One Arm Fly",
     "category": "Chest"
   },
   {
@@ -336,7 +2816,19 @@
     "category": "Chest"
   },
   {
+    "name": "Dumbbell Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
     "name": "Dumbbell Incline Alternate Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Bench Press",
     "category": "Chest"
   },
   {
@@ -344,7 +2836,47 @@
     "category": "Chest"
   },
   {
+    "name": "Dumbbell Incline Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
     "name": "Dumbbell Incline Hammer Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Press On Exercise Ball Modified",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Press On Exercise Ball With Extended",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Palm-in Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Incline Press On Exercise Ball",
     "category": "Chest"
   },
   {
@@ -356,7 +2888,99 @@
     "category": "Chest"
   },
   {
+    "name": "Dumbbell Lying Hammer Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Press V. 2",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Lying Pullover On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Bench Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Chest Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Decline Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Fly On Exercise Ball Improved",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Incline Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Pullover On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Arm Reverse Grip Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell One Leg Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Press On Exercise Ball",
+    "category": "Chest"
+  },
+  {
     "name": "Dumbbell Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Pullover Hip Extension On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Pullover On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Reverse Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Dumbbell Straight Arm Pullover",
+    "category": "Chest"
+  },
+  {
+    "name": "Dynamic Chest Stretch (male)",
+    "category": "Chest"
+  },
+  {
+    "name": "Exercise Ball Pike Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Fierce Weighted Straight Bar Dip",
+    "category": "Chest"
+  },
+  {
+    "name": "Floor Fly (with Barbell)",
     "category": "Chest"
   },
   {
@@ -364,7 +2988,55 @@
     "category": "Chest"
   },
   {
+    "name": "Gentle Style Dumbbell One Leg Fly On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Hands Bike",
+    "category": "Chest"
+  },
+  {
+    "name": "High Style Scapula Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Hyght Dumbbell Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Push Up Depth Jump",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Push Up Depth Jump With Complex",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Push-up",
+    "category": "Chest"
+  },
+  {
     "name": "Incline Push-up (on Box)",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Push-up (on Box) - Active Variation",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Reverse Grip Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Incline Scapula Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Intensified Style Kettlebell Extended Range One Arm Press On Floor",
+    "category": "Chest"
+  },
+  {
+    "name": "Isolation Assisted Seated Pectoralis Major Stretch With Stability Ball",
     "category": "Chest"
   },
   {
@@ -376,7 +3048,83 @@
     "category": "Chest"
   },
   {
+    "name": "Kettlebell Alternating Press On Floor",
+    "category": "Chest"
+  },
+  {
+    "name": "Kettlebell Extended Range One Arm Press On Floor",
+    "category": "Chest"
+  },
+  {
+    "name": "Kettlebell One Arm Floor Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Kettlebell Plyo Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Kneeling Push-up (male)",
+    "category": "Chest"
+  },
+  {
     "name": "Korean Dips",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Decline Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Incline Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Incline Chest Press V. 2",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Seated Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Lever Standing Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Light Lever Standing Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Machine Inner Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Medicine Ball Chest Pass",
+    "category": "Chest"
+  },
+  {
+    "name": "Medicine Ball Chest Push From 3 Point Stance",
+    "category": "Chest"
+  },
+  {
+    "name": "Medicine Ball Chest Push Multiple Response",
+    "category": "Chest"
+  },
+  {
+    "name": "Medicine Ball Chest Push Single Response",
+    "category": "Chest"
+  },
+  {
+    "name": "Medicine Ball Chest Push With Run Release",
+    "category": "Chest"
+  },
+  {
+    "name": "Modified Hindu Push-up (male)",
     "category": "Chest"
   },
   {
@@ -388,7 +3136,71 @@
     "category": "Chest"
   },
   {
+    "name": "Push Up On Bosu Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Push Up On Bosu Ball With Improved",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up (bosu Ball)",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up (on Stability Ball)",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up (wall)",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up (wall) V. 2",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up (wall) With Static",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up Medicine Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Push-up Plus",
+    "category": "Chest"
+  },
+  {
     "name": "Raise Single Arm Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Resistance Band Seated Chest Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Roller Seated Shoulder Flexor Depresor Retractor",
+    "category": "Chest"
+  },
+  {
+    "name": "Roller Seated Single Leg Shoulder Flexor Depresor Retractor",
+    "category": "Chest"
+  },
+  {
+    "name": "Rough Cable Decline Fly",
+    "category": "Chest"
+  },
+  {
+    "name": "Scapula Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Shoulder Tap Push-up",
     "category": "Chest"
   },
   {
@@ -396,11 +3208,215 @@
     "category": "Chest"
   },
   {
+    "name": "Smith Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Decline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Decline Reverse-grip Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Incline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Incline Reverse-grip Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Incline Shoulder Raises",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Machine Reverse Decline Close Grip Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Reverse-grip Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Wide Grip Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Smith Wide Grip Decline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Stretched Full Planche Push-up",
+    "category": "Chest"
+  },
+  {
+    "name": "Superman Push-up",
+    "category": "Chest"
+  },
+  {
     "name": "Suspended Push-up",
     "category": "Chest"
   },
   {
+    "name": "Upright Smith Incline Bench Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Wall Style Dumbbell Pullover Hip Extension On Exercise Ball",
+    "category": "Chest"
+  },
+  {
+    "name": "Weighted Drop Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Weighted Straight Bar Dip",
+    "category": "Chest"
+  },
+  {
+    "name": "Weighted Svend Press",
+    "category": "Chest"
+  },
+  {
+    "name": "Wide Hand Push Up",
+    "category": "Chest"
+  },
+  {
+    "name": "Wide-grip Chest Dip On High Parallel Bars",
+    "category": "Chest"
+  },
+  {
+    "name": "Wide-grip Chest Dip On High Parallel Bars - Low Variation",
+    "category": "Chest"
+  },
+  {
+    "name": "3/4 Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "45° Side Bend",
+    "category": "Core"
+  },
+  {
+    "name": "Air Bike",
+    "category": "Core"
+  },
+  {
+    "name": "Alternate Heel Touchers",
+    "category": "Core"
+  },
+  {
+    "name": "Arm Slingers Hanging Bent Knee Legs",
+    "category": "Core"
+  },
+  {
+    "name": "Arm Slingers Hanging Straight Legs",
+    "category": "Core"
+  },
+  {
+    "name": "Arms Overhead Full Sit-up (male)",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Hanging Knee Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Hanging Knee Raise With Throw Down",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Lying Leg Raise With Lateral Throw Down",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Lying Leg Raise With Throw Down",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Motion Russian Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Prone Rectus Femoris Stretch",
+    "category": "Core"
+  },
+  {
+    "name": "Assisted Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Band Alternating V-up",
+    "category": "Core"
+  },
+  {
+    "name": "Band Alternating V-up With Simple",
+    "category": "Core"
+  },
+  {
+    "name": "Band Assisted Wheel Rollerout",
+    "category": "Core"
+  },
+  {
+    "name": "Band Bicycle Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Band Horizontal Pallof Press",
+    "category": "Core"
+  },
+  {
+    "name": "Band Jack Knife Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Band Kneeling Twisting Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Band Lying Straight Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Band Push Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Band Seated Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Band Seated Twist Pure",
+    "category": "Core"
+  },
+  {
+    "name": "Band Standing Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Band Standing Twisting Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Band V-up",
+    "category": "Core"
+  },
+  {
+    "name": "Band Vertical Pallof Press",
+    "category": "Core"
+  },
+  {
+    "name": "Band Vertical Pallof Press - Seated Variation",
+    "category": "Core"
+  },
+  {
     "name": "Barbell Press Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Rollerout",
     "category": "Core"
   },
   {
@@ -412,7 +3428,31 @@
     "category": "Core"
   },
   {
+    "name": "Barbell Side Bent V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Sitted Alternate Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Sitted Alternate Leg Raise (female)",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Sitted Alternate Leg Raise (female) With Intermediate",
+    "category": "Core"
+  },
+  {
     "name": "Barbell Standing Ab Rollerout",
+    "category": "Core"
+  },
+  {
+    "name": "Barbell Standing Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Blunt Cable Standing Crunch",
     "category": "Core"
   },
   {
@@ -424,7 +3464,87 @@
     "category": "Core"
   },
   {
+    "name": "Bridge - Mountain Climber (cross Body)",
+    "category": "Core"
+  },
+  {
     "name": "Butt-ups",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Judo Flip",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Judo Flip With Static",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Kneeling Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Kneeling Crunch - Gentle Variation",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Reverse Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Russian Twists (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Seated Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Seated Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Side Bend",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Side Bend Crunch (bosu Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Side Bend Smooth",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Side Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Standing Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Standing Crunch (with Rope Attachment)",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Standing Lift",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Tuck Reverse Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Cable Twist (up-down)",
+    "category": "Core"
+  },
+  {
+    "name": "Captains Chair Straight Leg Raise",
     "category": "Core"
   },
   {
@@ -432,7 +3552,35 @@
     "category": "Core"
   },
   {
+    "name": "Cocoons With Mega",
+    "category": "Core"
+  },
+  {
     "name": "Crab Twist Toe Touch",
+    "category": "Core"
+  },
+  {
+    "name": "Cross Body Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Crunch (hands Overhead)",
+    "category": "Core"
+  },
+  {
+    "name": "Crunch (on Stability Ball, Arms Straight)",
+    "category": "Core"
+  },
+  {
+    "name": "Crunch (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Crunch Floor",
+    "category": "Core"
+  },
+  {
+    "name": "Curl-up",
     "category": "Core"
   },
   {
@@ -440,11 +3588,47 @@
     "category": "Core"
   },
   {
+    "name": "Decline Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Decline Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Dumbbell Side Bend",
+    "category": "Core"
+  },
+  {
+    "name": "Elbow-to-knee",
+    "category": "Core"
+  },
+  {
+    "name": "Firm Style Hanging Oblique Knee Raise",
+    "category": "Core"
+  },
+  {
     "name": "Flag",
     "category": "Core"
   },
   {
+    "name": "Flexion Leg Sit Up (bent Knee)",
+    "category": "Core"
+  },
+  {
+    "name": "Flexion Leg Sit Up (straight Arm)",
+    "category": "Core"
+  },
+  {
+    "name": "Frog Crunch",
+    "category": "Core"
+  },
+  {
     "name": "Frog Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Front Lever",
     "category": "Core"
   },
   {
@@ -460,7 +3644,63 @@
     "category": "Core"
   },
   {
+    "name": "Gentle Prone Twist On Stability Ball",
+    "category": "Core"
+  },
+  {
+    "name": "Gorilla Chin",
+    "category": "Core"
+  },
+  {
     "name": "Groin Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Half Sit-up (male)",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Leg Hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Oblique Knee Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Pike",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Pike Weak",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Pike With Intense",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Straight Leg Hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Straight Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Straight Leg Raise With Elevated",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Straight Twisting Leg Hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Hanging Straight Twisting Leg Hip Raise With Compound",
     "category": "Core"
   },
   {
@@ -472,11 +3712,91 @@
     "category": "Core"
   },
   {
+    "name": "Inchworm V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Incline Leg Hip Raise (leg Straight)",
+    "category": "Core"
+  },
+  {
+    "name": "Incline Twisting Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Intermediate Style Kneeling Plank Tap Shoulder (male)",
+    "category": "Core"
+  },
+  {
+    "name": "Jackknife Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Janda Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Kettlebell Advanced Windmill",
+    "category": "Core"
+  },
+  {
+    "name": "Kettlebell Bent Press",
+    "category": "Core"
+  },
+  {
+    "name": "Kettlebell Double Windmill",
+    "category": "Core"
+  },
+  {
+    "name": "Kettlebell Figure 8",
+    "category": "Core"
+  },
+  {
+    "name": "Kettlebell Windmill",
+    "category": "Core"
+  },
+  {
+    "name": "Knee Touch Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Kneeling Plank Tap Shoulder (male)",
+    "category": "Core"
+  },
+  {
+    "name": "L-sit On Floor",
+    "category": "Core"
+  },
+  {
     "name": "Landmine 180",
     "category": "Core"
   },
   {
     "name": "Lean Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Leg Pull In Flat Bench",
+    "category": "Core"
+  },
+  {
+    "name": "Lever Kneeling Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Lever Seated Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Lever Seated Crunch (chest Pad)",
+    "category": "Core"
+  },
+  {
+    "name": "Lever Seated Crunch V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Lever Seated Leg Raise Crunch",
     "category": "Core"
   },
   {
@@ -488,6 +3808,50 @@
     "category": "Core"
   },
   {
+    "name": "Lying Leg Raise Flat Bench",
+    "category": "Core"
+  },
+  {
+    "name": "Lying Leg-hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Lying Leg-hip Raise - Contracted Variation",
+    "category": "Core"
+  },
+  {
+    "name": "Narrow Style Band Jack Knife Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Negative Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Oblique Crunch V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Oblique Crunches Floor",
+    "category": "Core"
+  },
+  {
+    "name": "One Arm Slam (with Medicine Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Otis Up",
+    "category": "Core"
+  },
+  {
+    "name": "Pelvic Tilt",
+    "category": "Core"
+  },
+  {
+    "name": "Posterior Step To Overhead Reach",
+    "category": "Core"
+  },
+  {
     "name": "Potty Squat",
     "category": "Core"
   },
@@ -496,7 +3860,123 @@
     "category": "Core"
   },
   {
+    "name": "Prisoner Half Sit-up (male)",
+    "category": "Core"
+  },
+  {
+    "name": "Prone Twist On Stability Ball",
+    "category": "Core"
+  },
+  {
+    "name": "Pull-in (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Push-up To Side Plank",
+    "category": "Core"
+  },
+  {
+    "name": "Push-up To Side Plank - Athletic Variation",
+    "category": "Core"
+  },
+  {
+    "name": "Quarter Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Reverse Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Reverse Plank With Leg Lift",
+    "category": "Core"
+  },
+  {
+    "name": "Roller Body Saw",
+    "category": "Core"
+  },
+  {
+    "name": "Roller Reverse Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Rough Band Push Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Rounded Twisted Leg Raise (female)",
+    "category": "Core"
+  },
+  {
+    "name": "Russian Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Seated Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Seated Side Crunch (wall)",
+    "category": "Core"
+  },
+  {
+    "name": "Shoulder Tap",
+    "category": "Core"
+  },
+  {
+    "name": "Side Bridge V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Side Hip (on Parallel Bars)",
+    "category": "Core"
+  },
+  {
+    "name": "Side-to-side Toe Touch (male)",
+    "category": "Core"
+  },
+  {
+    "name": "Single Style Cable Standing Crunch (with Rope Attachment)",
+    "category": "Core"
+  },
+  {
+    "name": "Sit-up V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Sit-up With Arms On Chest",
+    "category": "Core"
+  },
+  {
+    "name": "Sit-up With Arms On Chest With Mini",
+    "category": "Core"
+  },
+  {
+    "name": "Sledge Hammer",
+    "category": "Core"
+  },
+  {
+    "name": "Slow Leg Pull In Flat Bench",
+    "category": "Core"
+  },
+  {
+    "name": "Smith Hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Spell Caster",
+    "category": "Core"
+  },
+  {
     "name": "Spine Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Stability Ball Crunch (full Range Hands Behind Head)",
+    "category": "Core"
+  },
+  {
+    "name": "Standing Wheel Rollerout",
     "category": "Core"
   },
   {
@@ -504,12 +3984,204 @@
     "category": "Core"
   },
   {
+    "name": "Straddle Planche",
+    "category": "Core"
+  },
+  {
+    "name": "Supine Style Band Alternating V-up",
+    "category": "Core"
+  },
+  {
     "name": "Suspended Abdominal Fallout",
+    "category": "Core"
+  },
+  {
+    "name": "Suspended Abdominal Fallout - Inclined Variation",
+    "category": "Core"
+  },
+  {
+    "name": "Suspended Reverse Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Tuck Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Twisted Leg Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Twisted Leg Raise (female)",
+    "category": "Core"
+  },
+  {
+    "name": "V-sit On Floor",
+    "category": "Core"
+  },
+  {
+    "name": "Vertical Leg Raise (on Parallel Bars)",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Crunch",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Decline Sit-up",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Front Plank",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Hanging Leg-hip Raise",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Overhead Crunch (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Russian Twist",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Russian Twist (legs Up)",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Russian Twist V. 2",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Seated Twist (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Weighted Side Bend (on Stability Ball)",
+    "category": "Core"
+  },
+  {
+    "name": "Wheel Rollerout",
     "category": "Core"
   },
   {
     "name": "Wind Sprints",
     "category": "Core"
+  },
+  {
+    "name": "Advanced Dumbbell Stiff Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "All Fours Squad Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "All Fours Squad Stretch - Elevated Variation",
+    "category": "Legs"
+  },
+  {
+    "name": "Ankle Circles",
+    "category": "Legs"
+  },
+  {
+    "name": "Arms Apart Circular Toe Touch (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Lying Calves Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Lying Glutes Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Lying Gluteus And Piriformis Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Prone Hamstring",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Prone Lying Quads Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Assisted Side Lying Adductor Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Backward Jump",
+    "category": "Legs"
+  },
+  {
+    "name": "Balance Board",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Bent-over Hip Extension",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Hip Lift",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Lying Hip Internal Rotation",
+    "category": "Legs"
+  },
+  {
+    "name": "Band One Arm Single Leg Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Pull Through",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Seated Hip Internal Rotation",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Single Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Single Leg Reverse Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Single Leg Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Squat Row",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Step-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Stiff Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Straight Back Stiff Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Band Two Legs Calf Raise - (band Under Both Legs) V. 2",
+    "category": "Legs"
   },
   {
     "name": "Barbell Bench Front Squat",
@@ -524,7 +4196,39 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Clean-grip Front Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Floor Calf Raise",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Front Chest Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Front Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Full Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Full Squat (back Pov)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Full Squat (side Pov)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Full Zercher Squat",
     "category": "Legs"
   },
   {
@@ -532,11 +4236,35 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Glute Bridge Two Legs On Bench (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Good Morning",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Hack Squat",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell High Bar Squat",
     "category": "Legs"
   },
   {
+    "name": "Barbell High Bar Squat Core",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Jefferson Squat",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Jump Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Lateral Lunge",
     "category": "Legs"
   },
   {
@@ -548,6 +4276,18 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Lying Lifting (on Hip)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Narrow Stance Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell One Arm Side Deadlift",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell One Leg Squat",
     "category": "Legs"
   },
@@ -556,7 +4296,23 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Rack Pull",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Rear Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Rear Lunge V. 2",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Romanian Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Seated Calf Raise",
     "category": "Legs"
   },
   {
@@ -568,7 +4324,15 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Side Split Squat V. 2",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Single Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Single Leg Split Squat",
     "category": "Legs"
   },
   {
@@ -576,7 +4340,19 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Split Squat V. 2",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Squat (on Knees)",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Squat (on Knees) With Pure",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Squat Jump Step Rear Lunge",
     "category": "Legs"
   },
   {
@@ -584,7 +4360,107 @@
     "category": "Legs"
   },
   {
+    "name": "Barbell Standing Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Standing Rocking Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Step-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Stiff Leg Good Morning",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Straight Leg Deadlift",
+    "category": "Legs"
+  },
+  {
     "name": "Barbell Sumo Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Wide Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Barbell Zercher Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Basic Toe Touch (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Bench Hip Extension",
+    "category": "Legs"
+  },
+  {
+    "name": "Bent Knee Lying Twist (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Bodyweight Drop Jump Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Bodyweight Standing Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Box Jump Down With One Leg Stabilization",
+    "category": "Legs"
+  },
+  {
+    "name": "Butterfly Yoga Pose",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Assisted Inverse Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Hip Adduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Pull Through (with Rope)",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Standing Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Standing Hip Extension",
+    "category": "Legs"
+  },
+  {
+    "name": "Cable Standing One Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Calf Push Stretch With Hands Against Wall",
+    "category": "Legs"
+  },
+  {
+    "name": "Calf Push Stretch With Hands Against Wall Elite",
+    "category": "Legs"
+  },
+  {
+    "name": "Calf Stretch With Hands Against Wall",
+    "category": "Legs"
+  },
+  {
+    "name": "Calf Stretch With Rope",
     "category": "Legs"
   },
   {
@@ -592,7 +4468,31 @@
     "category": "Legs"
   },
   {
+    "name": "Chair Leg Extended Stretch With Modified",
+    "category": "Legs"
+  },
+  {
+    "name": "Circles Knee Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Controlled Band Straight Back Stiff Leg Deadlift",
+    "category": "Legs"
+  },
+  {
     "name": "Curtsey Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Donkey Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Bench Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Clean",
     "category": "Legs"
   },
   {
@@ -604,7 +4504,27 @@
     "category": "Legs"
   },
   {
+    "name": "Dumbbell Goblet Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Lunge With Firm",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Lying Femoral",
+    "category": "Legs"
+  },
+  {
     "name": "Dumbbell One Arm Snatch",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Plyo Squat",
     "category": "Legs"
   },
   {
@@ -612,7 +4532,43 @@
     "category": "Legs"
   },
   {
+    "name": "Dumbbell Romanian Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Seated Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Seated One Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Seated One Leg Calf Raise - Hammer Grip",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Seated One Leg Calf Raise - Hammer Grip Deep",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Seated One Leg Calf Raise - Palm Up",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Single Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
     "name": "Dumbbell Single Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Single Leg Deadlift With Stepbox Support",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Single Leg Split Squat",
     "category": "Legs"
   },
   {
@@ -620,7 +4576,23 @@
     "category": "Legs"
   },
   {
+    "name": "Dumbbell Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Standing Calf Raise",
+    "category": "Legs"
+  },
+  {
     "name": "Dumbbell Step-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Step-up Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Dumbbell Step-up Split Squat",
     "category": "Legs"
   },
   {
@@ -632,7 +4604,67 @@
     "category": "Legs"
   },
   {
+    "name": "Dumbbell Sumo Pull Through",
+    "category": "Legs"
+  },
+  {
     "name": "Dumbbell Supported Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball Hip Flexor Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball Hip Flexor Stretch Pointed",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball On The Wall Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball On The Wall Calf Raise (tennis Ball Between Ankles)",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball On The Wall Calf Raise (tennis Ball Between Knees)",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball One Leg Prone Lower Body Rotation",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball One Leg Prone Lower Body Rotation Fierce",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball One Legged Diagonal Kick Hamstring Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Exercise Ball Seated Hamstring Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Farmers Walk",
+    "category": "Legs"
+  },
+  {
+    "name": "Fast Style Resistance Band Seated Hip Abduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Fierce Style Forward Lunge (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Flexible Assisted Prone Hamstring",
+    "category": "Legs"
+  },
+  {
+    "name": "Fluid Dumbbell Step-up Lunge",
     "category": "Legs"
   },
   {
@@ -640,7 +4672,27 @@
     "category": "Legs"
   },
   {
+    "name": "Forward Jump",
+    "category": "Legs"
+  },
+  {
+    "name": "Forward Lunge (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Forward Lunge (male) With Bench",
+    "category": "Legs"
+  },
+  {
     "name": "Frankenstein Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Glute Bridge March",
+    "category": "Legs"
+  },
+  {
+    "name": "Glute Bridge Two Legs On Bench (male)",
     "category": "Legs"
   },
   {
@@ -648,7 +4700,95 @@
     "category": "Legs"
   },
   {
+    "name": "Hack Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Hack One Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Hamstring Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Hands Clasped Circular Toe Touch (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Hands Reversed Clasped Circular Toe Touch (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Hug Keens To Chest",
+    "category": "Legs"
+  },
+  {
+    "name": "Inclined Style Pelvic Tilt Into Bridge",
+    "category": "Legs"
+  },
+  {
+    "name": "Intense Barbell Straight Leg Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Intermediate Hip Flexor And Quad Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Inverse Leg Curl (bench Support)",
+    "category": "Legs"
+  },
+  {
+    "name": "Inverse Leg Curl (on Pull-up Cable Machine)",
+    "category": "Legs"
+  },
+  {
+    "name": "Inverted Style Inverse Leg Curl (on Pull-up Cable Machine)",
+    "category": "Legs"
+  },
+  {
     "name": "Iron Cross Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Iron Cross Stretch - Deep Variation",
+    "category": "Legs"
+  },
+  {
+    "name": "Jump Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Jump Squat V. 2",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Front Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Goblet Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Hang Clean",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Lunge Pass Through",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Pistol Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Swing",
+    "category": "Legs"
+  },
+  {
+    "name": "Kettlebell Turkish Get Up (squat Style)",
     "category": "Legs"
   },
   {
@@ -660,11 +4800,255 @@
     "category": "Legs"
   },
   {
+    "name": "Leg Up Hamstring Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Alternate Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Calf Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Donkey Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Hip Extension V. 2",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Horizontal One Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Kneeling Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Leg Extension",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Lying Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Lying Two-one Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Reverse Hyperextension",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Rotary Calf",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Calf Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Good Morning",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Hip Abduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Hip Adduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Seated Squat Calf Raise On Leg Press Machine",
+    "category": "Legs"
+  },
+  {
+    "name": "Lever Standing Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Low Glute Bridge On Floor",
+    "category": "Legs"
+  },
+  {
+    "name": "Lunge With Jump",
+    "category": "Legs"
+  },
+  {
+    "name": "Lying (side) Quads Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "March Sit (wall)",
+    "category": "Legs"
+  },
+  {
+    "name": "Micro Style Barbell Speed Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Monster Walk",
+    "category": "Legs"
+  },
+  {
+    "name": "One Leg Donkey Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "One Leg Floor Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "One Leg Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "One Leg Squat - Expanded Variation",
+    "category": "Legs"
+  },
+  {
+    "name": "Outside Leg Kick Push-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Pelvic Tilt Into Bridge",
+    "category": "Legs"
+  },
+  {
+    "name": "Peroneals Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Pike-to-cobra Push-up",
+    "category": "Legs"
+  },
+  {
+    "name": "Posterior Tibialis Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Potty Squat With Support",
+    "category": "Legs"
+  },
+  {
+    "name": "Power Clean",
+    "category": "Legs"
+  },
+  {
     "name": "Push-up Inside Leg Kick",
     "category": "Legs"
   },
   {
+    "name": "Quads",
+    "category": "Legs"
+  },
+  {
+    "name": "Quads Complex",
+    "category": "Legs"
+  },
+  {
+    "name": "Quick Feet V. 2",
+    "category": "Legs"
+  },
+  {
+    "name": "Quick Feet V. 2 With Bent",
+    "category": "Legs"
+  },
+  {
+    "name": "Rear Decline Bridge",
+    "category": "Legs"
+  },
+  {
+    "name": "Reclining Big Toe Pose With Rope",
+    "category": "Legs"
+  },
+  {
+    "name": "Resistance Band Hip Thrusts On Knees (female)",
+    "category": "Legs"
+  },
+  {
+    "name": "Resistance Band Leg Extension",
+    "category": "Legs"
+  },
+  {
+    "name": "Resistance Band Leg Extension Declined",
+    "category": "Legs"
+  },
+  {
+    "name": "Resistance Band Seated Hip Abduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Reverse Hyper Extension (on Stability Ball)",
+    "category": "Legs"
+  },
+  {
+    "name": "Reverse Hyper On Flat Bench",
+    "category": "Legs"
+  },
+  {
+    "name": "Rocking Frog Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Roller Hip Lat Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Roller Hip Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Rough Band Hip Lift",
+    "category": "Legs"
+  },
+  {
     "name": "Runners Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Seated Calf Stretch (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Seated Glute Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Seated Piriformis Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Seated Wide Angle Pose Sequence",
+    "category": "Legs"
+  },
+  {
+    "name": "Self Assisted Inverse Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Self Assisted Inverse Leg Curl (on Floor)",
+    "category": "Legs"
+  },
+  {
+    "name": "Sharp Style Dumbbell Sumo Pull Through",
     "category": "Legs"
   },
   {
@@ -676,7 +5060,163 @@
     "category": "Legs"
   },
   {
+    "name": "Side Lying Hip Adduction (male)",
+    "category": "Legs"
+  },
+  {
     "name": "Side Plank Hip Adduction",
+    "category": "Legs"
+  },
+  {
+    "name": "Single Leg Bridge With Outstretched Leg",
+    "category": "Legs"
+  },
+  {
+    "name": "Single Leg Calf Raise (on A Dumbbell)",
+    "category": "Legs"
+  },
+  {
+    "name": "Single Leg Platform Slide",
+    "category": "Legs"
+  },
+  {
+    "name": "Single Leg Squat (pistol) Male",
+    "category": "Legs"
+  },
+  {
+    "name": "Sissy Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Sissy Squat Isolation",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45 Degrees One Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45 Degrees One Leg Press Pointed",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45° Leg Press (side Pov)",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45в° Calf Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45в° Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45в° Leg Press (back Pov)",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45в° Leg Wide Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled 45в° Leg Wide Press - Blunt Variation",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Calf Press On Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Closer Hack Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Forward Angled Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Hack Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Lying Calf Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled Lying Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Sled One Leg Calf Press On Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Bent Knee Good Morning",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Chair Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Front Squat (clean Grip)",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Full Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Hack Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Leg Press",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Low Bar Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith One Leg Floor Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Reverse Calf Raises",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Seated One Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Single Leg Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Sprint Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Standing Leg Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Sumo Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Smith Toe Raise",
     "category": "Legs"
   },
   {
@@ -696,12 +5236,152 @@
     "category": "Legs"
   },
   {
+    "name": "Squat On Bosu Ball",
+    "category": "Legs"
+  },
+  {
+    "name": "Squat To Overhead Reach",
+    "category": "Legs"
+  },
+  {
+    "name": "Squat To Overhead Reach With Twist",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Calf Raise (on A Staircase)",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Calves",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Calves Calf Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Hamstring And Calf Stretch With Strap",
+    "category": "Legs"
+  },
+  {
+    "name": "Standing Single Leg Curl",
+    "category": "Legs"
+  },
+  {
+    "name": "Straight Leg Outer Hip Abductor",
+    "category": "Legs"
+  },
+  {
     "name": "Suspended Split Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Swimmer Kicks V. 2 (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Targeted Style Single Leg Calf Raise (on A Dumbbell)",
+    "category": "Legs"
+  },
+  {
+    "name": "Tire Flip",
+    "category": "Legs"
+  },
+  {
+    "name": "Traditional Barbell Romanian Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Trap Bar Deadlift",
+    "category": "Legs"
+  },
+  {
+    "name": "Triple Style Sled One Leg Calf Press On Leg Press",
     "category": "Legs"
   },
   {
     "name": "Twist Hip Lift",
     "category": "Legs"
+  },
+  {
+    "name": "Walking Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Cossack Squats (male)",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Donkey Calf Raise",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Lunge With Swing",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Lunge With Swing Twisted",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Sissy Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Squat",
+    "category": "Legs"
+  },
+  {
+    "name": "Weighted Stretch Lunge",
+    "category": "Legs"
+  },
+  {
+    "name": "World Greatest Stretch",
+    "category": "Legs"
+  },
+  {
+    "name": "Athletic Style Battling Ropes",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Front Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Shrug",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Standing Rear Delt Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Twisting Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Band Y-raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell One Arm Snatch",
+    "category": "Shoulders"
   },
   {
     "name": "Barbell Rear Delt Raise",
@@ -712,7 +5392,35 @@
     "category": "Shoulders"
   },
   {
+    "name": "Barbell Seated Behind Head Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Seated Bradford Rocky Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Seated Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Skier",
+    "category": "Shoulders"
+  },
+  {
     "name": "Barbell Standing Bradford Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Standing Close Grip Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Standing Front Raise Over Head",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Standing Wide Military Press",
     "category": "Shoulders"
   },
   {
@@ -724,7 +5432,103 @@
     "category": "Shoulders"
   },
   {
+    "name": "Barbell Upright Row V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Barbell Upright Row V. 3",
+    "category": "Shoulders"
+  },
+  {
     "name": "Barbell Wide-grip Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Battling Ropes",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Alternate Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Cross-over Revers Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Forward Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Front Shoulder Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Kneeling Rear Delt Row (with Rope) (male)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Kneeling Rear Delt Row (with Rope) (male) Expanded",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable One Arm Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Rear Delt Row (stirrups)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Rear Delt Row (with Rope)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Seated Rear Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Seated Shoulder Internal Rotation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Standing Cross-over High Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Standing Rear Delt Row (with Rope)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Standing Shoulder External Rotation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Supine Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Cable Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Core Barbell Upright Row V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Alternate Side Press",
     "category": "Shoulders"
   },
   {
@@ -732,11 +5536,43 @@
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Arnold Press V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Bench Seated Press",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Cuban Press",
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Cuban Press V. 2",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Front Raise V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Full Can Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Incline One Arm Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Incline Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Incline Rear Lateral Raise",
     "category": "Shoulders"
   },
   {
@@ -748,11 +5584,75 @@
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Iron Cross - Improved Variation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lateral To Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lying External Shoulder Rotation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lying On Floor Rear Delt Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Deltoid Rear",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lying One Arm Rear Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Lying Rear Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Lateral Raise With Support",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Reverse Fly (with Support)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Shoulder Press V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell One Arm Upright Row",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Push Press",
     "category": "Shoulders"
   },
   {
     "name": "Dumbbell Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Rear Delt Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Rear Delt Row_shoulder",
     "category": "Shoulders"
   },
   {
@@ -764,11 +5664,23 @@
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Rear Lateral Raise (support Head)",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Reverse Fly",
     "category": "Shoulders"
   },
   {
     "name": "Dumbbell Rotation Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Scott Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Alternate Front Raise",
     "category": "Shoulders"
   },
   {
@@ -780,6 +5692,10 @@
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Seated Bent Arm Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Seated Front Raise",
     "category": "Shoulders"
   },
@@ -788,7 +5704,155 @@
     "category": "Shoulders"
   },
   {
+    "name": "Dumbbell Seated Lateral Raise V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Seated Shoulder Press (parallel Grip)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Side Lying One Hand Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Single Arm Overhead Carry",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Alternate Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Alternate Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Around World",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Front Raise Above Head",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing One Arm Palm In Press",
+    "category": "Shoulders"
+  },
+  {
     "name": "Dumbbell Standing Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Standing Palms In Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Upright Row (back Pov)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell Upright Shoulder External Rotation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Dumbbell W-press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Ez Barbell Anti Gravity Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Horizontal Dumbbell Standing Alternate Overhead Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Inverted Style Smith Seated Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Alternating Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Arnold Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Arnold Press - Beginner Variation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Double Jerk",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Double Push Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Double Snatch",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell One Arm Clean And Jerk",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell One Arm Jerk",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell One Arm Military Press To The Side",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell One Arm Push Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell One Arm Snatch",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Pirate Supper Legs",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Seated Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Seated Press With High",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Seated Two Arm Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Seesaw Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Thruster",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Two Arm Clean",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Kettlebell Two Arm Military Press",
     "category": "Shoulders"
   },
   {
@@ -796,11 +5860,119 @@
     "category": "Shoulders"
   },
   {
+    "name": "Left Hook. Boxing",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Military Press With Strength",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever One Arm Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Seated Reverse Fly",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Seated Reverse Fly (parallel Grip)",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Shoulder Press V. 2",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Lever Shoulder Press V. 3",
+    "category": "Shoulders"
+  },
+  {
     "name": "Neck Side Stretch",
     "category": "Shoulders"
   },
   {
+    "name": "Prone Dumbbell Upright Shoulder External Rotation",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Rear Deltoid Stretch",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Resistance Band Seated Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Resistance Band Seated Shoulder Press With Declined",
+    "category": "Shoulders"
+  },
+  {
     "name": "Side Push Neck Stretch",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Single Smith Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Behind Neck Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Rear Delt Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Seated Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Shoulder Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Standing Behind Head Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Standing Military Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Smith Upright Row",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Standing Behind Neck Press",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Tough Cable One Arm Lateral Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Weighted Front Raise",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Weighted Kneeling Step With Swing",
+    "category": "Shoulders"
+  },
+  {
+    "name": "Weighted Round Arm",
     "category": "Shoulders"
   }
 ]
