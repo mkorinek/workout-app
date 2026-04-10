@@ -331,3 +331,311 @@ html.theme-transition *::after {
 .animate-scale-in {
   animation: scale-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.0) both;
 }
+
+/* ===== View Transitions — iOS-style directional slide + fade ===== */
+
+/* Forward: content slides LEFT (navigating to a tab on the right) */
+@keyframes vt-slide-out-left {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(-20%); opacity: 0; }
+}
+@keyframes vt-slide-in-from-right {
+  from { transform: translateX(20%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Back: content slides RIGHT (navigating to a tab on the left) */
+@keyframes vt-slide-out-right {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(20%); opacity: 0; }
+}
+@keyframes vt-slide-in-from-left {
+  from { transform: translateX(-20%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Pin header and bottom nav — no animation */
+.vt-header {
+  view-transition-name: header;
+}
+.vt-bottom-nav {
+  view-transition-name: bottom-nav;
+}
+
+::view-transition-old(header),
+::view-transition-new(header),
+::view-transition-old(bottom-nav),
+::view-transition-new(bottom-nav) {
+  animation: none;
+}
+
+/* Fix background gap: fill the transition snapshot with the app bg */
+::view-transition-old(root),
+::view-transition-new(root) {
+  overflow: hidden;
+  height: 100%;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+}
+
+/* Default direction: forward (slide left) */
+::view-transition-old(root) {
+  animation: vt-slide-out-left 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-slide-in-from-right 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Back direction: slide right — set via data-vt-direction="back" on <html> */
+html[data-vt-direction="back"]::view-transition-old(root) {
+  animation-name: vt-slide-out-right;
+}
+html[data-vt-direction="back"]::view-transition-new(root) {
+  animation-name: vt-slide-in-from-left;
+}
+
+/* Disable for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ===== Rank text color — theme-aware contrast ===== */
+.rank-text-color {
+  color: var(--rank-text-light);
+}
+.dark .rank-text-color {
+  color: var(--rank-text-dark);
+}
+
+/* ===== Rank Card System ===== */
+
+/* Spinning conic gradient border */
+@property --rank-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rank-border-spin {
+  to { --rank-angle: 360deg; }
+}
+
+.rank-card-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.rank-card-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-md) + 2px);
+  background: conic-gradient(
+    from var(--rank-angle),
+    var(--rank-color-1) 0%,
+    var(--rank-color-2) 25%,
+    var(--rank-color-1) 50%,
+    var(--rank-color-2) 75%,
+    var(--rank-color-1) 100%
+  );
+  z-index: -1;
+  opacity: var(--rank-border-opacity, 0);
+  animation: rank-border-spin var(--rank-spin-speed, 4s) linear infinite;
+}
+
+/* Pulsing glow behind the card */
+@keyframes rank-glow-pulse {
+  0%, 100% { opacity: var(--rank-glow-min, 0); }
+  50% { opacity: var(--rank-glow-max, 0); }
+}
+
+.rank-card-glow {
+  position: relative;
+}
+
+.rank-card-glow::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: calc(var(--radius-md) + 8px);
+  background: radial-gradient(
+    ellipse at center,
+    var(--rank-color-1) 0%,
+    transparent 70%
+  );
+  z-index: -2;
+  opacity: 0;
+  animation: rank-glow-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Floating particles */
+@keyframes rank-particle-rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% {
+    transform: translateY(-60px) translateX(var(--particle-drift, 10px)) scale(0);
+    opacity: 0;
+  }
+}
+
+.rank-particle {
+  position: absolute;
+  bottom: 8px;
+  width: var(--particle-size, 3px);
+  height: var(--particle-size, 3px);
+  border-radius: 50%;
+  background: var(--rank-color-1);
+  pointer-events: none;
+  z-index: 10;
+  animation: rank-particle-rise var(--particle-duration, 2.5s) ease-out infinite;
+  animation-delay: var(--particle-delay, 0s);
+}
+
+/* Progress bar fill animation */
+@keyframes rank-progress-fill {
+  from { width: 0%; }
+}
+
+.rank-progress-bar {
+  animation: rank-progress-fill 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: 0.3s;
+}
+
+/* Stat glow pulse */
+@keyframes stat-glow {
+  0%, 100% { text-shadow: 0 0 0px transparent; }
+  50% { text-shadow: 0 0 12px var(--rank-color-1); }
+}
+
+.rank-stat-glow {
+  animation: stat-glow 3s ease-in-out infinite;
+}
+
+/* Rank up celebration burst */
+@keyframes rank-burst {
+  0% { transform: scale(0.3); opacity: 0; }
+  40% { transform: scale(1.15); opacity: 1; }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes rank-burst-ring {
+  0% { transform: scale(0.8); opacity: 0.8; border-width: 3px; }
+  100% { transform: scale(2); opacity: 0; border-width: 0px; }
+}
+
+.rank-burst {
+  animation: rank-burst 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.rank-burst-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  border: 3px solid var(--rank-color-1);
+  animation: rank-burst-ring 1s ease-out both;
+  animation-delay: 0.2s;
+  pointer-events: none;
+}
+
+/* ===== Social Card Rank Effects (lighter weight for list items) ===== */
+
+/* Animated left accent border for list cards */
+@keyframes social-border-shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.social-rank-card {
+  position: relative;
+  overflow: visible;
+}
+
+/* Left accent strip */
+.social-rank-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(180deg, var(--rank-color-1), var(--rank-color-2));
+  opacity: var(--social-border-opacity, 0);
+}
+
+/* Animated border for REGULAR+ */
+.social-rank-animated::before {
+  animation: social-border-shimmer 2.5s ease-in-out infinite;
+}
+
+/* Subtle bottom glow for HARDENED+ */
+.social-rank-glow {
+  box-shadow: 0 2px 12px -2px color-mix(in srgb, var(--rank-color-1) 20%, transparent);
+  transition: box-shadow 0.3s ease;
+}
+
+.social-rank-glow:hover {
+  box-shadow: 0 4px 20px -2px color-mix(in srgb, var(--rank-color-1) 35%, transparent);
+}
+
+/* Spinning avatar ring for VETERAN+ */
+@keyframes avatar-ring-spin {
+  to { rotate: 360deg; }
+}
+
+.avatar-rank-ring {
+  position: relative;
+}
+
+.avatar-rank-ring::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--rank-color-1),
+    var(--rank-color-2),
+    var(--rank-color-1)
+  );
+  z-index: -1;
+  animation: avatar-ring-spin 3s linear infinite;
+}
+
+/* Static avatar ring for REGULAR-HARDENED */
+.avatar-rank-ring-static::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--rank-color-1), var(--rank-color-2));
+  z-index: -1;
+  animation: none;
+}
+
+/* Mini particles for social cards (ELITE+) */
+@keyframes social-particle {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  15% { opacity: 0.8; }
+  100% { transform: translateY(-24px) scale(0); opacity: 0; }
+}
+
+.social-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--rank-color-1);
+  pointer-events: none;
+  animation: social-particle var(--sp-dur, 2s) ease-out infinite;
+  animation-delay: var(--sp-delay, 0s);
+}

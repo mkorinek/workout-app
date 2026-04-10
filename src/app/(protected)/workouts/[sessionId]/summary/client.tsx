@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SaveTemplateDialog } from "@/components/workout/save-template-dialog";
 import { useToast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/utils";
+import { AchievementIcon } from "@/components/achievement-icons";
 
 
 interface ExerciseBreakdown {
@@ -257,7 +258,9 @@ export function SummaryClient({ summary }: { summary: SummaryData }) {
                     : ""
                 }`}
               >
-                <span className="text-lg">{a.icon}</span>
+                <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                  <AchievementIcon name={a.name} icon={a.icon} size={18} />
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-accent font-medium">{a.name}</p>
                   <p className="text-xs text-text-muted">{a.description}</p>

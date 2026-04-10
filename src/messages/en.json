@@ -90,7 +90,14 @@
     "dummyWorkoutCreated": "Dummy workout created",
     "volumeSetTo": "Volume set to {vol}kg",
     "rankSetTo": "Rank set to {rank}",
-    "streakSetTo": "Streak set to {streak}"
+    "streakSetTo": "Streak set to {streak}",
+    "featuredBadge": "Featured Badge",
+    "badge": "Badge",
+    "noBadgesUnlocked": "Unlock achievements to pick a badge",
+    "noBadgeSelected": "No badge selected",
+    "clearBadge": "Clear",
+    "badgeSet": "Badge updated",
+    "badgeCleared": "Badge cleared"
   },
   "workouts": {
     "title": "Workout Log",
@@ -229,7 +236,17 @@
     "unfollow": "Unfollow",
     "following": "Following ({count})",
     "badges": "{count, plural, one {# badge} other {# badges}}",
-    "weekStreak": "{count}w streak"
+    "weekStreak": "{count}w streak",
+    "rank": "Rank",
+    "totalVolume": "Total Volume",
+    "achievements": "Achievements",
+    "lastWorkout": "Last Workout",
+    "featuredBadge": "Badge",
+    "never": "Never",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "daysAgo": "{count}d ago",
+    "weeksAgo": "{count}w ago"
   },
   "exerciseGroup": {
     "unnamed": "Unnamed exercise",

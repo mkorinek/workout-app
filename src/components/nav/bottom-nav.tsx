@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { DumbbellIcon, LayoutIcon, ListIcon, ActivityIcon, UserIcon } from "@/components/icons";
@@ -29,27 +29,48 @@ export function BottomNav() {
 
   const activeIndex = NAV_ITEMS.findIndex((item) => pathname.startsWith(item.href));
   const hasActiveTab = activeIndex >= 0;
-  const safeIndex = hasActiveTab ? activeIndex : 0;
+  // Keep last known position so blob fades out in place instead of jumping
+  const lastIndex = useRef(0);
+  if (hasActiveTab) lastIndex.current = activeIndex;
+  const safeIndex = hasActiveTab ? activeIndex : lastIndex.current;
 
-  const blobLeft = `calc(${(safeIndex / ITEM_COUNT) * 100}% + 6px)`;
-  const blobWidth = `calc(${100 / ITEM_COUNT}% - 12px)`;
+  const isFirst = safeIndex === 0;
+  const isLast = safeIndex === ITEM_COUNT - 1;
+  // Tighter inset on the container edge, normal inset on the inner side
+  const edgeGap = 3; // px from container edge
+  const innerGap = 4; // px between blob and adjacent items
+  const blobLeft = isFirst
+    ? `${edgeGap}px`
+    : `calc(${(safeIndex / ITEM_COUNT) * 100}% + ${innerGap}px)`;
+  const blobWidth = isFirst || isLast
+    ? `calc(${100 / ITEM_COUNT}% - ${edgeGap + innerGap}px)`
+    : `calc(${100 / ITEM_COUNT}% - ${innerGap * 2}px)`;
+  // Radius: match container curve on edge side, smaller on inner side
+  const blobRadius = isFirst
+    ? "18px 12px 12px 18px"
+    : isLast
+      ? "12px 18px 18px 12px"
+      : "12px";
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 px-3 pb-3">
-      <div className="relative flex items-stretch max-w-lg mx-auto nav-glass rounded-2xl">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-50 px-3 vt-bottom-nav"
+      style={{ paddingBottom: "max(env(safe-area-inset-bottom, 8px), 8px)" }}
+    >
+      <div className="relative flex items-stretch max-w-lg mx-auto nav-glass rounded-[22px]">
         {/* Blob indicator — smoothly morphs between tab highlight and full-width border */}
         {mounted && (
           <div
             className="absolute pointer-events-none"
             style={{
-              top: hasActiveTab ? "6px" : "0px",
-              bottom: hasActiveTab ? "6px" : "0px",
+              top: hasActiveTab ? `${edgeGap}px` : "0px",
+              bottom: hasActiveTab ? `${edgeGap}px` : "0px",
               left: hasActiveTab ? blobLeft : "0px",
               width: hasActiveTab ? blobWidth : "100%",
-              borderRadius: hasActiveTab ? "8px" : "16px",
+              borderRadius: hasActiveTab ? blobRadius : "22px",
               background: hasActiveTab
                 ? "var(--color-accent-muted)"
-                : "var(--color-surface)",
+                : "transparent",
               border: hasActiveTab
                 ? "1px solid transparent"
                 : "1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)",
@@ -68,7 +89,7 @@ export function BottomNav() {
               onPointerEnter={() => prefetchRoute(item.href)}
               onTouchStart={() => prefetchRoute(item.href)}
               className={cn(
-                "relative z-10 flex flex-1 flex-col items-center justify-center p-2.5 text-[11px] font-medium transition-colors gap-1 rounded-md m-1.5",
+                "relative z-10 flex flex-1 flex-col items-center justify-center py-2.5 px-1 text-[10px] sm:text-[11px] font-medium transition-colors gap-1 rounded-md m-1",
                 active
                   ? "text-accent"
                   : "text-text-muted hover:text-text-secondary"

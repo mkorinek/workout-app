@@ -90,7 +90,14 @@
     "dummyWorkoutCreated": "Testovací trénink vytvořen",
     "volumeSetTo": "Objem nastaven na {vol} kg",
     "rankSetTo": "Úroveň nastavena na {rank}",
-    "streakSetTo": "Série nastavena na {streak}"
+    "streakSetTo": "Série nastavena na {streak}",
+    "featuredBadge": "Odznak",
+    "badge": "Odznak",
+    "noBadgesUnlocked": "Odemkni achievementy pro výběr odznaku",
+    "noBadgeSelected": "Žádný odznak nevybrán",
+    "clearBadge": "Zrušit",
+    "badgeSet": "Odznak nastaven",
+    "badgeCleared": "Odznak zrušen"
   },
   "workouts": {
     "title": "Záznamy tréninků",
@@ -216,6 +223,10 @@
   },
   "social": {
     "title": "Lidé",
+    "rank":"Úroveň liftera",
+    "totalVolume": "Celkový objem",
+    "achievements": "Počet achievementů",
+    "lastWorkout": "Poslední trénink",
     "findPeople": "Najít lidi podle emailu",
     "searchPlaceholder": "Hledat email...",
     "noUsersFound": "Žádní uživatelé nenalezeni",
@@ -224,12 +235,18 @@
     "notFollowing": "Zatím nikoho nesleduješ",
     "searchToFind": "Hledej podle emailu",
     "followed": "Sledováno!",
-    "unfollowed": "Přestáno sledovat",
+    "unfollowed": "Sledování zrušeno",
     "follow": "Sledovat",
-    "unfollow": "Přestat sledovat",
+    "unfollow": "Zrušit sledování",
     "following": "Sledovaní ({count})",
     "badges": "{count, plural, one {# odznak} few {# odznaky} other {# odznaků}}",
-    "weekStreak": "{count}t série"
+    "weekStreak": "{count}t série",
+    "featuredBadge": "Odznak",
+    "never": "Nikdy",
+    "today": "Dnes",
+    "yesterday": "Včera",
+    "daysAgo": "před {count}d",
+    "weeksAgo": "před {count}t"
   },
   "exerciseGroup": {
     "unnamed": "Cvik bez názvu",

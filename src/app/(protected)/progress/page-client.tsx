@@ -13,8 +13,8 @@ import type {
   ExercisesData,
   StreakData,
 } from "@/lib/cache/app-store";
-import { getNextRank } from "@/lib/utils";
 import { PRBoard } from "@/components/progress/pr-board";
+import { RankCard } from "@/components/rank-card";
 import { AchievementBoard } from "@/components/achievements/achievement-board";
 import { WeeklyStreakSection } from "@/components/progress/weekly-streak";
 import { ProgressClient } from "./client";
@@ -35,7 +35,6 @@ export function ProgressPageClient({
   initialStreakData,
 }: Props) {
   const t = useTranslations("progress");
-  const tc = useTranslations("common");
   const records = useCached("records", getPersonalRecords, initialRecords) ?? [];
   const achievements = useCached("achievements", getAchievements, initialAchievements) ?? { all: [], unlocked: [] };
   const profile = useCached("profile", getProfile, initialProfile);
@@ -44,7 +43,7 @@ export function ProgressPageClient({
 
   const totalVolume = Number(profile?.total_volume_kg ?? 0);
   const currentRank = (profile?.lifter_rank as string) ?? "ROOKIE";
-  const nextRank = getNextRank(currentRank);
+  const displayName = (profile as { display_name?: string } | null)?.display_name ?? "";
   const exerciseNames = exercises.map((e: { name: string }) => e.name);
   const savedTracked = (profile as { tracked_exercises?: string[] } | null)?.tracked_exercises ?? [];
 
@@ -59,43 +58,11 @@ export function ProgressPageClient({
         <p className="text-xs font-medium text-text-secondary mb-3">
           {t("lifterRank")}
         </p>
-        <div className="card overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-accent/20 bg-accent/[0.04]">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
-              {t("current")}
-            </span>
-            {nextRank && (
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-accent/60">
-                {t("next")}
-              </span>
-            )}
-          </div>
-          <div className="px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-accent text-sm font-bold">
-                {currentRank}
-              </span>
-              {nextRank && (
-                <span className="text-sm text-text-muted font-medium">
-                  {nextRank.name}
-                </span>
-              )}
-            </div>
-            <p className="text-xs text-text-muted mb-3">
-              {t("totalVolume")} <span className="text-accent font-medium tabular-nums">{totalVolume.toLocaleString()} {tc("kg")}</span>
-            </p>
-            {nextRank && (
-              <div className="h-1.5 bg-border rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-accent rounded-full transition-all"
-                  style={{
-                    width: `${Math.min(100, (totalVolume / nextRank.volumeNeeded) * 100)}%`,
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
+        <RankCard
+          rank={currentRank}
+          totalVolumeKg={totalVolume}
+          displayName={displayName}
+        />
       </div>
 
       {/* Weekly streak */}

@@ -1,12 +1,18 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const t = useTranslations("login");
+
+  // Clear any stale auth cookies to prevent "Refresh Token Not Found" errors
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.signOut({ scope: "local" });
+  }, []);
 
   async function handleGoogleLogin() {
     setLoading(true);

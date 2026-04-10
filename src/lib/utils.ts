@@ -4,18 +4,18 @@ export function formatTime(seconds: number): string {
   return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
 
-export function formatDate(date: string | Date): string {
+export function formatDate(date: string | Date, locale = "en-US"): string {
   const d = new Date(date);
-  return d.toLocaleDateString("en-US", {
+  return d.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 }
 
-export function formatDateShort(date: string | Date): string {
+export function formatDateShort(date: string | Date, locale = "en-US"): string {
   const d = new Date(date);
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return d.toLocaleDateString(locale, { month: "short", day: "numeric" });
 }
 
 const RANK_THRESHOLDS: [string, number][] = [

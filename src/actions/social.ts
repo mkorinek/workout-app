@@ -31,12 +31,37 @@ export const getFollowedProfiles = cache(async () => {
 
   const ids = follows.map((f) => f.following_id);
 
+  const { data: lastWorkouts } = await supabase.rpc("get_last_workouts", {
+    user_ids: ids,
+  });
+
   const { data: profiles } = await supabase
     .from("profiles")
-    .select("id, display_name, lifter_rank, total_volume_kg, current_week_streak, achievement_count")
+    .select(
+      "id, display_name, lifter_rank, total_volume_kg, current_week_streak, achievement_count, featured_achievement:featured_achievement_id(name, icon)",
+    )
     .in("id", ids);
 
-  return profiles ?? [];
+  const lastWorkoutMap = new Map(
+    (lastWorkouts ?? []).map((w: { user_id: string; completed_at: string }) => [
+      w.user_id,
+      w.completed_at,
+    ]),
+  );
+
+  return (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    profiles?.map((p: any) => ({
+      id: p.id as string,
+      display_name: p.display_name as string | null,
+      lifter_rank: p.lifter_rank as string,
+      total_volume_kg: p.total_volume_kg as number,
+      current_week_streak: p.current_week_streak as number,
+      achievement_count: p.achievement_count as number,
+      featured_achievement: (p.featured_achievement ?? null) as { name: string; icon: string } | null,
+      last_workout_at: (lastWorkoutMap.get(p.id) ?? null) as string | null,
+    })) ?? []
+  );
 });
 
 export async function searchUsers(query: string) {

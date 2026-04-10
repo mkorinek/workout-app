@@ -16,6 +16,9 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  experimental: {
+    viewTransition: true,
+  },
   turbopack: {},
   images: {
     remotePatterns: [

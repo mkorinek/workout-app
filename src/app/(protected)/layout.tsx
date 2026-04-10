@@ -47,7 +47,7 @@ export default async function ProtectedLayout({
       <AccentSeed index={profile?.accent_color ?? 0} />
       <div id="app-shell" className="flex flex-col h-dvh">
         {/* Top bar */}
-        <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass">
+        <header className="px-4 py-3 flex items-center justify-between shrink-0 nav-glass vt-header">
           <div className="flex items-center gap-2 font-black text-rainbow">
             {t("title")}
           </div>

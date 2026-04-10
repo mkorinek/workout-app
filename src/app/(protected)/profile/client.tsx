@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   updateProfile,
   updateLanguage,
+  setFeaturedAchievement,
   resetProfile,
   deleteAllHistory,
   adminUpdateStats,
@@ -20,6 +21,8 @@ import { useToast } from "@/components/ui/toast";
 import { getRankFromVolume } from "@/lib/utils";
 import { useAccent, ACCENT_PRESETS } from "@/components/accent-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { RankCard } from "@/components/rank-card";
+import { AchievementIcon } from "@/components/achievement-icons";
 
 export interface ProfileData {
   display_name: string;
@@ -33,6 +36,13 @@ export interface ProfileData {
   week_start_day: number;
   is_admin: boolean;
   language: string;
+  featured_achievement_id: string | null;
+}
+
+interface UnlockedAchievement {
+  id: string;
+  name: string;
+  icon: string;
 }
 
 function SectionHeader({ left, right }: { left: string; right?: string }) {
@@ -80,8 +90,10 @@ function SettingRow({
 
 export function ProfileClient({
   initialProfile,
+  unlockedAchievements,
 }: {
   initialProfile: ProfileData;
+  unlockedAchievements: UnlockedAchievement[];
 }) {
   const [profile, setProfile] = useState<ProfileData>(initialProfile);
   const [saving, setSaving] = useState(false);
@@ -91,10 +103,27 @@ export function ProfileClient({
   const [testVolume, setTestVolume] = useState("");
   const [testRank, setTestRank] = useState("");
   const [testStreak, setTestStreak] = useState("");
+  const [badgePicking, setBadgePicking] = useState(false);
   const { addToast } = useToast();
   const { accentIndex, setAccent } = useAccent();
   const t = useTranslations("profile");
   const tc = useTranslations("common");
+
+  const featuredAchievement = unlockedAchievements.find(
+    (a) => a.id === profile.featured_achievement_id,
+  );
+
+  async function handleSetFeaturedBadge(achievementId: string | null) {
+    setBadgePicking(true);
+    const result = await setFeaturedAchievement(achievementId);
+    if ("error" in result && result.error) {
+      addToast(result.error, "error");
+    } else {
+      setProfile((p) => ({ ...p, featured_achievement_id: achievementId }));
+      addToast(achievementId ? t("badgeSet") : t("badgeCleared"), "success");
+    }
+    setBadgePicking(false);
+  }
 
   async function handleSave() {
     setSaving(true);
@@ -128,21 +157,71 @@ export function ProfileClient({
     <div className="p-4 max-w-lg mx-auto">
       <h1 className="text-lg font-bold text-text-primary mb-6">{t("title")}</h1>
 
-      {/* Rank */}
+      {/* Featured Badge */}
       <div className="mb-6">
         <p className="text-xs font-medium text-text-secondary mb-3">
-          {t("lifterRank")}
+          {t("featuredBadge")}
         </p>
         <div className="card overflow-hidden">
-          <SectionHeader left={t("rank")} right={t("volume")} />
-          <div className="flex items-center justify-between px-4 py-3">
-            <span className="text-accent text-lg font-bold">
-              {profile.lifter_rank}
-            </span>
-            <span className="text-accent font-medium tabular-nums text-sm">
-              {profile.total_volume_kg.toLocaleString()} kg
-            </span>
-          </div>
+          <SectionHeader left={t("badge")} />
+          {unlockedAchievements.length === 0 ? (
+            <div className="px-4 py-4">
+              <p className="text-sm text-text-muted">{t("noBadgesUnlocked")}</p>
+            </div>
+          ) : (
+            <div className="px-4 py-4">
+              {/* Currently selected badge — prominent display */}
+              {featuredAchievement ? (
+                <div className="flex items-center gap-3 mb-4 p-3 rounded-lg bg-accent/[0.06] border border-accent/15">
+                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                    <AchievementIcon
+                      name={featuredAchievement.name}
+                      icon={featuredAchievement.icon}
+                      size={22}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-text-primary">
+                      {featuredAchievement.name}
+                    </p>
+                    <p className="text-[11px] text-accent mt-0.5">
+                      {t("featuredBadge")}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleSetFeaturedBadge(null)}
+                    disabled={badgePicking}
+                    className="text-xs text-text-muted hover:text-text-secondary transition-colors px-2 py-1 rounded-md hover:bg-surface-elevated"
+                  >
+                    {t("clearBadge")}
+                  </button>
+                </div>
+              ) : (
+                <p className="text-sm text-text-muted mb-4">{t("noBadgeSelected")}</p>
+              )}
+              {/* Badge picker grid */}
+              <div className="flex flex-wrap gap-2">
+                {unlockedAchievements.map((a) => {
+                  const isSelected = a.id === profile.featured_achievement_id;
+                  return (
+                    <button
+                      key={a.id}
+                      disabled={badgePicking}
+                      onClick={() => handleSetFeaturedBadge(a.id)}
+                      title={a.name}
+                      className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all active:scale-95 ${
+                        isSelected
+                          ? "bg-accent/15 ring-2 ring-accent shadow-sm text-accent"
+                          : "bg-surface-elevated hover:bg-accent/[0.08] hover:scale-105 text-text-secondary"
+                      }`}
+                    >
+                      <AchievementIcon name={a.name} icon={a.icon} size={20} />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

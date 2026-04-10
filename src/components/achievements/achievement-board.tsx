@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
+import { AchievementIcon } from "@/components/achievement-icons";
 
 interface Achievement {
   id: string;
@@ -73,9 +74,15 @@ export function AchievementBoard({ all, unlocked }: AchievementBoardProps) {
                     i < achievements.length - 1 ? "border-b border-border-subtle" : ""
                   } ${isUnlocked ? "" : "opacity-40"}`}
                 >
-                  <span className="text-lg">
-                    {achievement.icon}
-                  </span>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
+                    isUnlocked ? "bg-accent/10 text-accent" : "bg-surface-elevated text-text-muted"
+                  }`}>
+                    <AchievementIcon
+                      name={achievement.name}
+                      icon={achievement.icon}
+                      size={18}
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm ${isUnlocked ? "text-accent font-medium" : "text-text-muted"}`}>
                       {isUnlocked || achievement.category !== "hidden"

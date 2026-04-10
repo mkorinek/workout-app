@@ -49,6 +49,34 @@ export async function updateProfile(updates: {
   return { success: true };
 }
 
+export async function setFeaturedAchievement(achievementId: string | null) {
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return { error: "Not authenticated" };
+
+  if (achievementId) {
+    // Verify the user actually unlocked this achievement
+    const { data } = await supabase
+      .from("user_achievements")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("achievement_id", achievementId)
+      .single();
+
+    if (!data) return { error: "Achievement not unlocked" };
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ featured_achievement_id: achievementId, updated_at: new Date().toISOString() })
+    .eq("id", user.id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/profile");
+  revalidatePath("/social");
+  return { success: true };
+}
+
 export async function updateLanguage(language: string) {
   const supabase = await createClient();
   const user = await getAuthUser();
